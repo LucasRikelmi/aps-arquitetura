@@ -1,0 +1,11 @@
+@page { size: A4; margin: 2.5cm 2cm; }
+body { font-family: "Liberation Serif", "Times New Roman", serif; font-size: 12pt; line-height: 1.5; text-align: justify; max-width: none; margin: 0; color:#000;}
+h1 { font-size: 14pt; page-break-before: always; } h2 { font-size: 12pt; }
+header h1.title { page-break-before: avoid; text-align:center; font-size:16pt;}
+header p { text-align:center; }
+table { border-collapse: collapse; width: 100%; font-size: 10pt; margin: .5em 0 1em; page-break-inside: avoid;}
+th, td { border: 1px solid #555; padding: 3px 6px; text-align: left; vertical-align: top; }
+figure { text-align: center; margin: 1em 0; page-break-inside: avoid; } figure img { max-height: 20cm; }
+figcaption { font-size: 10pt; }
+code { font-size: 10pt; } blockquote { border-left: 3px solid #999; margin-left: 0; padding-left: 1em; color:#333;}
+nav#TOC { page-break-after: always; }

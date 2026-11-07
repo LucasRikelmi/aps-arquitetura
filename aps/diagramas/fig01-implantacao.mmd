@@ -1,0 +1,14 @@
+flowchart LR
+  subgraph CLI["Máquina do usuário"]
+    B["Browser<br/>(HTML + JavaScript fetch)"]
+  end
+  DNS[("Servidor DNS")]
+  subgraph SRV["Servidor (host Linux)"]
+    N["Nginx 1.x<br/>Servidor web / proxy reverso<br/>porta 443 - terminação TLS"]
+    A["Node.js + Express<br/>Servidor de aplicação<br/>127.0.0.1:3000"]
+    P[("PostgreSQL<br/>SGBD - porta 5432")]
+  end
+  B -- "1. consulta nome (UDP/53)" --> DNS
+  B -- "2. HTTPS (TLS 1.3 sobre TCP/443)" --> N
+  N -- "3. HTTP/1.1 proxy_pass (rede local)" --> A
+  A -- "4. protocolo PostgreSQL (TCP/5432)<br/>consulta parametrizada" --> P

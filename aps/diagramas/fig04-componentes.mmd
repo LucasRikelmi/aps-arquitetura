@@ -1,0 +1,13 @@
+flowchart TB
+  subgraph APP["Servidor de aplicação (Node.js/Express)"]
+    direction TB
+    CT["AuthController<br/>«camada de apresentação»<br/>valida formato, mapeia para HTTP"]
+    SV["AuthenticationService<br/>«camada de negócio»<br/>decide autenticação"]
+    PH["PasswordHasher «interface»<br/>Argon2idPasswordHasher"]
+    RP["UserRepository «interface»<br/>PgUserRepository<br/>«camada de dados»"]
+    CT -->|"authenticate(credenciais)"| SV
+    SV -->|"findByLogin(login)"| RP
+    SV -->|"verify(senha, hash)"| PH
+  end
+  N["Nginx"] -->|"HTTP"| CT
+  RP -->|"SQL parametrizado"| DB[("PostgreSQL<br/>tabela usuario")]

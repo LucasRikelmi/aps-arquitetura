@@ -1,0 +1,9 @@
+flowchart TB
+  U(["Usuário"])
+  C["Aplicação cliente<br/>(página Web no browser)"]
+  S["Serviço de Autenticação<br/>[sistema projetado]<br/>verifica credenciais e retorna identidade"]
+  DB[("Repositório de usuários<br/>(PostgreSQL)")]
+  U -- "informa login e senha" --> C
+  C -- "POST /api/auth/login<br/>HTTPS / JSON" --> S
+  S -- "consulta usuário por login" --> DB
+  S -. "identidade do usuário ou erro" .-> C

@@ -1,0 +1,23 @@
+sequenceDiagram
+  autonumber
+  actor U as Usuário
+  participant B as Browser
+  participant D as DNS
+  participant N as Nginx (servidor web)
+  participant A as Node.js/Express (servidor de aplicação)
+  participant P as PostgreSQL
+  U->>B: preenche formulário e clica "Entrar"
+  B->>D: resolve auth.exemplo.com.br
+  D-->>B: endereço IP
+  B->>N: abertura TCP (SYN, SYN-ACK, ACK) na porta 443
+  B->>N: handshake TLS 1.3 (ClientHello / ServerHello, certificado)
+  B->>N: POST /api/auth/login (JSON, cifrado)
+  N->>N: decifra, aplica regras (tamanho máx., rate limit)
+  N->>A: HTTP proxy_pass para 127.0.0.1:3000
+  A->>A: event loop → cadeia de middlewares → rota
+  A->>P: SELECT ... WHERE login = $1
+  P-->>A: linha do usuário (ou vazio)
+  A-->>N: HTTP 200 ou 401 + corpo JSON
+  N-->>B: resposta cifrada (TLS)
+  B->>B: JavaScript trata status e atualiza a página (DOM)
+  B-->>U: exibe resultado

@@ -37,8 +37,11 @@ Título, autoria e data conferidos na página oficial em 17/11/2026. A coluna "I
 | BIRYUKOV, A.; DINU, D.; KHOVRATOVICH, D.; JOSEFSSON, S. *Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications*. RFC 9106. [S. l.]: IETF, set. 2021. Disponível em: https://www.rfc-editor.org/rfc/rfc9106. Acesso em: [data]. | 2.2, 2.6, 2.7 |
 | OWASP. *Password Storage Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html. Acesso em: [data]. | 2.1, 2.2, 2.8 |
 | OWASP. *Authentication Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html. Acesso em: [data]. | 2.1, 2.8 |
+| ISO/IEC/IEEE. *42010:2022 – Software, systems and enterprise — Architecture description*. 2. ed. Genebra: ISO/IEC; IEEE, 2022. 62 p. Disponível em: https://www.iso.org/standard/74393.html. Acesso em: 17 nov. 2026. | 2.2 (citada no PR #45; passa à Parte A no merge) |
 
 ### Observações da conferência
+
+- **ISO/IEC/IEEE 42010: edição de 2022.** O esboço usa o título da edição de 2011 (*Systems and software engineering – Architecture description*), que a página da ISO marca como retirada. A edição vigente é a 42010:2022 (2. ed., nov. 2022, 62 p.), com o título *Software, systems and enterprise — Architecture description*. A entrada segue a forma usada no item 2.2. As cláusulas 5.2.12 e 6.10 citadas no 2.2 não foram conferidas aqui, porque a página pública da ISO não traz o sumário.
 
 - **TLS 1.3: RFC 9846 no lugar da RFC 8446.** O esboço cita a RFC 8446 (2018). A página da RFC 8446 no RFC Editor informa que ela foi tornada obsoleta pela RFC 9846 (jul. 2026), que mantém o mesmo protocolo (TLS 1.3, mesmo número de versão, compatível com a anterior). Recomenda-se citar a RFC 9846 nos itens 1.3, 1.4 e 2.8. Se um item já tiver citado a 8446, basta indicar "RFC 8446, tornada obsoleta pela RFC 9846".
 - **Nginx e TLS 1.3.** A página *Configuring HTTPS servers* informa que, a partir da versão 1.27.3, o padrão do Nginx é `ssl_protocols TLSv1.2 TLSv1.3`. Como a pilha adota só TLS 1.3, o item 1.4 deve configurar `ssl_protocols TLSv1.3` explicitamente.
@@ -47,15 +50,14 @@ Título, autoria e data conferidos na página oficial em 17/11/2026. A coluna "I
 
 ## Lacunas
 
-Referências que aparecem no esboço mas não entram na lista até que um item as cite e alguém confirme a edição:
+Referências que aparecem no esboço mas não entram na lista até que um item as cite e alguém confirme a edição. A ISO/IEC/IEEE 42010 saiu desta tabela: a edição de 2011, citada no esboço, está retirada (página da ISO), e a vigente, de 2022, entrou na Parte B.
 
 | Referência no esboço | Situação |
 |---|---|
 | NIST SP 800-63B (*Digital Identity Guidelines – Authentication and Lifecycle Management*) | Existe a revisão 4 publicada em https://pages.nist.gov/800-63-4/sp800-63b.html, mas a página consultada não informa autores nem data formal de publicação. Falta confirmar os dados no registro oficial do NIST (DOI) antes de citar. |
-| ISO/IEC/IEEE 42010 (*Architecture description*) | Edição não conferida. O esboço marca "[conferir edição]". |
 | ISO/IEC/IEEE 12207:2026 (*Software life cycle processes*) | Edição de 2026 não confirmada. Não citar até conferir no catálogo da ISO. |
 
-Nenhum item mesclado cita essas três normas até 17/11. Se nenhum item as citar, saem da lista final.
+Nenhum item mesclado cita essas duas normas até 17/11. Se nenhum item as citar, saem da lista final.
 
 ## Parte C – Uso de IA
 

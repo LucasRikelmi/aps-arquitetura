@@ -1,37 +1,36 @@
 # aps-arquitetura
 APS - Arquitetura Web (SoftwareWeb.log)
 
-Fluxo de trabalho original: [CONTRIBUTING.md](CONTRIBUTING.md). Este README registra a reorganização de 17/11/2026, que substitui as atribuições e a regra de revisão do CONTRIBUTING até a entrega.
+O fluxo original está no [CONTRIBUTING.md](CONTRIBUTING.md). Este README registra a reorganização de 17/11/2026. Até a entrega, ela vale no lugar das atribuições e da regra de revisão do CONTRIBUTING.
 
-## Acompanhamento
+## Links
 
-- Quadro Kanban (GitHub Projects): https://github.com/users/LucasRikelmi/projects/1
+- Quadro Kanban: https://github.com/users/LucasRikelmi/projects/1
 - Issues: https://github.com/LucasRikelmi/aps-arquitetura/issues
 - Pull requests: https://github.com/LucasRikelmi/aps-arquitetura/pulls
 
 ## Reorganização de 17/11/2026
 
-Para concluir o documento até a entrega, a equipe reorganizou as atribuições. A reorganização foi conduzida pelo Lucas (gestão), anunciada à equipe em 16/11 às 21h e consolidada em 17/11. Entrega e apresentação: 18/11.
+Com o prazo próximo, redistribuí as tarefas para fechar o documento a tempo. Anunciei a mudança no grupo em 16/11, às 21h, e ela foi registrada aqui em 17/11. A entrega e a apresentação são em 18/11.
 
 ### Como era
 
-- WBS de 07/11 (`aps/wbs-atribuicao.md`): cada membro autor de 5 a 6 itens e revisor de 5 itens, com revisão cruzada entre as Seções 1 e 2.
-- Cada PR precisava da aprovação do revisor do item; o autor fazia o merge.
-- Itens coletivos: G3 e G4 em rodízio, G9 com todos.
+- A WBS de 07/11 (`aps/wbs-atribuicao.md`) dava a cada membro de 5 a 6 itens como autor e 5 como revisor, com revisão cruzada entre as Seções 1 e 2.
+- Cada PR precisava da aprovação do revisor do item, e o próprio autor fazia o merge.
+- G3 e G4 eram em rodízio, e o G9 era de todos.
 
-### Como passa a ser
+### Como fica
 
-- **Revisor único:** o Lucas revisa todos os PRs e faz todos os merges. O arquivo `.github/CODEOWNERS` o adiciona automaticamente como revisor de todo PR.
-- **Prazos de revisão:** PR aberto até 18h de 17/11; revisão e merge até 23h.
-- **Ajustes:** o revisor pede mudanças com sugestões no próprio PR, e o autor aplica na mesma branch.
-- **Uso de IA:** cada item registra no fim do próprio arquivo, sob o título `## Uso de IA`, a ferramenta, a URL, a data e o prompt literal. A Grazieli consolida o Apêndice I (G5) em 18/11.
-- **Texto em `.md`:** cada item fica em `aps/secoes/<id>.md`.
-- **Figuras:** entram no PR do item, em `aps/diagramas/`.
-- **Itens coletivos:** G3, G4 e G6 com o Lucas; G9 (slides) com a Grazieli; todos apresentam.
+- Revisão: eu reviso todos os PRs e faço todos os merges. O `.github/CODEOWNERS` me coloca como revisor de qualquer PR.
+- Prazos: PR aberto até 18h de 17/11. Revisão e merge até 23h.
+- Ajustes: peço as mudanças por sugestão no próprio PR, e o autor aplica na mesma branch.
+- Uso de IA: cada item registra no fim do arquivo, sob `## Uso de IA`, a ferramenta, a URL, a data e o prompt literal. A Grazieli junta tudo no Apêndice I (G5) em 18/11.
+- Arquivos: cada item fica em `aps/secoes/<id>.md`, e as figuras entram no PR do item, em `aps/diagramas/`.
+- Itens coletivos: G3, G4 e G6 ficam comigo. O G9 (slides) fica com a Grazieli, e todos apresentam.
 
-> **Nota sobre a regra 7 do enunciado:** a regra pede que cada membro seja autor e revisor de algum item, com autor ≠ revisor. Com revisor único, nem todos os membros terão revisão registrada, e os itens do Lucas terão autor = revisor. A equipe adotou o revisor único para cumprir o prazo, ciente desse ponto.
+Sobre a regra 7 do enunciado: ela pede que cada membro seja autor e revisor de algum item, com autor diferente do revisor. Com revisor único, nem todos terão revisão registrada, e nos meus itens autor e revisor são a mesma pessoa. Optamos por isso para cumprir o prazo, cientes do ponto.
 
-### Definições comuns a todos os itens
+### Definições comuns
 
 | Tema | Definição |
 |---|---|
@@ -43,7 +42,7 @@ Para concluir o documento até a entrega, a equipe reorganizou as atribuições.
 | Figura 1 | O SVG de `aps/diagramas/fig01-implantacao.svg`. |
 | Fontes | Citadas no corpo do item em que a ideia aparece, e listadas em ABNT com data de acesso (regra 6). |
 
-### Responsável por issue: antes e depois
+### Responsáveis por issue
 
 | Issue | Item | Antes (autor / revisor) | Depois (autor / revisor) | O item deve cobrir |
 |---|---|---|---|---|
@@ -72,7 +71,7 @@ Para concluir o documento até a entrega, a equipe reorganizou as atribuições.
 | #23 | 2.7 Desenho detalhado | Lucas / Kamilly | André / Lucas | A partir do esboço e das Figuras 6 a 9 |
 | #24 | 2.8 Segurança e erros | André / Grazieli | André / Lucas | A partir do esboço |
 
-### Responsável por tipo de trabalho: antes e depois
+### Responsáveis por tipo de trabalho
 
 | Tipo de trabalho | Itens | Antes | Depois |
 |---|---|---|---|
@@ -87,7 +86,7 @@ Para concluir o documento até a entrega, a equipe reorganizou as atribuições.
 
 ### Totais por pessoa
 
-Horas estimadas com a escala da WBS (P ≈ 1–2 h, M ≈ 3–4 h, G ≈ 5–8 h), somando o trabalho já realizado e o restante.
+Estimativa em horas pela escala da WBS (P = 1 a 2 h, M = 3 a 4 h, G = 5 a 8 h). Soma o que já foi feito e o que falta.
 
 | Pessoa | Antes (WBS) | Depois (total estimado) |
 |---|---|---|
@@ -98,7 +97,7 @@ Horas estimadas com a escala da WBS (P ≈ 1–2 h, M ≈ 3–4 h, G ≈ 5–8 h
 
 ### Dependências
 
-Um arquivo por item, então não há conflito de merge. As dependências são de conteúdo: o item da direita precisa usar os termos, valores e remissões do item da esquerda.
+Como cada item tem o seu arquivo, não há conflito de merge. A dependência é de conteúdo: o item da direita usa os termos, os valores e as remissões do item da esquerda.
 
 | Item | Depende de | Precisa estar coerente com | Bloqueia |
 |---|---|---|---|
@@ -140,29 +139,29 @@ Um arquivo por item, então não há conflito de merge. As dependências são de
 | Lucas | G8 (PDF final) | 18/11, 9h |
 | Grazieli | G9 (slides e divisão de fala) | 18/11, 10h |
 
-Se o PR do 2.7 não estiver aberto até 18h, a Grazieli assume as sequências (Figuras 8 e 9).
+Se o PR do 2.7 não for aberto até 18h, a Grazieli fica com as sequências (Figuras 8 e 9).
 
 ### Ordem de merge
 
 1. PR #25 (esboço e Figuras 2 a 9).
-2. Seção 1: 1.2, 1.3, 1.4, 1.5, 1.6; o 1.7 pode entrar antes, escrito a partir do esboço.
+2. Seção 1: 1.2, 1.3, 1.4, 1.5 e 1.6. O 1.7 pode entrar antes, porque parte do esboço.
 3. Seção 2: 2.1 → 2.2 → 2.3, 2.4, 2.5, 2.6 → 2.7 → 2.8.
 4. G5 e G6 → G7 → G8 (PDF).
 
 ## Passo a passo para commitar e abrir o PR
 
-Um PR por item. O exemplo é o 1.2 (issue #11); troque o número, o nome e a issue nos outros.
+Um PR por item. O exemplo usa o 1.2 (issue #11). Para os outros, troque o número, o nome e a issue.
 
 ### Pelo navegador
 
-1. **Criar a branch.** Na página do repositório, clique no seletor de branch (mostra `main`), digite `item/1-2-browser` e clique em *Create branch item/1-2-browser from main*.
-2. **Criar o arquivo.** Na branch nova, entre em `aps/secoes/`, clique em *Add file → Create new file* e dê o nome `1.2.md`. Cole o texto do item.
-3. **Registrar o uso de IA.** No fim do mesmo arquivo, crie o título `## Uso de IA` e informe a ferramenta (por exemplo, OpenAI, ChatGPT), a URL (chatgpt.com), a data de uso e o prompt literal. Se não usou IA, escreva "Não foi usada IA".
-4. **Commitar.** Em *Commit changes*, escreva `[1.2] descreve o browser` e mantenha *Commit directly to the item/1-2-browser branch*.
-5. **Figuras, se houver.** Em `aps/diagramas/`, use *Add file → Upload files* na mesma branch e cite a figura no texto ("Figura N").
-6. **Abrir o PR.** Clique em *Compare & pull request*. Base: `main`. Título: `[1.2] Browser`. No corpo (o template já vem), escreva `Closes #11`. O Lucas entra como revisor automaticamente pelo CODEOWNERS. Clique em *Create pull request* e mova a issue para **Em revisão** no quadro.
-7. **Responder à revisão.** Para cada sugestão, clique em *Commit suggestion*. Para ajustes maiores, edite o arquivo na mesma branch (lápis em *Files changed*). Responda "feito" no comentário e clique em *Re-request review*.
-8. **Merge.** O Lucas aprova e faz o merge. A issue fecha sozinha.
+1. Na página do repositório, clique no seletor de branch (mostra `main`), digite `item/1-2-browser` e clique em *Create branch item/1-2-browser from main*.
+2. Na branch nova, entre em `aps/secoes/`, clique em *Add file → Create new file* e dê o nome `1.2.md`. Cole o texto do item.
+3. No fim do mesmo arquivo, crie o título `## Uso de IA` e informe a ferramenta (por exemplo, OpenAI, ChatGPT), a URL (chatgpt.com), a data de uso e o prompt literal. Se não usou IA, escreva "Não foi usada IA".
+4. Em *Commit changes*, escreva `[1.2] descreve o browser` e mantenha *Commit directly to the item/1-2-browser branch*.
+5. Se houver figuras, envie em `aps/diagramas/` por *Add file → Upload files* na mesma branch e cite a figura no texto ("Figura N").
+6. Clique em *Compare & pull request*. Base: `main`. Título: `[1.2] Browser`. No corpo (o template já vem), escreva `Closes #11`. Eu entro como revisor automaticamente, pelo CODEOWNERS. Clique em *Create pull request* e mova a issue para "Em revisão" no quadro.
+7. Para cada sugestão, clique em *Commit suggestion*. Para ajustes maiores, edite o arquivo na mesma branch (lápis em *Files changed*). Responda "feito" no comentário e clique em *Re-request review*.
+8. Eu aprovo e faço o merge. A issue fecha sozinha.
 
 ### Pelo terminal (opcional)
 
@@ -175,7 +174,7 @@ git commit -m "[1.2] descreve o browser"
 git push -u origin item/1-2-browser
 ```
 
-Depois, abra o PR pelo link que o `git push` mostra e siga os passos 6 a 8.
+Depois, abra o PR pelo link que aparece no `git push` e siga os passos 6 a 8.
 
 ### Nomes de branch e arquivo
 

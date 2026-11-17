@@ -18,10 +18,10 @@ documento:
 # Chave curta -> nome completo. A capa e o cabeçalho listam os autores em ordem
 # alfabética do nome completo (regra 4). Só entra quem contribuiu.
 pessoas:
-  andre:    "André [SOBRENOME]"
-  grazieli: "Grazieli [SOBRENOME]"
-  kamilly:  "Kamilly [SOBRENOME]"
-  lucas:    "Lucas Rikelmi [SOBRENOME]"
+  andre:    "André Barbosa Alancardete"
+  grazieli: "Grazieli da Silva Macedo"
+  kamilly:  "Kamilly Benigno de Paula"
+  lucas:    "Lucas Rikelmi Macedo da Silva"
 
 # Partes, na ordem do PDF.
 #   tipo: secao     -> título de seção numerada (nível 1), sem arquivo

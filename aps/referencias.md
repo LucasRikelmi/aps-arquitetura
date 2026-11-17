@@ -69,8 +69,8 @@ Entrada já prevista no esboço: ANTHROPIC. *Claude*. Assistente de IA. Disponí
 
 Ferramenta: Claude Code (Anthropic). Disponível em: claude.ai/code. Data: 17/11/2026.
 
-Prompt literal (versão inicial): "bora trabalhar, pega os meus aí / o que falta? pendente em já iniciados? pendentes sem ínicio, e etc"
+Prompt (versão inicial): "Vamos começar pelos itens sob minha responsabilidade. Antes, levante o que falta: o que está pendente entre os itens já iniciados e o que ainda não foi iniciado."
 
-Prompt literal (revisão): "falo meus itens mesmo, sem englobar revisão (essa parte eu preciso da galera) / monta uma tabelinha / delegue uma tread pra cada issues, deixando o textinho nela no comment e abrindo os prs, se necessário"
+Prompt (revisão): "Considere apenas os itens de minha autoria, sem a revisão, que será feita com a equipe. Monte uma tabela e trate cada issue separadamente, registrando o texto em comentário na própria issue e abrindo os PRs quando necessário."
 
 Uso: lista montada pela ferramenta a partir do item 1.1, da lista de referências do esboço e dos rascunhos anexados às issues. Na revisão, a ferramenta conferiu título, autoria e data de cada referência da Parte B na página oficial e registrou as observações e lacunas acima.

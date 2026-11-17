@@ -15,10 +15,10 @@ Em 17/11, data prevista na WBS para o PDF fechado, só o item 1.1 estava na `mai
 
 ### Como passa a ser
 
-- **Lucas é o revisor único:** revisa todos os PRs, inclusive os próprios, e faz todos os merges.
+- **Lucas é o revisor único:** revisa todos os PRs, inclusive os próprios, e faz todos os merges. O arquivo `.github/CODEOWNERS` torna o Lucas revisor obrigatório de todo PR.
 - **Prazos de revisão:** PR aberto até 18h de 17/11; revisão e merge até 23h.
 - **Ajustes:** o Lucas pede mudanças com sugestões pontuais no PR, e o autor aplica na mesma branch. Assim o texto continua do autor e o retrabalho não migra para o revisor.
-- **Registro de IA no fim:** cada PR move os prompts usados para `aps/ia/<id>.md` (ferramenta, URL, data e prompt literal), em vez de deixá-los no texto ou apagá-los. A Grazieli consolida o Apêndice I (G5) em 18/11.
+- **Registro de IA no fim:** cada item mantém os prompts usados no fim do próprio arquivo, numa seção "Uso de IA" com ferramenta, URL, data e prompt literal. A Grazieli consolida o Apêndice I (G5) em 18/11 e retira essas seções do texto final.
 - **Texto em `.md`:** cada item fica em `aps/secoes/<id>.md`. Texto puro facilita revisar linha a linha e comparar versões.
 - **Figuras:** entram no PR do item, em `aps/diagramas/`.
 - **Itens coletivos:** G3, G4 e G6 com o Lucas; G9 (slides) com a Grazieli; todos apresentam.
@@ -35,7 +35,7 @@ Em 17/11, data prevista na WBS para o PDF fechado, só o item 1.1 estava na `mai
 | Endpoint de login | `POST /api/auth/login` (DA02 e 2.5). O rascunho do 1.4 usa `/api/login` e precisa ser corrigido, senão o limite de taxa (RNF05) não se aplica. |
 | Códigos de erro | O 2.5 precisa listar o 413 (corpo acima do limite, devolvido pelo Nginx) e definir se o 429 sai em JSON (`error_page` no 1.4) ou como página do Nginx. |
 | Rascunhos de 1.2 e 1.3 | Bons como base, mas genéricos: precisam ser ligados à aplicação de login e cobrir o escopo das issues. Detalhes no guia da Kamilly. |
-| Prompts colados nos rascunhos | Saem do texto e vão para `aps/ia/`. As fontes em que os textos se baseiam (MDN no 1.2, Cloudflare no 1.3) precisam ser citadas no corpo. |
+| Prompts colados nos rascunhos | Ficam no fim do próprio arquivo, sob o título "Uso de IA", com ferramenta, URL e data, até a consolidação do G5. As fontes em que os textos se baseiam (MDN no 1.2, Cloudflare no 1.3) precisam ser citadas no corpo. |
 
 ### Responsável por issue: antes e depois
 
@@ -45,7 +45,7 @@ Em 17/11, data prevista na WBS para o PDF fechado, só o item 1.1 estava na `mai
 | #2 | G2 Pergunta à docente | André / – | Lucas / Lucas | Fechar registrando as premissas adotadas |
 | #3 | G3 Atas e registros | rodízio | Lucas / Lucas | Sem registro; reconstruir a partir do Discord (Apêndice II) |
 | #4 | G4 Monitoramento | rodízio | Lucas / Lucas | Sem registro |
-| #5 | G5 Registro de IA | Kamilly / Lucas | Grazieli / Lucas | No fim, a partir de `aps/ia/` e dos prompts do esboço |
+| #5 | G5 Registro de IA | Kamilly / Lucas | Grazieli / Lucas | No fim, a partir das seções "Uso de IA" de cada item e dos prompts do esboço |
 | #6 | G6 Referências | André / Grazieli | Lucas / Lucas | Não iniciado |
 | #7 | G7 Integração | Grazieli / Kamilly | Lucas / Lucas | Feito na revisão de cada PR + leitura final |
 | #8 | G8 PDF final | Lucas / André | Lucas / Lucas | Não iniciado |
@@ -112,7 +112,7 @@ Um arquivo por item, então não há conflito de merge. As dependências são de
 | 2.6 Modelo de dados | 2.2 | 1.6 | 2.7 |
 | 2.7 Desenho detalhado | 2.4, 2.5, 2.6 | Figuras 6 a 9 | 2.8 |
 | 2.8 Segurança e erros | 2.4 a 2.7, 1.4 | – | G7 |
-| G5 Registro de IA | `aps/ia/` de todos os PRs | – | G8 |
+| G5 Registro de IA | Seções "Uso de IA" de todos os itens | – | G8 |
 | G6 Referências | 1.x e 2.x mesclados | – | G8 |
 | G7 Integração | Todos os itens | – | G8, G9 |
 | G8 PDF final | G5, G6, G7 | – | Entrega |
@@ -146,8 +146,8 @@ Um arquivo por item, então não há conflito de merge. As dependências são de
 Um PR por item. Exemplo com o 1.2; troque o número e o nome nos outros.
 
 1. **Criar a branch.** Na página do repositório, clique no seletor de branch (canto superior esquerdo, mostra `main`), digite `item/1-2-browser` e clique em *Create branch item/1-2-browser from main*.
-2. **Criar o arquivo do item.** Ainda na branch nova, entre em `aps/secoes/`, clique em *Add file → Create new file* e dê o nome `1.2.md`. Cole o texto **sem** o prompt de IA no fim. Em *Commit changes*, escreva `[1.2] descreve o browser` e mantenha *Commit directly to the item/1-2-browser branch*.
-3. **Mover os prompts.** Na mesma branch, crie `aps/ia/1.2.md` com: ferramenta (por exemplo, OpenAI, ChatGPT), URL (chatgpt.com), data de uso e o prompt literal. Commit: `[1.2] registra prompts de IA`.
+2. **Criar o arquivo do item.** Ainda na branch nova, entre em `aps/secoes/`, clique em *Add file → Create new file* e dê o nome `1.2.md`. Cole o texto. Em *Commit changes*, escreva `[1.2] descreve o browser` e mantenha *Commit directly to the item/1-2-browser branch*.
+3. **Registrar o uso de IA.** No fim do mesmo arquivo, deixe os prompts sob o título `## Uso de IA`, com ferramenta (por exemplo, OpenAI, ChatGPT), URL (chatgpt.com), data de uso e o prompt literal.
 4. **Figuras, se houver.** Entre em `aps/diagramas/`, clique em *Add file → Upload files*, envie a imagem e faça o commit na mesma branch. Cite a figura no texto ("Figura N").
 5. **Abrir o PR.** Clique em *Compare & pull request* (ou em *Pull requests → New pull request*, base `main`, compare `item/1-2-browser`). Título: `[1.2] Browser`. No corpo (o template já vem), escreva `Closes #11`. Em *Reviewers*, selecione `LucasRikelmi`. Clique em *Create pull request* e mova a issue para **Em revisão** no quadro.
 6. **Responder à revisão.** Se o Lucas pedir mudanças com sugestão, clique em *Commit suggestion* no próprio comentário. Se for um ajuste maior, edite o arquivo na mesma branch (ícone de lápis em *Files changed*). Responda "feito" em cada comentário e clique em *Re-request review*.

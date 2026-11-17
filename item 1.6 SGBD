@@ -1,0 +1,99 @@
+# 1.6 — Sistema Gerenciador de Banco de Dados (SGBD)
+
+## Sistema Gerenciador de Banco de Dados
+
+Um Sistema Gerenciador de Banco de Dados (SGBD) é um software responsável por armazenar, organizar, consultar, atualizar e administrar informações de maneira estruturada. Ele permite que aplicações realizem operações sobre os dados armazenados, mantendo sua organização e integridade.
+
+Um exemplo de SGBD é o PostgreSQL, um sistema de gerenciamento de banco de dados relacional que utiliza a linguagem SQL (Structured Query Language) para realizar operações de consulta e manipulação de informações.
+
+Em uma aplicação Web, o servidor de aplicação se comunica com o SGBD para armazenar e recuperar informações necessárias ao funcionamento do sistema. Em uma aplicação de autenticação, por exemplo, o banco de dados pode armazenar informações dos usuários, como identificadores, logins e hashes de senhas.
+
+## Pool de conexões
+
+Um pool de conexões é um mecanismo que mantém um conjunto de conexões disponíveis entre a aplicação e o banco de dados, permitindo que elas sejam reutilizadas durante a execução do sistema.
+
+Sem esse mecanismo, a aplicação precisaria estabelecer uma nova conexão com o banco de dados para cada operação realizada, o que poderia aumentar o tempo de processamento e consumir mais recursos do servidor.
+
+Com a utilização do pool, a aplicação solicita uma conexão disponível sempre que precisa executar uma consulta. Após a conclusão da operação, a conexão é liberada e pode ser reutilizada por outra solicitação.
+
+No caso de aplicações desenvolvidas em Node.js que utilizam PostgreSQL, a biblioteca `node-postgres` disponibiliza esse recurso por meio da classe `Pool`, permitindo controlar a quantidade máxima de conexões e seu tempo de utilização.
+
+Além disso, o pool permite configurar uma quantidade máxima de conexões simultâneas com o banco de dados. Esse controle evita que a aplicação abra conexões em excesso, contribuindo para o gerenciamento dos recursos disponíveis no servidor e do próprio SGBD.
+
+Dessa forma, o pool contribui para melhorar o gerenciamento das conexões, reduzir operações desnecessárias de abertura e encerramento e permitir que várias requisições da aplicação utilizem o banco de dados de maneira organizada.
+
+## Consultas parametrizadas
+
+Uma consulta parametrizada é uma operação SQL na qual os comandos e os valores fornecidos pelo usuário são enviados separadamente ao banco de dados.
+
+Esse mecanismo evita que os dados recebidos sejam interpretados como parte do comando SQL, reduzindo o risco de ataques conhecidos como SQL Injection.
+
+Em vez de montar uma consulta por meio da concatenação de textos fornecidos pelo usuário, a aplicação utiliza parâmetros identificados por marcadores específicos. No PostgreSQL, por exemplo, podem ser utilizados marcadores como `$1`, `$2` e `$3` para representar os valores que serão enviados separadamente.
+
+Em uma aplicação de autenticação, uma consulta parametrizada pode ser utilizada para localizar um usuário a partir do identificador informado, sem inserir diretamente esse valor no comando SQL.
+
+Exemplo:
+
+```javascript
+const consulta = `
+    SELECT id, login, senha_hash
+    FROM usuario
+    WHERE login = $1
+`;
+
+const valores = [login];
+
+const resultado = await pool.query(
+    consulta,
+    valores
+);
+```
+
+Nesse exemplo, o comando SQL é definido separadamente do valor recebido na variável `login`. O marcador `$1` representa o primeiro parâmetro, que será enviado ao banco de dados por meio do segundo argumento da função `pool.query()`.
+
+Essa separação permite que o PostgreSQL trate o valor como um dado, e não como parte da instrução SQL, contribuindo para a prevenção de SQL Injection.
+
+A parametrização deve ser utilizada para os valores fornecidos pelo usuário. Ela não substitui outras medidas de segurança, como validação dos dados e controle de permissões no banco de dados.
+
+## Retorno do resultado ao driver
+
+Após receber uma consulta da aplicação, o SGBD executa a instrução SQL e retorna o resultado ao driver responsável pela comunicação entre a aplicação e o banco de dados.
+
+No caso do PostgreSQL com a biblioteca `node-postgres`, a aplicação recebe um objeto de resultado que contém informações sobre a operação executada e os registros retornados.
+
+Entre as principais propriedades disponíveis estão:
+
+- `rows`: contém as linhas retornadas pela consulta.
+- `fields`: apresenta informações sobre as colunas do resultado.
+- `rowCount`: informa a quantidade de linhas afetadas ou retornadas, conforme a operação executada.
+
+Por exemplo, quando uma consulta busca um usuário pelo login, o PostgreSQL retorna os registros encontrados ao driver. A biblioteca `node-postgres` organiza essas informações em um objeto JavaScript, permitindo que a aplicação acesse os dados por meio da propriedade `rows`.
+
+Exemplo:
+
+```javascript
+const resultado = await pool.query(
+    consulta,
+    valores
+);
+
+console.log(resultado.rows);
+```
+
+Nesse caso, a propriedade `resultado.rows` contém os registros retornados pelo banco de dados. A aplicação pode utilizar essas informações para verificar se o usuário existe e, posteriormente, realizar as etapas necessárias para validar suas credenciais.
+
+Quando a consulta é realizada diretamente por meio de `pool.query()`, a biblioteca `node-postgres` gerencia automaticamente a utilização da conexão, disponibilizando-a novamente no pool após a conclusão da operação. Dessa maneira, ela pode ser reutilizada por outras consultas da aplicação.
+
+Dessa forma, a comunicação entre a aplicação e o SGBD permite armazenar, consultar e recuperar informações de forma organizada, enquanto o pool de conexões e as consultas parametrizadas contribuem para a eficiência e a segurança do acesso aos dados.
+
+## Referências
+
+POSTGRESQL GLOBAL DEVELOPMENT GROUP. **PostgreSQL Documentation**. Disponível em: https://www.postgresql.org/docs/current/. Acesso em: 17 nov. 2026.
+
+NODE-POSTGRES. **Pooling**. Disponível em: https://node-postgres.com/features/pooling. Acesso em: 17 nov. 2026.
+
+NODE-POSTGRES. **Queries**. Disponível em: https://node-postgres.com/features/queries. Acesso em: 17 nov. 2026.
+
+NODE-POSTGRES. **Result**. Disponível em: https://node-postgres.com/apis/result. Acesso em: 17 nov. 2026.
+
+OWASP FOUNDATION. **SQL Injection Prevention Cheat Sheet**. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html. Acesso em: 17 nov. 2026.

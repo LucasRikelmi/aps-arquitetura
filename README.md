@@ -5,7 +5,7 @@ Fluxo de trabalho original: [CONTRIBUTING.md](CONTRIBUTING.md). Este README regi
 
 ## Reorganização de 17/11/2026
 
-Em 17/11, data prevista na WBS para o PDF fechado, só o item 1.1 estava na `main`. A reorganização abaixo foi decidida pelo Lucas (gestão), anunciada à equipe em 16/11 às 21h e consolidada em 17/11. Entrega e apresentação: 18/11.
+Para concluir o documento até a entrega, a equipe reorganizou as atribuições. A reorganização foi conduzida pelo Lucas (gestão), anunciada à equipe em 16/11 às 21h e consolidada em 17/11. Entrega e apresentação: 18/11.
 
 ### Como era
 
@@ -15,62 +15,62 @@ Em 17/11, data prevista na WBS para o PDF fechado, só o item 1.1 estava na `mai
 
 ### Como passa a ser
 
-- **Lucas é o revisor único:** revisa todos os PRs, inclusive os próprios, e faz todos os merges. O arquivo `.github/CODEOWNERS` torna o Lucas revisor obrigatório de todo PR.
+- **Revisor único:** o Lucas revisa todos os PRs e faz todos os merges. O arquivo `.github/CODEOWNERS` o adiciona automaticamente como revisor de todo PR.
 - **Prazos de revisão:** PR aberto até 18h de 17/11; revisão e merge até 23h.
-- **Ajustes:** o Lucas pede mudanças com sugestões pontuais no PR, e o autor aplica na mesma branch. Assim o texto continua do autor e o retrabalho não migra para o revisor.
-- **Registro de IA no fim:** cada item mantém os prompts usados no fim do próprio arquivo, numa seção "Uso de IA" com ferramenta, URL, data e prompt literal. A Grazieli consolida o Apêndice I (G5) em 18/11 e retira essas seções do texto final.
-- **Texto em `.md`:** cada item fica em `aps/secoes/<id>.md`. Texto puro facilita revisar linha a linha e comparar versões.
+- **Ajustes:** o revisor pede mudanças com sugestões no próprio PR, e o autor aplica na mesma branch.
+- **Uso de IA:** cada item registra no fim do próprio arquivo, sob o título `## Uso de IA`, a ferramenta, a URL, a data e o prompt literal. A Grazieli consolida o Apêndice I (G5) em 18/11.
+- **Texto em `.md`:** cada item fica em `aps/secoes/<id>.md`.
 - **Figuras:** entram no PR do item, em `aps/diagramas/`.
 - **Itens coletivos:** G3, G4 e G6 com o Lucas; G9 (slides) com a Grazieli; todos apresentam.
 
-### Pontos já esclarecidos
+> **Nota sobre a regra 7 do enunciado:** a regra pede que cada membro seja autor e revisor de algum item, com autor ≠ revisor. Com revisor único, nem todos os membros terão revisão registrada, e os itens do Lucas terão autor = revisor. A equipe adotou o revisor único para cumprir o prazo, ciente desse ponto.
 
-| Ponto | Situação |
+### Definições comuns a todos os itens
+
+| Tema | Definição |
 |---|---|
-| Revisor único e regra 7 | A regra 7 exige que cada membro seja autor **e revisor** de algum item, e que autor ≠ revisor. Com revisor único, Grazieli e Kamilly ficam sem revisão registrada (o André tem a do 1.1), e os itens do Lucas (G1, G2, G3, G4, G6, G7, G8, 1.7) ficam com autor = revisor. Decisão mantida pelo Lucas, com esta ressalva registrada. |
-| Merge dos PRs do Lucas | O GitHub não deixa o autor aprovar o próprio PR. Com a proteção da `main` ativa, esses merges saem pelo bypass de administrador, sem aprovação registrada. |
-| Figura 1 duplicada (#28) | Vale o SVG do 1.1 que já está na `main`. Os arquivos `fig01-implantacao.mmd/.png` saem do PR #25 antes do merge. |
-| Branch de revert do 1.1 | Existe sem PR; o 1.1 continua na `main`. A branch deve ser apagada. |
-| Versão do HTTP (#29) | HTTP/1.1 sobre TLS 1.3; HTTP/2 não é habilitado. Afeta 1.2, 1.3, 1.4 e 1.7. |
-| Endpoint de login | `POST /api/auth/login` (DA02 e 2.5). O rascunho do 1.4 usa `/api/login` e precisa ser corrigido, senão o limite de taxa (RNF05) não se aplica. |
-| Códigos de erro | O 2.5 precisa listar o 413 (corpo acima do limite, devolvido pelo Nginx) e definir se o 429 sai em JSON (`error_page` no 1.4) ou como página do Nginx. |
-| Rascunhos de 1.2 e 1.3 | Bons como base, mas genéricos: precisam ser ligados à aplicação de login e cobrir o escopo das issues. Detalhes no guia da Kamilly. |
-| Prompts colados nos rascunhos | Ficam no fim do próprio arquivo, sob o título "Uso de IA", com ferramenta, URL e data, até a consolidação do G5. As fontes em que os textos se baseiam (MDN no 1.2, Cloudflare no 1.3) precisam ser citadas no corpo. |
+| Pilha | Nginx (servidor web e proxy reverso), Node.js com Express, PostgreSQL; cliente em HTML e JavaScript (item 1.1). |
+| Versão do HTTP | HTTP/1.1 sobre TLS 1.3; HTTP/2 não é habilitado. |
+| Endpoint de login | `POST /api/auth/login`, corpo JSON (DA02 e 2.5). |
+| Limite de taxa | Aplicado no Nginx ao endpoint de login, por IP (RNF05); resposta 429. |
+| Limite de corpo | Aplicado no Nginx; resposta 413. O 2.5 lista os códigos 200, 400, 401, 413 e 429. |
+| Figura 1 | O SVG de `aps/diagramas/fig01-implantacao.svg`. |
+| Fontes | Citadas no corpo do item em que a ideia aparece, e listadas em ABNT com data de acesso (regra 6). |
 
 ### Responsável por issue: antes e depois
 
-| Issue | Item | Antes (autor / revisor) | Depois (autor / revisor) | Estado em 17/11 |
+| Issue | Item | Antes (autor / revisor) | Depois (autor / revisor) | O item deve cobrir |
 |---|---|---|---|---|
-| #1 | G1 Infraestrutura | Kamilly / Grazieli | Lucas / Lucas | Praticamente feito pelo Lucas; falta confirmar o convite da docente |
-| #2 | G2 Pergunta à docente | André / – | Lucas / Lucas | Fechar registrando as premissas adotadas |
-| #3 | G3 Atas e registros | rodízio | Lucas / Lucas | Sem registro; reconstruir a partir do Discord (Apêndice II) |
-| #4 | G4 Monitoramento | rodízio | Lucas / Lucas | Sem registro |
-| #5 | G5 Registro de IA | Kamilly / Lucas | Grazieli / Lucas | No fim, a partir das seções "Uso de IA" de cada item e dos prompts do esboço |
-| #6 | G6 Referências | André / Grazieli | Lucas / Lucas | Não iniciado |
-| #7 | G7 Integração | Grazieli / Kamilly | Lucas / Lucas | Feito na revisão de cada PR + leitura final |
-| #8 | G8 PDF final | Lucas / André | Lucas / Lucas | Não iniciado |
-| #9 | G9 Apresentação | todos | Grazieli (slides) / Lucas; todos apresentam | Não iniciado |
-| #10 | 1.1 Visão geral e pilha | Grazieli / André | Grazieli / André | Na `main` (PR #26) |
-| #11 | 1.2 Browser | Kamilly / Lucas | Kamilly / Lucas | Rascunho na issue; ligar à aplicação de login |
-| #12 | 1.3 Rede | Kamilly / Lucas | Kamilly / Lucas | Rascunho na issue; faltam os passos dos handshakes TCP e TLS 1.3 |
-| #13 | 1.4 Servidor web | Kamilly / Lucas | Kamilly / Lucas | Rascunho na issue; corrigir endpoint, limite de corpo e cabeçalhos de proxy |
-| #14 | 1.5 Servidor de aplicação | Grazieli / André | Grazieli / Lucas | Só esboço |
-| #15 | 1.6 SGBD | Kamilly / André | Kamilly / Lucas | Só esboço |
-| #16 | 1.7 Ciclo completo | Grazieli / André | Lucas / Lucas | Só esboço |
-| #17 | 2.1 Requisitos | André / Grazieli | André / Lucas | Só esboço |
-| #18 | 2.2 Decisões arquiteturais | André / Kamilly | André / Lucas | Só esboço |
-| #19 | 2.3 Contexto | André / Lucas | André / Lucas | Só esboço |
-| #20 | 2.4 Componentes | Lucas / Grazieli | Kamilly / Lucas | Só esboço |
-| #21 | 2.5 Contrato da API | Lucas / Kamilly | Grazieli / Lucas | Só esboço |
-| #22 | 2.6 Modelo de dados | Lucas / Kamilly | Kamilly / Lucas | Só esboço (Figura 5 no PR #25); coerente com o 1.6 |
-| #23 | 2.7 Desenho detalhado | Lucas / Kamilly | André / Lucas | Só esboço (Figuras 6 a 9 no PR #25); plano B: se não houver PR até 18h, Grazieli assume as sequências (Figs. 8 e 9) |
-| #24 | 2.8 Segurança e erros | André / Grazieli | André / Lucas | Só esboço |
+| #1 | G1 Infraestrutura | Kamilly / Grazieli | Lucas / Lucas | Repositório, quadro e convite da docente |
+| #2 | G2 Pergunta à docente | André / – | Lucas / Lucas | Registro das premissas adotadas |
+| #3 | G3 Atas e registros | rodízio | Lucas / Lucas | Atas e registros de comunicação (Apêndice II) |
+| #4 | G4 Monitoramento | rodízio | Lucas / Lucas | Acompanhamento dos prazos nas issues |
+| #5 | G5 Registro de IA | Kamilly / Lucas | Grazieli / Lucas | Apêndice I a partir das seções "Uso de IA" e dos prompts do esboço |
+| #6 | G6 Referências | André / Grazieli | Lucas / Lucas | Lista consolidada em ABNT |
+| #7 | G7 Integração | Grazieli / Kamilly | Lucas / Lucas | Consistência entre itens, feita na revisão de cada PR e numa leitura final |
+| #8 | G8 PDF final | Lucas / André | Lucas / Lucas | PDF com sumário, autores e figuras |
+| #9 | G9 Apresentação | todos | Grazieli (slides) / Lucas; todos apresentam | Slides e divisão de fala |
+| #10 | 1.1 Visão geral e pilha | Grazieli / André | Grazieli / André | Concluído |
+| #11 | 1.2 Browser | Kamilly / Lucas | Kamilly / Lucas | Requisição de login gerada pelo browser (`fetch`, JSON, cabeçalhos em HTTP/1.1) e tratamento das respostas |
+| #12 | 1.3 Rede | Kamilly / Lucas | Kamilly / Lucas | Resolução DNS, handshake TCP, handshake TLS 1.3 e certificado; por que HTTPS é obrigatório |
+| #13 | 1.4 Servidor web | Kamilly / Lucas | Kamilly / Lucas | Configuração com o endpoint de login, cabeçalhos de proxy, limites de corpo e de taxa |
+| #14 | 1.5 Servidor de aplicação | Grazieli / André | Grazieli / Lucas | A partir do esboço |
+| #15 | 1.6 SGBD | Kamilly / André | Kamilly / Lucas | A partir do esboço |
+| #16 | 1.7 Ciclo completo | Grazieli / André | Lucas / Lucas | A partir do esboço e da Figura 2 |
+| #17 | 2.1 Requisitos | André / Grazieli | André / Lucas | A partir do esboço; valor do RNF05 |
+| #18 | 2.2 Decisões arquiteturais | André / Kamilly | André / Lucas | A partir do esboço |
+| #19 | 2.3 Contexto | André / Lucas | André / Lucas | A partir do esboço |
+| #20 | 2.4 Componentes | Lucas / Grazieli | Kamilly / Lucas | A partir do esboço e da Figura 4 |
+| #21 | 2.5 Contrato da API | Lucas / Kamilly | Grazieli / Lucas | A partir do esboço; códigos 413 e 429 |
+| #22 | 2.6 Modelo de dados | Lucas / Kamilly | Kamilly / Lucas | A partir do esboço e da Figura 5 |
+| #23 | 2.7 Desenho detalhado | Lucas / Kamilly | André / Lucas | A partir do esboço e das Figuras 6 a 9 |
+| #24 | 2.8 Segurança e erros | André / Grazieli | André / Lucas | A partir do esboço |
 
 ### Responsável por tipo de trabalho: antes e depois
 
 | Tipo de trabalho | Itens | Antes | Depois |
 |---|---|---|---|
-| Infraestrutura da equipe | G1 (repositório, Kanban, issues, templates), esboço e Figuras 1 a 9 | Kamilly | Lucas (já entregue) |
+| Infraestrutura da equipe | G1 (repositório, Kanban, issues, templates), esboço e Figuras 1 a 9 | Kamilly | Lucas |
 | Documentação, Seção 1 (ambiente operacional) | 1.1 a 1.7 | Grazieli (1.1, 1.5, 1.7), Kamilly (1.2, 1.3, 1.4, 1.6) | Grazieli (1.1, 1.5), Kamilly (1.2, 1.3, 1.4, 1.6), Lucas (1.7) |
 | Documentação, Seção 2 (projeto da aplicação) | 2.1 a 2.8 | André (2.1, 2.2, 2.3, 2.8), Lucas (2.4 a 2.7) | André (2.1, 2.2, 2.3, 2.7, 2.8), Kamilly (2.4, 2.6), Grazieli (2.5) |
 | Gestão | G2, G3, G4 | André (G2), rodízio (G3, G4) | Lucas |
@@ -81,14 +81,14 @@ Em 17/11, data prevista na WBS para o PDF fechado, só o item 1.1 estava na `mai
 
 ### Totais por pessoa
 
-Horas estimadas com a escala da WBS (P ≈ 1–2 h, M ≈ 3–4 h, G ≈ 5–8 h). "Já entregue" conta só o que está no GitHub ou foi anexado às issues. A revisão única custa ao Lucas de 30 a 60 min por PR, para cerca de 13 PRs dos outros. O 2.7 custa ao André de 4 a 6 h, mais do que custaria ao Lucas, porque parte de figuras que não são dele.
+Horas estimadas com a escala da WBS (P ≈ 1–2 h, M ≈ 3–4 h, G ≈ 5–8 h), somando o trabalho já realizado e o restante.
 
-| Pessoa | Antes (WBS) | Já entregue | Restante | Total |
-|---|---|---|---|---|
-| Lucas | ~16 h | ~8–10 h (G1, esboço, 9 figuras, WBS, manual) | 21–32 h | 29–42 h |
-| Kamilly | ~16 h | ~9–12 h (rascunhos de 1.2 a 1.4) | 10–15 h | 19–27 h |
-| André | ~16 h | ~5–6 h (revisão do 1.1, issues #27 a #29) | 13–19 h | 18–25 h |
-| Grazieli | ~20 h | ~7 h (1.1 mesclado, 2 rodadas de correção) | 11–15 h | 18–22 h |
+| Pessoa | Antes (WBS) | Depois (total estimado) |
+|---|---|---|
+| Lucas | ~16 h | 29–42 h |
+| Kamilly | ~16 h | 19–27 h |
+| André | ~16 h | 18–25 h |
+| Grazieli | ~20 h | 18–22 h |
 
 ### Dependências
 
@@ -98,7 +98,7 @@ Um arquivo por item, então não há conflito de merge. As dependências são de
 |---|---|---|---|
 | PR #25 (esboço e figuras) | – | – | Todos (é a base de texto e figuras) |
 | 1.1 | – | – | 1.2 a 1.7 (pilha) |
-| 1.2 Browser | 1.1 | 2.5 (requisição e respostas), #29 (HTTP/1.1) | 1.7 |
+| 1.2 Browser | 1.1 | 2.5 (requisição e respostas) | 1.7 |
 | 1.3 Rede | 1.1 | 1.4 (TLS 1.3, porta 443) | 1.7 |
 | 1.4 Servidor web | 1.1 | 2.1 (valor do RNF05), 2.5 (endpoint, 413, 429) | 1.7, 2.8 |
 | 1.5 Servidor de aplicação | 1.1 | 2.4 (componentes), 2.5 (rotas) | 1.7 |
@@ -122,10 +122,10 @@ Um arquivo por item, então não há conflito de merge. As dependências são de
 
 | Pessoa | Entrega | Prazo |
 |---|---|---|
-| Lucas | Ajustar e mesclar o #25; confirmar convite da docente; fechar G2 | 17/11, 12h |
-| Kamilly | PRs de 1.2, 1.3 e 1.4 (um por item) | 17/11, 12h |
+| Lucas | Mesclar o #25; convite da docente; G2 | 17/11, 12h |
+| Kamilly | PRs de 1.2, 1.3 e 1.4 | 17/11, 12h |
 | Lucas | PR do 1.7 | 17/11, 15h |
-| Kamilly | Ajustes de 1.2 a 1.4; PRs de 1.6, 2.4 e 2.6 | 17/11, 18h |
+| Kamilly | PRs de 1.6, 2.4 e 2.6; ajustes de 1.2 a 1.4 | 17/11, 18h |
 | Grazieli | PRs de 1.5 e 2.5 | 17/11, 18h |
 | André | PRs de 2.1, 2.2, 2.3, 2.7 e 2.8 | 17/11, 18h |
 | Lucas | Revisão e merge de todos os PRs | 17/11, 23h |
@@ -134,21 +134,58 @@ Um arquivo por item, então não há conflito de merge. As dependências são de
 | Lucas | G8 (PDF final) | 18/11, 9h |
 | Grazieli | G9 (slides e divisão de fala) | 18/11, 10h |
 
+Se o PR do 2.7 não estiver aberto até 18h, a Grazieli assume as sequências (Figuras 8 e 9).
+
 ### Ordem de merge
 
-1. PR #25 (esboço e Figuras 2 a 9, sem a Figura 1 duplicada).
+1. PR #25 (esboço e Figuras 2 a 9).
 2. Seção 1: 1.2, 1.3, 1.4, 1.5, 1.6; o 1.7 pode entrar antes, escrito a partir do esboço.
 3. Seção 2: 2.1 → 2.2 → 2.3, 2.4, 2.5, 2.6 → 2.7 → 2.8.
 4. G5 e G6 → G7 → G8 (PDF).
 
-## Passo a passo do PR (pelo navegador)
+## Passo a passo para commitar e abrir o PR
 
-Um PR por item. Exemplo com o 1.2; troque o número e o nome nos outros.
+Um PR por item. O exemplo é o 1.2 (issue #11); troque o número, o nome e a issue nos outros.
 
-1. **Criar a branch.** Na página do repositório, clique no seletor de branch (canto superior esquerdo, mostra `main`), digite `item/1-2-browser` e clique em *Create branch item/1-2-browser from main*.
-2. **Criar o arquivo do item.** Ainda na branch nova, entre em `aps/secoes/`, clique em *Add file → Create new file* e dê o nome `1.2.md`. Cole o texto. Em *Commit changes*, escreva `[1.2] descreve o browser` e mantenha *Commit directly to the item/1-2-browser branch*.
-3. **Registrar o uso de IA.** No fim do mesmo arquivo, deixe os prompts sob o título `## Uso de IA`, com ferramenta (por exemplo, OpenAI, ChatGPT), URL (chatgpt.com), data de uso e o prompt literal.
-4. **Figuras, se houver.** Entre em `aps/diagramas/`, clique em *Add file → Upload files*, envie a imagem e faça o commit na mesma branch. Cite a figura no texto ("Figura N").
-5. **Abrir o PR.** Clique em *Compare & pull request* (ou em *Pull requests → New pull request*, base `main`, compare `item/1-2-browser`). Título: `[1.2] Browser`. No corpo (o template já vem), escreva `Closes #11`. Em *Reviewers*, selecione `LucasRikelmi`. Clique em *Create pull request* e mova a issue para **Em revisão** no quadro.
-6. **Responder à revisão.** Se o Lucas pedir mudanças com sugestão, clique em *Commit suggestion* no próprio comentário. Se for um ajuste maior, edite o arquivo na mesma branch (ícone de lápis em *Files changed*). Responda "feito" em cada comentário e clique em *Re-request review*.
-7. **Merge.** O Lucas aprova e clica em *Merge pull request* (merge commit, que preserva os commits do autor). A issue fecha sozinha.
+### Pelo navegador
+
+1. **Criar a branch.** Na página do repositório, clique no seletor de branch (mostra `main`), digite `item/1-2-browser` e clique em *Create branch item/1-2-browser from main*.
+2. **Criar o arquivo.** Na branch nova, entre em `aps/secoes/`, clique em *Add file → Create new file* e dê o nome `1.2.md`. Cole o texto do item.
+3. **Registrar o uso de IA.** No fim do mesmo arquivo, crie o título `## Uso de IA` e informe a ferramenta (por exemplo, OpenAI, ChatGPT), a URL (chatgpt.com), a data de uso e o prompt literal. Se não usou IA, escreva "Não foi usada IA".
+4. **Commitar.** Em *Commit changes*, escreva `[1.2] descreve o browser` e mantenha *Commit directly to the item/1-2-browser branch*.
+5. **Figuras, se houver.** Em `aps/diagramas/`, use *Add file → Upload files* na mesma branch e cite a figura no texto ("Figura N").
+6. **Abrir o PR.** Clique em *Compare & pull request*. Base: `main`. Título: `[1.2] Browser`. No corpo (o template já vem), escreva `Closes #11`. O Lucas entra como revisor automaticamente pelo CODEOWNERS. Clique em *Create pull request* e mova a issue para **Em revisão** no quadro.
+7. **Responder à revisão.** Para cada sugestão, clique em *Commit suggestion*. Para ajustes maiores, edite o arquivo na mesma branch (lápis em *Files changed*). Responda "feito" no comentário e clique em *Re-request review*.
+8. **Merge.** O Lucas aprova e faz o merge. A issue fecha sozinha.
+
+### Pelo terminal (opcional)
+
+```bash
+git checkout main && git pull
+git checkout -b item/1-2-browser
+# crie ou edite aps/secoes/1.2.md, com "## Uso de IA" no fim
+git add aps/secoes/1.2.md
+git commit -m "[1.2] descreve o browser"
+git push -u origin item/1-2-browser
+```
+
+Depois, abra o PR pelo link que o `git push` mostra e siga os passos 6 a 8.
+
+### Nomes de branch e arquivo
+
+| Item | Branch | Arquivo | Issue |
+|---|---|---|---|
+| 1.2 | `item/1-2-browser` | `aps/secoes/1.2.md` | #11 |
+| 1.3 | `item/1-3-rede` | `aps/secoes/1.3.md` | #12 |
+| 1.4 | `item/1-4-servidor-web` | `aps/secoes/1.4.md` | #13 |
+| 1.5 | `item/1-5-servidor-aplicacao` | `aps/secoes/1.5.md` | #14 |
+| 1.6 | `item/1-6-sgbd` | `aps/secoes/1.6.md` | #15 |
+| 1.7 | `item/1-7-ciclo-completo` | `aps/secoes/1.7.md` | #16 |
+| 2.1 | `item/2-1-requisitos` | `aps/secoes/2.1.md` | #17 |
+| 2.2 | `item/2-2-decisoes` | `aps/secoes/2.2.md` | #18 |
+| 2.3 | `item/2-3-contexto` | `aps/secoes/2.3.md` | #19 |
+| 2.4 | `item/2-4-componentes` | `aps/secoes/2.4.md` | #20 |
+| 2.5 | `item/2-5-contrato-api` | `aps/secoes/2.5.md` | #21 |
+| 2.6 | `item/2-6-modelo-dados` | `aps/secoes/2.6.md` | #22 |
+| 2.7 | `item/2-7-desenho-detalhado` | `aps/secoes/2.7.md` | #23 |
+| 2.8 | `item/2-8-seguranca` | `aps/secoes/2.8.md` | #24 |

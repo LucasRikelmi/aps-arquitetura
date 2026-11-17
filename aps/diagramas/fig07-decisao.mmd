@@ -1,0 +1,11 @@
+flowchart TD
+  I([Credenciais recebidas]) --> V{Formato válido?}
+  V -- não --> E400[/400 - requisição inválida/]
+  V -- sim --> F[Buscar usuário por login]
+  F --> X{Usuário existe?}
+  X -- não --> DH[Verificar senha contra hash fictício]
+  DH --> NA
+  X -- sim --> CMP[Verificar senha contra hash registrado]
+  CMP --> OK{Confere?}
+  OK -- não --> NA[/401 - credenciais inválidas/]
+  OK -- sim --> AU[/200 - identidade do usuário/]

@@ -1,0 +1,53 @@
+classDiagram
+  direction LR
+  class AuthController {
+    -service: AuthenticationService
+    +login(req, res) void
+  }
+  class LoginRequest {
+    +login: string
+    +senha: string
+  }
+  class AuthenticationService {
+    -repo: UserRepository
+    -hasher: PasswordHasher
+    -dummyHash: string
+    +authenticate(req: LoginRequest) AuthResult
+  }
+  class UserRepository {
+    <<interface>>
+    +findByLogin(login: string) Usuario
+  }
+  class PgUserRepository {
+    -pool: Pool
+    +findByLogin(login: string) Usuario
+  }
+  class PasswordHasher {
+    <<interface>>
+    +verify(senha: string, hash: string) boolean
+  }
+  class Argon2idPasswordHasher {
+    +verify(senha: string, hash: string) boolean
+  }
+  class Usuario {
+    +id: UUID
+    +login: string
+    +senhaHash: string
+  }
+  class AuthResult {
+    +autenticado: boolean
+    +identidade: UserIdentity
+  }
+  class UserIdentity {
+    +id: UUID
+    +login: string
+  }
+  AuthController --> AuthenticationService
+  AuthController ..> LoginRequest
+  AuthenticationService --> UserRepository
+  AuthenticationService --> PasswordHasher
+  AuthenticationService ..> AuthResult
+  UserRepository <|.. PgUserRepository
+  PasswordHasher <|.. Argon2idPasswordHasher
+  UserRepository ..> Usuario
+  AuthResult o-- UserIdentity

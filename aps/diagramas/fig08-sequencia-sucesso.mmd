@@ -1,0 +1,19 @@
+sequenceDiagram
+  autonumber
+  participant B as Browser
+  participant C as AuthController
+  participant S as AuthenticationService
+  participant R as PgUserRepository
+  participant H as Argon2idPasswordHasher
+  participant P as PostgreSQL
+  B->>C: POST /api/auth/login {login, senha}
+  C->>C: valida formato (campos obrigatórios, tamanho)
+  C->>S: authenticate(LoginRequest)
+  S->>R: findByLogin(login)
+  R->>P: SELECT id, login, senha_hash FROM usuario WHERE login = $1
+  P-->>R: 1 linha
+  R-->>S: Usuario
+  S->>H: verify(senha, usuario.senhaHash)
+  H-->>S: true
+  S-->>C: AuthResult(autenticado = true, UserIdentity)
+  C-->>B: 200 OK {id, login}

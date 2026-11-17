@@ -1,0 +1,26 @@
+sequenceDiagram
+  autonumber
+  participant B as Browser
+  participant C as AuthController
+  participant S as AuthenticationService
+  participant R as PgUserRepository
+  participant H as Argon2idPasswordHasher
+  B->>C: POST /api/auth/login {login, senha}
+  alt payload malformado
+    C-->>B: 400 Bad Request {erro: "requisição inválida"}
+  else formato válido
+    C->>S: authenticate(LoginRequest)
+    S->>R: findByLogin(login)
+    alt usuário inexistente
+      R-->>S: nulo
+      S->>H: verify(senha, dummyHash)
+      Note over S,H: iguala o tempo de resposta (anti-enumeração)
+      H-->>S: false
+    else usuário existe, senha incorreta
+      R-->>S: Usuario
+      S->>H: verify(senha, usuario.senhaHash)
+      H-->>S: false
+    end
+    S-->>C: AuthResult(autenticado = false)
+    C-->>B: 401 Unauthorized {erro: "credenciais inválidas"}
+  end

@@ -1,0 +1,6 @@
+erDiagram
+  USUARIO {
+    uuid id PK
+    varchar(254) login UK "e-mail ou identificador, normalizado"
+    varchar(255) senha_hash "formato PHC do Argon2id (inclui salt e parâmetros)"
+  }

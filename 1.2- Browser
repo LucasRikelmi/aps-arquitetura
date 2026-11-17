@@ -58,6 +58,7 @@ No processo de autenticação, os principais códigos de resposta previstos são
 - **200 OK:** indica que a autenticação foi realizada com sucesso. A resposta contém a identificação do usuário, conforme o contrato da API.
 - **400 Bad Request:** indica que a requisição apresenta dados inválidos ou está incompleta.
 - **401 Unauthorized:** indica que as credenciais informadas não são válidas.
+- **413 Content Too Large:** indica que o corpo da requisição ultrapassou o tamanho máximo aceito pelo servidor web, conforme o item 1.4.
 - **429 Too Many Requests:** indica que o limite de requisições permitido foi excedido.
 
 O JavaScript pode analisar o código de status e o conteúdo retornado pelo servidor para apresentar a informação adequada ao usuário. Em caso de sucesso, a aplicação poderá utilizar a identificação recebida. Em caso de erro, poderá apresentar uma mensagem correspondente à situação.

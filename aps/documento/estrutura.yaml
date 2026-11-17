@@ -66,5 +66,5 @@ partes:
 opcoes:
   # As seções "## Uso de IA" no fim de cada item são consolidadas no Apêndice I (G5).
   # true: o PDF omite essas seções dos itens (evita prompt duplicado).
-  # false: mantém nos itens. Decisão de 17/11: true; literais em aps/ia/prompts-literais.md.
+  # false: mantém nos itens. Decisão de 17/11: true.
   remover_uso_ia_dos_itens: true

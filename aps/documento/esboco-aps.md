@@ -39,7 +39,7 @@ Tabela 1 relaciona cada item de informação ao seu autor e revisor (regra 7). A
 
 A aplicação é executada por quatro softwares de apoio: o browser, no computador do usuário; o servidor DNS, que traduz nomes em endereços; o Nginx, como servidor web e proxy reverso; o Node.js com o framework Express, como servidor de aplicação; e o PostgreSQL, como sistema gerenciador de banco de dados. A Figura 1 mostra onde cada um é executado e por qual protocolo se comunicam. A mesma pilha é usada no projeto da Seção 2 ([2.4](#s2-4)).
 
-![Figura 1 – Diagrama de implantação do ambiente operacional. Fonte: elaborado pelos autores.](../diagramas/fig01-implantacao.png){#fig1 width=95%}
+![Figura 1 – Diagrama de implantação do ambiente operacional. Fonte: elaborado pelos autores.](../diagramas/fig01-implantacao.svg){#fig1 width=95%}
 
 [Justificar a escolha da pilha em um parágrafo: tecnologias amplamente documentadas; separação entre servidor web e servidor de aplicação.]
 

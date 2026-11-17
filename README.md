@@ -28,6 +28,15 @@ Com o prazo próximo, redistribuí as tarefas para fechar o documento a tempo. A
 - Arquivos: cada item fica em `aps/secoes/<id>.md`, e as figuras entram no PR do item, em `aps/diagramas/`.
 - Itens coletivos: G3, G4 e G6 ficam comigo. O G9 (slides) fica com a Grazieli, e todos apresentam.
 
+### Quem faz o quê
+
+| Membro | Issues |
+|---|---|
+| Lucas | #1 G1 Infraestrutura, #2 G2 Premissas, #3 G3 Registros, #4 G4 Monitoramento, #6 G6 Referências, #7 G7 Integração, #8 G8 PDF final, #16 1.7 Ciclo completo |
+| Grazieli | #10 1.1 Visão geral e pilha, #14 1.5 Servidor de aplicação, #21 2.5 Contrato da API, #5 G5 Registro de IA, #9 G9 Apresentação |
+| Kamilly | #11 1.2 Browser, #12 1.3 Rede, #13 1.4 Servidor web, #15 1.6 SGBD, #20 2.4 Componentes, #22 2.6 Modelo de dados |
+| André | #17 2.1 Requisitos, #18 2.2 Decisões arquiteturais, #19 2.3 Contexto, #23 2.7 Desenho detalhado, #24 2.8 Segurança e erros |
+
 Sobre a regra 7 do enunciado: ela pede que cada membro seja autor e revisor de algum item, com autor diferente do revisor. Com revisor único, nem todos terão revisão registrada, e nos meus itens autor e revisor são a mesma pessoa. Optamos por isso para cumprir o prazo, cientes do ponto.
 
 ### Definições comuns

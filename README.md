@@ -3,6 +3,12 @@ APS - Arquitetura Web (SoftwareWeb.log)
 
 Fluxo de trabalho original: [CONTRIBUTING.md](CONTRIBUTING.md). Este README registra a reorganização de 17/11/2026, que substitui as atribuições e a regra de revisão do CONTRIBUTING até a entrega.
 
+## Acompanhamento
+
+- Quadro Kanban (GitHub Projects): https://github.com/users/LucasRikelmi/projects/1
+- Issues: https://github.com/LucasRikelmi/aps-arquitetura/issues
+- Pull requests: https://github.com/LucasRikelmi/aps-arquitetura/pulls
+
 ## Reorganização de 17/11/2026
 
 Para concluir o documento até a entrega, a equipe reorganizou as atribuições. A reorganização foi conduzida pelo Lucas (gestão), anunciada à equipe em 16/11 às 21h e consolidada em 17/11. Entrega e apresentação: 18/11.

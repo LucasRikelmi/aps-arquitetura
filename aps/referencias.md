@@ -41,13 +41,13 @@ Atualizada em 17/11/2026 com as fontes dos itens 1.2, 1.3, 1.4, 1.6, 2.1 e 2.2, 
 | NODE-POSTGRES. *Result*. [20--]. Disponível em: https://node-postgres.com/apis/result. Acesso em: 17 nov. 2026. | 1.6 |
 | NODE.JS. *Don't Block the Event Loop (or the Worker Pool)*. [20--]. Disponível em: https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop. Acesso em: 10 nov. 2026. | 1.1 |
 | NODE.JS. *Node.js Documentation*. [20--]. Disponível em: https://nodejs.org/docs/latest/api/. Acesso em: 17 nov. 2026. | 1.1 |
-| OWASP. *Authentication Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2 |
-| OWASP. *Logging Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1 |
-| OWASP. *Password Storage Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2 |
-| OWASP. *SQL Injection Prevention Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 1.6, 2.1 |
+| OWASP. *Authentication Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.8 |
+| OWASP. *Logging Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.8 |
+| OWASP. *Password Storage Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.8 |
+| OWASP. *SQL Injection Prevention Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 1.6, 2.1, 2.8 |
 | POSTGRESQL GLOBAL DEVELOPMENT GROUP. *PostgreSQL Documentation*. [20--]. Disponível em: https://www.postgresql.org/docs/current/. Acesso em: 17 nov. 2026. | 1.1, 1.6 |
 | RESCORLA, E. *The Transport Layer Security (TLS) Protocol Version 1.3*. RFC 9846. [S. l.]: IETF, jul. 2026. Disponível em: https://www.rfc-editor.org/rfc/rfc9846. Acesso em: 17 nov. 2026. | 1.3, 2.1 |
-| TEMOSHOK, D. *et al.* *Digital Identity Guidelines: Authentication and Authenticator Management*. NIST SP 800-63B-4. Gaithersburg: NIST, jul. 2025. DOI: 10.6028/NIST.SP.800-63b-4. Disponível em: https://pages.nist.gov/800-63-4/sp800-63b.html. Acesso em: 17 nov. 2026. | 2.1 |
+| TEMOSHOK, D. *et al.* *Digital Identity Guidelines: Authentication and Authenticator Management*. NIST SP 800-63B-4. Gaithersburg: NIST, jul. 2025. DOI: 10.6028/NIST.SP.800-63b-4. Disponível em: https://pages.nist.gov/800-63-4/sp800-63b.html. Acesso em: 17 nov. 2026. | 2.1, 2.8 |
 
 ## Parte B – Candidatas, previstas no esboço e nos rascunhos
 

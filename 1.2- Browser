@@ -1,0 +1,75 @@
+# 1.2 — Browser
+
+## Funcionamento do navegador Web
+
+Os navegadores Web funcionam dentro da arquitetura cliente-servidor, na qual o cliente realiza solicitações de recursos e o servidor responde de acordo com as requisições recebidas. Nesse contexto, o navegador é um aplicativo utilizado para acessar, recuperar, interpretar e exibir conteúdos disponíveis na World Wide Web, como páginas HTML, imagens, vídeos e outros arquivos.
+
+A comunicação entre o navegador e o servidor ocorre por meio do protocolo HTTP (Hypertext Transfer Protocol), responsável por definir a estrutura das requisições e respostas utilizadas na transferência de informações pela Web. Neste projeto, será utilizado o HTTP/1.1 sobre uma conexão protegida por TLS 1.3.
+
+## Acesso à aplicação por meio de uma URL
+
+Quando o usuário acessa o endereço da aplicação, o navegador identifica o domínio e estabelece a comunicação com o servidor responsável pelo conteúdo solicitado. A resolução do domínio em endereço IP ocorre por meio do DNS, conforme explicado no item 1.3.
+
+Após localizar o servidor e estabelecer a conexão segura, o navegador pode solicitar os recursos necessários para apresentar a aplicação ao usuário.
+
+## Interpretação de HTML e construção do DOM
+
+Ao receber um documento HTML, o navegador realiza sua interpretação e constrói o DOM (Document Object Model), uma representação estruturada do documento que permite acessar e manipular seus elementos.
+
+Durante esse processo, também são processados recursos associados à página, como folhas de estilo CSS e scripts JavaScript. O CSS define a apresentação visual dos elementos, enquanto o JavaScript permite adicionar funcionalidades e interatividade à aplicação.
+
+## JavaScript e API Fetch
+
+O JavaScript permite executar funcionalidades no navegador e responder às ações realizadas pelo usuário. Por meio da API Fetch, os scripts podem realizar requisições HTTP de forma assíncrona, permitindo enviar e receber dados sem necessariamente recarregar toda a página.
+
+Na aplicação desenvolvida, esse mecanismo será utilizado no processo de autenticação. Quando o usuário preencher o formulário de login e enviar suas credenciais, o JavaScript utilizará a função `fetch()` para realizar uma requisição do tipo POST ao endpoint `/api/auth/login`.
+
+O corpo da requisição será enviado no formato JSON, contendo o identificador e a senha informados pelo usuário. Dessa maneira, os dados serão encaminhados ao servidor de aplicação para que as credenciais sejam verificadas.
+
+## Estrutura da requisição HTTP
+
+A comunicação utilizará HTTP/1.1 sobre TLS 1.3. Uma requisição HTTP/1.1 possui uma linha inicial, cabeçalhos e, quando necessário, um corpo com os dados enviados ao servidor.
+
+No processo de login, a requisição terá a seguinte estrutura ilustrativa:
+
+```http
+POST /api/auth/login HTTP/1.1
+Host: exemplo.com
+Content-Type: application/json
+
+{
+  "identificador": "usuario",
+  "senha": "senha_informada"
+}
+```
+
+A linha inicial informa o método HTTP, o caminho do recurso solicitado e a versão do protocolo. O método POST é utilizado porque a aplicação precisa enviar informações ao servidor.
+
+O cabeçalho `Host` identifica o domínio ao qual a requisição se destina, enquanto `Content-Type: application/json` informa que o corpo da mensagem está no formato JSON. O corpo contém o identificador e a senha fornecidos pelo usuário.
+
+A comunicação entre navegador e servidor será protegida por HTTPS, utilizando TLS 1.3, conforme descrito no item 1.3.
+
+## Tratamento da resposta HTTP
+
+Após receber a requisição, o servidor processa as informações e retorna uma resposta HTTP. Essa resposta contém uma linha de status, cabeçalhos e, quando aplicável, um corpo com os dados ou mensagens retornadas pela aplicação.
+
+No processo de autenticação, os principais códigos de resposta previstos são:
+
+- **200 OK:** indica que a autenticação foi realizada com sucesso. A resposta contém a identificação do usuário, conforme o contrato da API.
+- **400 Bad Request:** indica que a requisição apresenta dados inválidos ou está incompleta.
+- **401 Unauthorized:** indica que as credenciais informadas não são válidas.
+- **429 Too Many Requests:** indica que o limite de requisições permitido foi excedido.
+
+O JavaScript pode analisar o código de status e o conteúdo retornado pelo servidor para apresentar a informação adequada ao usuário. Em caso de sucesso, a aplicação poderá utilizar a identificação recebida. Em caso de erro, poderá apresentar uma mensagem correspondente à situação.
+
+Dessa forma, o navegador atua como intermediário entre o usuário e os serviços disponibilizados pelo servidor, sendo responsável por apresentar a interface, executar scripts, enviar requisições HTTP e interpretar as respostas recebidas.
+
+## Referências
+
+MOZILLA. **Using the Fetch API**. MDN Web Docs. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch. Acesso em: 17 nov. 2026.
+
+FIELDING, R. et al. **HTTP Semantics**. RFC 9110. Internet Engineering Task Force, 2022. Disponível em: https://www.rfc-editor.org/rfc/rfc9110. Acesso em: 17 nov. 2026.
+
+MOZILLA. **HTML: HyperText Markup Language**. MDN Web Docs. Disponível em: https://developer.mozilla.org/en-US/docs/Web/HTML. Acesso em: 17 nov. 2026.
+
+MOZILLA. **Document Object Model (DOM)**. MDN Web Docs. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model. Acesso em: 17 nov. 2026.

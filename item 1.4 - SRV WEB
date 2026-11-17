@@ -1,0 +1,153 @@
+# 1.4 — Servidor Web (Nginx)
+
+## Funcionamento do Nginx
+
+O Nginx é um servidor Web utilizado para receber e processar requisições HTTP e HTTPS realizadas pelos clientes, como os navegadores. Ele também pode atuar como proxy reverso, encaminhando as requisições recebidas para servidores de aplicação responsáveis pelo processamento das funcionalidades do sistema.
+
+Além disso, o Nginx pode disponibilizar arquivos estáticos, como imagens, arquivos HTML, CSS e JavaScript, diretamente aos clientes, sem precisar encaminhar essas solicitações para a aplicação. Dessa forma, ele contribui para a organização da infraestrutura e para a distribuição eficiente das requisições recebidas pelo sistema.
+
+## Processos master e workers
+
+O Nginx utiliza uma arquitetura baseada em processos, composta principalmente por um processo master e vários processos workers.
+
+O processo master é responsável por ler e interpretar os arquivos de configuração, gerenciar os processos workers e controlar o funcionamento do servidor. Ele também pode iniciar, encerrar ou reiniciar os workers quando necessário.
+
+Os processos workers são responsáveis por atender e processar as requisições recebidas dos clientes. Eles utilizam um modelo orientado a eventos, permitindo lidar com várias conexões simultaneamente sem precisar criar um processo separado para cada requisição.
+
+Essa divisão permite que o Nginx distribua o processamento entre diferentes workers, aproveitando os recursos disponíveis no servidor e atendendo múltiplas conexões de maneira eficiente.
+
+## Porta 443 e terminação TLS
+
+A porta 443 é utilizada convencionalmente para receber conexões HTTPS. No Nginx, essa porta pode ser configurada por meio da diretiva `listen 443 ssl`, indicando que o servidor deve aceitar conexões protegidas por TLS.
+
+Neste projeto, a comunicação segura utiliza TLS 1.3, conforme definido no item 1.3. Para isso, o Nginx deve ser configurado com um certificado digital e sua respectiva chave privada.
+
+A terminação TLS é o processo em que o Nginx recebe uma conexão HTTPS e realiza o processamento da camada de criptografia da comunicação. Depois de receber os dados protegidos, o Nginx pode processar a requisição ou encaminhá-la para a aplicação.
+
+Em uma arquitetura com proxy reverso, a comunicação entre o Nginx e a aplicação pode ocorrer por uma conexão interna HTTP, desde que essa configuração seja adequada ao ambiente e às exigências de segurança. Assim, a comunicação externa permanece protegida por HTTPS, enquanto o Nginx atua como intermediário entre o navegador e a aplicação.
+
+## Disponibilização de arquivos estáticos
+
+Arquivos estáticos são recursos cujo conteúdo não precisa ser gerado dinamicamente pela aplicação a cada requisição. Alguns exemplos são arquivos HTML, CSS, JavaScript, imagens e fontes utilizadas pelo sistema.
+
+O Nginx pode disponibilizar esses arquivos diretamente ao navegador, utilizando diretivas como `root` e `location` para identificar os caminhos e diretórios onde os recursos estão armazenados.
+
+Dessa maneira, quando o navegador solicita um arquivo estático, o Nginx pode localizar o recurso e enviá-lo diretamente ao cliente, reduzindo o trabalho do servidor de aplicação e evitando processamento desnecessário.
+
+## Encaminhamento de requisições com proxy_pass
+
+A diretiva `proxy_pass` é utilizada no Nginx para encaminhar requisições recebidas para outro servidor, geralmente uma aplicação responsável pelo processamento das funcionalidades do sistema.
+
+Em uma arquitetura que utiliza Node.js com Express, por exemplo, o Nginx pode receber uma requisição HTTPS na porta 443 e encaminhá-la para a aplicação executada internamente na porta 3000.
+
+Nesse cenário, o Nginx atua como proxy reverso, recebendo as requisições externas e direcionando-as ao servidor de aplicação. Após o processamento, a resposta retorna ao Nginx, que a encaminha ao navegador do usuário.
+
+Para preservar informações da requisição original, podem ser utilizados cabeçalhos como `Host` e `X-Forwarded-For`. O primeiro encaminha o domínio solicitado pelo cliente, enquanto o segundo permite informar os endereços IP envolvidos no encaminhamento da requisição.
+
+## Limite de tamanho das requisições
+
+O Nginx permite configurar limites para o tamanho do corpo das requisições recebidas dos clientes. Essa configuração é importante para evitar que solicitações excessivamente grandes consumam recursos desnecessários do servidor.
+
+Para estabelecer esse limite, pode ser utilizada a diretiva `client_max_body_size`, que define o tamanho máximo permitido para o corpo de uma requisição.
+
+Como o endpoint de login recebe apenas informações pequenas, como identificador e senha, o exemplo de configuração utiliza o limite de `1k`. Caso o cliente envie uma requisição com tamanho superior ao permitido, o Nginx rejeita a solicitação e retorna o código HTTP 413 (Content Too Large).
+
+## Limitação da taxa de requisições
+
+O Nginx também permite limitar a quantidade de requisições recebidas em determinado intervalo de tempo. Esse mecanismo é conhecido como limitação de taxa de requisições (rate limiting).
+
+Para realizar esse controle, pode ser utilizado o módulo `ngx_http_limit_req_module`, que permite definir uma taxa de solicitações considerando uma chave de identificação, como o endereço IP do cliente.
+
+Neste projeto, a limitação é aplicada especificamente ao endpoint `/api/auth/login`, utilizando o endereço IP como referência. O parâmetro `rate` define a taxa média permitida, enquanto `burst` estabelece uma quantidade de solicitações excedentes que podem ser acomodadas temporariamente. O parâmetro `nodelay` permite encaminhar essas solicitações excedentes sem atraso, dentro do limite configurado.
+
+Quando o limite é ultrapassado, as solicitações excedentes podem ser rejeitadas. Por padrão, o módulo `limit_req` utiliza o código HTTP 503 para essas rejeições. Para que a aplicação retorne HTTP 429 (Too Many Requests), é necessário configurar a diretiva `limit_req_status 429`.
+
+Esse mecanismo contribui para reduzir abusos, controlar o volume de solicitações e proteger os recursos do servidor, especialmente no endpoint de autenticação.
+
+## Exemplo de configuração do Nginx
+
+O exemplo a seguir demonstra uma configuração ilustrativa do Nginx utilizando HTTPS com TLS 1.3, redirecionamento da porta 80 para a 443, disponibilização de arquivos estáticos, encaminhamento de requisições para uma aplicação e limitação de tamanho e taxa de requisições.
+
+```nginx
+http {
+    limit_req_zone $binary_remote_addr
+        zone=login_limit:10m rate=5r/s;
+
+    server {
+        listen 80;
+        server_name exemplo.com;
+
+        return 301 https://$host$request_uri;
+    }
+
+    server {
+        listen 443 ssl;
+        server_name exemplo.com;
+
+        ssl_protocols TLSv1.3;
+        ssl_certificate /caminho/certificado.crt;
+        ssl_certificate_key /caminho/chave-privada.key;
+
+        client_max_body_size 1k;
+
+        error_page 429 = @rate_limit_json;
+
+        location / {
+            root /var/www/html;
+            index index.html;
+        }
+
+        location = /api/auth/login {
+            limit_req zone=login_limit
+                burst=5 nodelay;
+
+            limit_req_status 429;
+
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For
+                $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            proxy_pass http://127.0.0.1:3000;
+        }
+
+        location /api/ {
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For
+                $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            proxy_pass http://127.0.0.1:3000;
+        }
+
+        location @rate_limit_json {
+            default_type application/json;
+            return 429 '{"erro":"Muitas requisicoes. Tente novamente mais tarde."}';
+        }
+    }
+}
+```
+
+Nesse exemplo, o Nginx recebe inicialmente as conexões HTTP na porta 80 e redireciona os clientes para HTTPS na porta 443. A comunicação segura utiliza TLS 1.3, com o certificado digital e a chave privada configurados.
+
+As solicitações de arquivos estáticos são atendidas diretamente pelo Nginx, enquanto as requisições destinadas à API são encaminhadas para a aplicação executada localmente na porta 3000.
+
+A diretiva `client_max_body_size 1k` estabelece o limite de 1 kilobyte para o corpo das requisições. Já o módulo `limit_req` controla a taxa de solicitações direcionadas especificamente ao endpoint `/api/auth/login`, utilizando o endereço IP do cliente como referência.
+
+A taxa de `5r/s` e o limite `burst=5` são valores ilustrativos e devem ser ajustados conforme o requisito não funcional de limitação de requisições definido para o projeto. A diretiva `limit_req_status 429` configura o código de resposta para as solicitações rejeitadas por excesso de requisições.
+
+A configuração `error_page 429` permite apresentar uma resposta no formato JSON quando o limite de taxa é ultrapassado. Os cabeçalhos `Host`, `X-Forwarded-For` e `X-Forwarded-Proto` encaminham informações da requisição original para a aplicação.
+
+O exemplo é ilustrativo e deve ser adaptado aos caminhos, certificados, endereços, limites e demais parâmetros definidos na implementação do projeto.
+
+## Referências
+
+NGINX. **Beginner's Guide**. Disponível em: https://nginx.org/en/docs/beginners_guide.html. Acesso em: 17 nov. 2026.
+
+NGINX. **Configuring HTTPS servers**. Disponível em: https://nginx.org/en/docs/http/configuring_https_servers.html. Acesso em: 17 nov. 2026.
+
+NGINX. **Module ngx_http_proxy_module**. Disponível em: https://nginx.org/en/docs/http/ngx_http_proxy_module.html. Acesso em: 17 nov. 2026.
+
+NGINX. **Module ngx_http_core_module**. Disponível em: https://nginx.org/en/docs/http/ngx_http_core_module.html. Acesso em: 17 nov. 2026.
+
+NGINX. **Module ngx_http_limit_req_module**. Disponível em: https://nginx.org/en/docs/http/ngx_http_limit_req_module.html. Acesso em: 17 nov. 2026.

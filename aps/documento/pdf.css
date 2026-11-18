@@ -58,6 +58,7 @@ p:has(> strong:only-child) { break-after: avoid; }
 .capa p, .folha-rosto p { text-align: center; margin: 0; }
 .capa .inst, .capa .autores p, .folha-rosto .autores p { text-transform: uppercase; }
 .capa .inst { font-weight: bold; }
+.capa .logo { display: block; width: 4.5cm; margin: 0 auto 0.6cm; }
 .titulo { font-weight: bold; text-transform: uppercase; }
 .folha-rosto { break-before: page; }
 .folha-rosto .natureza { margin-left: 8cm; text-align: justify; line-height: 1.15; font-size: 11pt; }

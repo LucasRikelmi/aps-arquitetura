@@ -4,17 +4,22 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 ## Registro anterior aos itens
 
-### I.1 Esboço do documento e artefatos iniciais
+### I.1 Esboço do documento, repositório e quadro Kanban — Lucas
 
 **Ferramenta:** Claude (Anthropic). Disponível em: claude.ai
 
-**Data de uso:** 5 nov. 2026
+**Data de uso:** 5 nov. 2026 (prompt 1); [Lucas confirma a data dos prompts 2 a 4]
 
-**Prompts literais submetidos:** [a transcrever pela equipe, conforme a marcação do esboço: o envio do enunciado e o pedido "pode montar os artefatos e um esboço do documento"]
+**Prompts literais submetidos:**
 
-**Resumo do Uso:** sessão que produziu o esboço do documento e os artefatos iniciais, usados como ponto de partida por todos os itens. É o uso a que remete a entrada bibliográfica já prevista no esboço, com acesso em 5 nov. 2026.
+1. "pode montar os artefatos e um esboço do documento" (com o PDF de definição da APS anexado)
+2. "É exigido commits no repositório?"
+3. "Ou pode ser as issues mesmo?"
+4. "Como organizar o projeto do kanban pra permitir os commits e prs?"
 
-**Observação:** registro ainda não transcrito. A autoria da sessão deve ser declarada pela equipe.
+**Resumo do Uso:** no prompt 1, a ferramenta produziu o esboço do documento (`esboco-aps.pdf`, 17 páginas) e nove diagramas em PNG e Mermaid, a partir do enunciado. O texto do esboço foi rascunhado pela ferramenta e serviu de ponto de partida para os itens, com a indicação de que a equipe deveria reescrevê-lo, revisá-lo e citar o uso. É o uso a que remete a entrada bibliográfica prevista no esboço, com acesso em 5 nov. 2026. Nos prompts 2 a 4, a ferramenta indicou que os artefatos precisam estar versionados no GitHub e recomendou que cada autor faça commit do próprio item, com revisão por pull request. Para o G1, sugeriu a proteção da `main` com uma aprovação obrigatória, uma issue por atividade da WBS, um quadro no GitHub Projects com as colunas Backlog, Em escrita, Em revisão e Concluído e movimentação automática, e o fluxo por item com branch própria, pull request com `Closes #N` e revisor designado.
+
+**Observação:** os commits de 7 nov. 2026 que subiram o esboço, os diagramas, a WBS, o template de issue e o manual do fluxo constam no histórico com autoria da ferramenta. [Lucas confirma se pertencem a esta sessão ou a outra, e o prompt correspondente.]
 
 ## Itens da Seção 1
 

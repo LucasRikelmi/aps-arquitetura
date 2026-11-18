@@ -41,6 +41,7 @@ RE_LEGENDA_MD = re.compile(r"^[\s*_]*(Figura|Tabela|Quadro)\s+([\dA-Z][\w.]*)\s*
 RE_PENDENCIA = re.compile(
     r"\[(?:\s*|data|NOME[^\]]*|SOBRENOME|conferir[^\]]*|TODO[^\]]*|[A-Za-zÀ-ÿ][^\]\n]{25,})\](?!\()"
 )
+RE_CITACAO = re.compile(r'"[^"\n]*"|“[^”\n]*”|`[^`\n]*`')
 RE_ESBOCO = re.compile(r"\bESBOÇO\b|\bTODO\b|\bFIXME\b")
 
 
@@ -174,6 +175,9 @@ def verificar_texto(texto: str, onde: str, rel: Relatorio) -> None:
     for n, (ln, cod) in enumerate(zip(texto.split("\n"), cercas), 1):
         if cod:
             continue
+        # Trecho citado ("...", “...”) ou `código` é transcrição literal
+        # (ex.: prompt no Apêndice I), não pendência do texto.
+        ln = RE_CITACAO.sub("", ln)
         for m in RE_PENDENCIA.finditer(ln):
             rel.aviso(onde, f"linha {n}: pendência {m.group(0)[:50]!r}")
         if RE_ESBOCO.search(ln):

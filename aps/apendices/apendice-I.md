@@ -10,7 +10,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Data de uso:** 5 e 7 nov. 2026
 
-**Prompts literais submetidos:**
+**Prompts:**
 
 1. "pode montar os artefatos e um esboço do documento" (com o PDF de definição da APS anexado)
 2. "É exigido commits no repositório?"
@@ -29,7 +29,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Resolva as três sub-issues do item 1.1: a versão do HTTP na conexão externa, a escolha da Figura 1 e os ajustes de redação apontados na revisão."
 
@@ -41,7 +41,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "CHATGPT - IA) PROMT: o que achou Os navegadores rodam encima da arquitetura cliente-servidor web. […]" — segue, no mesmo prompt, o texto-base redigido pela autora, com a conexão de internet, TCP/IP, DNS, HTTP, arquivos componentes e os quatro passos da requisição. Transcrição integral no bloco de código de `aps/secoes/1.2.md`.
 
@@ -53,7 +53,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "CHATPG - IA) PROMT: o que acha que precisa melhorar dessa parte O que é DNS? […]" — segue o texto-base da autora sobre DNS, IP e TCP, TLS e HTTPS. Transcrição integral em `aps/secoes/1.3.md`.
 
@@ -65,7 +65,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "CHATPGT - AI) Melhore esse texto para mim? # 1.4 — Servidor Web (Nginx) O que é Nginx? […]" — segue o texto-base da autora cobrindo processos master e workers, porta 443, terminação TLS, arquivos estáticos, `proxy_pass`, `client_max_body_size`, `ngx_http_limit_req_module` e exemplo de configuração. Transcrição integral em `aps/secoes/1.4.md`.
 
@@ -77,7 +77,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "revise a seguinte anotação: 1.5. Servidor de Aplicação […]" (com a anotação própria da autora sobre servidor de aplicação, características e Node.js/Express)
 2. "descreva o pipeline de um middleware"
@@ -97,7 +97,7 @@ Os prompts 1, 3, 4 e 5 trazem o item colado na íntegra; transcrição em `aps/s
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "CHATGPT - IA) PROMT O que acha que precisa melhorar para atender esses requisitos do item 1.6 1.6 — Sistema Gerenciador de Banco de Dados (SGBD) […]" — segue o texto-base da autora sobre SGBD, pool de conexões, consulta parametrizada com marcadores `$1`, e retorno ao driver com `rows`, `fields` e `rowCount`. Transcrição integral em `aps/secoes/1.6.md`.
 
@@ -109,7 +109,7 @@ Os prompts 1, 3, 4 e 5 trazem o item colado na íntegra; transcrição em `aps/s
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Vamos começar pelos itens sob minha responsabilidade. Antes, levante o que falta: o que está pendente entre os itens já iniciados e o que ainda não foi iniciado."
 2. "Vamos concluir o item 1.7 (PR #34)." (revisão)
@@ -124,7 +124,7 @@ Os prompts 1, 3, 4 e 5 trazem o item colado na íntegra; transcrição em `aps/s
 
 **Data de uso:** 17 nov. 2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Vamos começar o 2.1. Deixa eu pegar os contextos aqui"
 2. "O que fizeram até agora. Vamos começar minha parte no 2.1" (com os itens 1.2, 1.3 e 1.6, escritos por outros membros da equipe, anexados)
@@ -144,7 +144,7 @@ Material anexado anteriormente na mesma sessão: enunciado da APS, documento de 
 
 **Data de uso:** 17 nov. 2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Vamos para o 2.2? Ou falta algo?"
 2. "Vamos para o 2.2. Me dê uma revisão sobre ele e o que deve ter feito de acordo com a documentação oficial"
@@ -163,7 +163,7 @@ Material anexado anteriormente na mesma sessão: enunciado da APS, documento de 
 
 **Data de uso:** 17 nov. 2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "vamos para os próximos itens?"
 2. "Terminamos o 2.1 e 2.2"
@@ -180,13 +180,13 @@ Material anexado anteriormente na mesma sessão: enunciado da APS, documento de 
 
 **Data de uso:** 17 nov. 2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Faça as alterações necessárias no item 2.4: troque PostgreSQLUserRepository por PgUserRepository, inclua o AuthController na camada de apresentação, insira a Figura 4 pelo caminho informado, acrescente a fonte abaixo da tabela e padronize as fontes."
 
 Material fornecido como referência: item 2.2 (decisões arquiteturais), Figura 4 e orientações de revisão do item 2.4.
 
-**Resumo do Uso:** a ferramenta foi empregada na aplicação dos ajustes apontados na revisão do item: nomenclatura do repositório alinhada à DA03, inclusão do `AuthController` na camada de apresentação, inserção da Figura 4, fonte abaixo da Tabela 5 e padronização do formato das fontes.
+**Resumo do Uso:** a ferramenta foi empregada na aplicação dos ajustes apontados na revisão do item: nomenclatura do repositório alinhada à DA03, inclusão do `AuthController` na camada de apresentação, inserção da Figura 4, fonte abaixo da tabela de componentes e padronização do formato das fontes.
 
 ### I.13 Item 2.5 — Grazieli
 
@@ -194,7 +194,7 @@ Material fornecido como referência: item 2.2 (decisões arquiteturais), Figura 
 
 **Data de uso:** 18/11/2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "sobre o item 2.5, verifique se a descrição da api foi feita de forma adequada e indique os pontos que estão incorretos" (com o item 2.5 e o documento consolidado anexados)
 2. "valide também com o esboço" (com o esboço da APS anexado)
@@ -211,7 +211,7 @@ Material fornecido como referência: item 2.2 (decisões arquiteturais), Figura 
 
 **Data de uso:** 17 nov. 2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Lembra sobre o uqe estavamos falando? melhore o texto com base naquele texto que te pedi para ver se atendia os requisitos e se estava bom (2.4). Agora verificar se esta bom e atende os requisitoos do 2.6. nao inventa bobeira."
 
@@ -225,7 +225,7 @@ Material fornecido como referência: item 2.2 (decisões arquiteturais) e docume
 
 **Data de uso:** 17 nov. 2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Vamos voltar para o 2.7"
 2. Respostas a três perguntas de múltipla escolha, nas quais o autor decidiu dividir o item em 2.7a e 2.7b, manter a Figura 7 sem o caminho de indisponibilidade do repositório e não manifestar preferência quanto à representação do hash fictício na Figura 9
@@ -244,11 +244,11 @@ Material anexado anteriormente na mesma sessão: enunciado da APS, documento de 
 
 **Data de uso:** 17 nov. 2026
 
-**Prompts literais submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "vamos para 2.8"
 2. "e 2.8 está ok?"
-3. Pedidos sucessivos de nova verificação, submetidos literalmente como: "revise novamente"; "Revise pela terceira vez"; "faça pela 4 vez"; "revise novamente"; "novamente"; "dnv"; "vamos novamente"; "Novamente"
+3. Pedidos sucessivos de nova verificação, submetidos como: "revise novamente"; "Revise pela terceira vez"; "faça pela 4 vez"; "revise novamente"; "novamente"; "dnv"; "vamos novamente"; "Novamente"
 
 Material anexado anteriormente na mesma sessão: enunciado da APS, documento de quebra de escopo e atribuição, esboço do documento e os itens 2.1, 2.2, 2.3 e 2.7 já elaborados.
 
@@ -281,7 +281,7 @@ O conteúdo foi conferido e assumido pelo autor.
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração destes itens:**
+**Prompts:**
 
 1. "Vamos começar pelos itens sob minha responsabilidade. Antes, levante o que falta: o que está pendente entre os itens já iniciados e o que ainda não foi iniciado."
 
@@ -293,7 +293,7 @@ O conteúdo foi conferido e assumido pelo autor.
 
 **Data de uso:** 17/11/2026
 
-**Prompts literais submetidos para a elaboração destes itens:**
+**Prompts:**
 
 1. "A partir da exportação das conversas do grupo de WhatsApp da equipe, elaborar os registros de comunicação (G3) e o monitoramento de compromissos (G4)."
 
@@ -305,7 +305,7 @@ O conteúdo foi conferido e assumido pelo autor.
 
 **Data de uso:** 17 e 18/11/2026
 
-**Prompts submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Vamos começar pelos itens sob minha responsabilidade. Antes, levante o que falta: o que está pendente entre os itens já iniciados e o que ainda não foi iniciado." (17/11/2026)
 2. "Considere apenas os itens de minha autoria, sem a revisão, que será feita com a equipe. Monte uma tabela e trate cada issue separadamente, registrando o texto em comentário na própria issue e abrindo os PRs quando necessário." (17/11/2026)
@@ -319,7 +319,7 @@ O conteúdo foi conferido e assumido pelo autor.
 
 **Data de uso:** 17 e 18/11/2026
 
-**Prompts submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Prepare a leitura final de consistência do G7: monte a checklist a partir do README e da issue, confira os itens abertos e mesclados, aplique as correções de integração e abra o PR para revisão, sem mesclar."
 
@@ -331,7 +331,7 @@ O conteúdo foi conferido e assumido pelo autor.
 
 **Data de uso:** 17 e 18/11/2026
 
-**Prompts submetidos para a elaboração deste item:**
+**Prompts:**
 
 1. "Considere apenas os itens de minha autoria, sem a revisão, que será feita com a equipe. Monte uma tabela e trate cada issue separadamente, registrando o texto em comentário na própria issue e abrindo os PRs quando necessário." (17/11/2026)
 2. "O PDF gerado segue as normas da ABNT? Compare com o estilo deste trabalho." (18/11/2026, com o PDF de outro trabalho da equipe anexado como referência visual)

@@ -29,6 +29,7 @@ Formatação no padrão da NBR 14724, conferida contra o modelo da equipe: marge
 - Desce um nível os títulos internos (`##` vira `###`).
 - Resolve o caminho das figuras (`../diagramas/...`). A legenda é o parágrafo `Figura N – ... Fonte: ...` logo abaixo da imagem. Se ele faltar, usa o texto alternativo e avisa.
 - Formata como legenda os parágrafos que começam por `Figura N –`, `Tabela N –` ou `Quadro N –`.
+- Opcional (`fontes_dos_itens_em_linha` em `estrutura.yaml`): troca a lista `## Fontes` do item por uma linha de chamadas autor-data, por exemplo "(NGINX, [20--]a, [20--]b; OWASP, [20--]c)". A descrição completa fica só nas Referências.
 - Opcional (`remover_uso_ia_dos_itens` em `estrutura.yaml`): omite as seções `## Uso de IA` dos itens, já consolidadas no Apêndice I.
 
 O texto dos itens não é alterado no repositório.

@@ -86,8 +86,69 @@ def separar_cercas(linhas: list[str]) -> list[bool]:
     return marca
 
 
+RE_ANO_REF = re.compile(r"\[20--\][a-z]?|\b(?:19|20)\d{2}[a-z]?\b")
+
+
+def chamada_autor_data(entrada: str) -> tuple[str, str] | None:
+    """Da entrada ABNT da lista "Fontes", extrai (AUTOR, ano) para a chamada
+    autor-data: "FIELDING, R.; NOTTINGHAM, M.; ..., 2022a" -> ("FIELDING; NOTTINGHAM; ...", "2022a")."""
+    m = re.match(r"^(.*?)\.\s*\*", entrada)
+    if not m:
+        return None
+    autor = m.group(1)
+    et_al = "et al." in autor or entrada[m.end() - 1:].startswith("*et al.*")
+    autor = re.sub(r"\(ed\.\)|\*?et al\.\*?", "", autor).strip(" .")
+    nomes = [n.split(",")[0].strip() for n in autor.split(";") if n.strip()]
+    if not nomes:
+        return None
+    if et_al or len(nomes) > 3:
+        nomes = [nomes[0] + " et al."]
+    antes_url = entrada.split("Disponível em")[0]
+    anos = RE_ANO_REF.findall(antes_url)
+    if not anos:
+        return None
+    return "; ".join(nomes), anos[-1]
+
+
+def compactar_fontes(linhas: list[str], cercas: list[bool], onde: str, rel: Relatorio) -> list[str]:
+    """Troca a seção "## Fontes" do item por uma linha com as chamadas autor-data
+    (NBR 10520). A descrição completa de cada obra fica nas Referências."""
+    saida, k = [], 0
+    while k < len(linhas):
+        m = None if cercas[k] else RE_TITULO.match(linhas[k])
+        if not (m and re.fullmatch(r"fontes", m.group(2).strip(), re.IGNORECASE)):
+            saida.append(linhas[k])
+            k += 1
+            continue
+        nivel, k = len(m.group(1)), k + 1
+        bloco = []
+        while k < len(linhas):
+            m2 = None if cercas[k] else RE_TITULO.match(linhas[k])
+            if m2 and len(m2.group(1)) <= nivel:
+                break
+            bloco.append(linhas[k])
+            k += 1
+        itens = [re.sub(r"^\s*[-*]\s+", "", ln).strip() for ln in bloco if re.match(r"^\s*[-*]\s+", ln)]
+        if not itens:
+            # Item sem bibliografia externa: mantém a frase explicativa, sem o título.
+            saida += [ln for ln in bloco]
+            continue
+        por_autor: dict[str, list[str]] = {}
+        for ent in itens:
+            c = chamada_autor_data(ent)
+            if not c:
+                rel.aviso(onde, f"fonte sem autor/ano reconhecível: {ent[:60]!r}")
+                continue
+            anos = por_autor.setdefault(c[0], [])
+            if c[1] not in anos:
+                anos.append(c[1])
+        chamadas = "; ".join(f"{a}, {', '.join(anos)}" for a, anos in por_autor.items())
+        saida += ["", f"Fontes deste item, descritas nas Referências: ({chamadas}).", ""]
+    return saida
+
+
 def normalizar(texto: str, parte: dict, pessoas: dict, rel: Relatorio,
-               remover_uso_ia: bool) -> str:
+               remover_uso_ia: bool, compactar: bool = False) -> str:
     """Prepara o .md de uma parte para entrar no documento único."""
     onde = parte.get("id") or parte["titulo"]
     arquivo = RAIZ / parte["arquivo"]
@@ -129,6 +190,11 @@ def normalizar(texto: str, parte: dict, pessoas: dict, rel: Relatorio,
             if not pulando:
                 saida.append(ln)
         linhas = saida
+        cercas = separar_cercas(linhas)
+
+    # 3b) Lista "Fontes" vira uma linha de chamadas autor-data (opcional).
+    if compactar and parte["tipo"] == "item":
+        linhas = compactar_fontes(linhas, cercas, onde, rel)
         cercas = separar_cercas(linhas)
 
     # 4) Desce um nível os títulos restantes (o item é nível 2 no documento).
@@ -230,6 +296,7 @@ def lista_de_referencias(texto: str, onde: str, rel: Relatorio) -> str:
 def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[tuple[int, str, str]]]:
     pessoas = est["pessoas"]
     remover_uso_ia = bool(est.get("opcoes", {}).get("remover_uso_ia_dos_itens", False))
+    compactar = bool(est.get("opcoes", {}).get("fontes_dos_itens_em_linha", False))
     blocos, sumario = [], []
 
     for nome in pessoas.values():
@@ -287,7 +354,7 @@ def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[t
         if parte.get("somente_parte_a"):
             texto = lista_de_referencias(texto, onde, rel)
         verificar_texto(texto, onde, rel)
-        corpo = normalizar(texto, parte, pessoas, rel, remover_uso_ia)
+        corpo = normalizar(texto, parte, pessoas, rel, remover_uso_ia, compactar)
         blocos.append(f"{cab}\n{autoria}\n{corpo}")
 
     md = "\n\n".join(blocos)

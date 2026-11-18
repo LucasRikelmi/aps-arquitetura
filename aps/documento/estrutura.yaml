@@ -76,3 +76,7 @@ opcoes:
   # true: o PDF omite essas seções dos itens (evita prompt duplicado).
   # false: mantém nos itens. Decisão de 17/11: true.
   remover_uso_ia_dos_itens: true
+  # A lista "## Fontes" de cada item vira uma linha com as chamadas autor-data
+  # (NBR 10520), e a descrição completa fica só nas Referências. Mantém a citação
+  # no item (regra 6) sem a lista longa no meio do texto. Os .md não mudam.
+  fontes_dos_itens_em_linha: true

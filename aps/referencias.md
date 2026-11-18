@@ -19,11 +19,11 @@ Lista final, conferida em 18/11/2026 contra a seção "Fontes" de cada item da `
 
 | Referência | Citada em |
 |---|---|
-| ANTHROPIC. *Claude*. Assistente de IA. Disponível em: https://claude.ai. Acesso em: 5 e 7 nov. 2026. Questão: Apêndice I, Seção I.1. | Apêndice I, I.1 |
-| ANTHROPIC. *Claude*. Assistente de IA. Disponível em: https://claude.ai. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.6, I.9, I.10, I.11, I.15, I.16 e I.18. | Apêndice I, I.6, I.9, I.10, I.11, I.15, I.16, I.18 |
-| ANTHROPIC. *Claude Code*. Assistente de IA. Disponível em: https://claude.ai/code. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.2, I.8 e I.17. | Apêndice I, I.2, I.8, I.17 |
-| ANTHROPIC. *Claude Code*. Assistente de IA. Disponível em: https://claude.ai/code. Acesso em: 17 e 18 nov. 2026. Questão: Apêndice I, Seções I.19, I.20 e I.21. | Apêndice I, I.19, I.20, I.21 |
-| ANTHROPIC. *Claude Code*. Assistente de IA. Disponível em: https://claude.ai/code. Acesso em: 18 nov. 2026. Questão: Apêndice I, Seção I.13. | Apêndice I, I.13 |
+| ANTHROPIC. *Claude*. Assistente de IA. 2026a. Disponível em: https://claude.ai. Acesso em: 5 e 7 nov. 2026. Questão: Apêndice I, Seção I.1. | Apêndice I, I.1 |
+| ANTHROPIC. *Claude*. Assistente de IA. 2026b. Disponível em: https://claude.ai. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.6, I.9, I.10, I.11, I.15, I.16 e I.18. | Apêndice I, I.6, I.9, I.10, I.11, I.15, I.16, I.18 |
+| ANTHROPIC. *Claude Code*. Assistente de IA. 2026c. Disponível em: https://claude.ai/code. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.2, I.8 e I.17. | Apêndice I, I.2, I.8, I.17 |
+| ANTHROPIC. *Claude Code*. Assistente de IA. 2026d. Disponível em: https://claude.ai/code. Acesso em: 17 e 18 nov. 2026. Questão: Apêndice I, Seções I.19, I.20 e I.21. | Apêndice I, I.19, I.20, I.21 |
+| ANTHROPIC. *Claude Code*. Assistente de IA. 2026e. Disponível em: https://claude.ai/code. Acesso em: 18 nov. 2026. Questão: Apêndice I, Seção I.13. | Apêndice I, I.13 |
 | BIRYUKOV, A.; DINU, D.; KHOVRATOVICH, D.; JOSEFSSON, S. *Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications*. RFC 9106. [S. l.]: IETF, set. 2021. Disponível em: https://www.rfc-editor.org/rfc/rfc9106. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.6 |
 | CLOUDFLARE. *O que é DNS?* [20--]a. Disponível em: https://www.cloudflare.com/pt-br/learning/dns/what-is-dns. Acesso em: 17 nov. 2026. | 1.3 |
 | CLOUDFLARE. *What happens in a TLS handshake?* [20--]b. Disponível em: https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake. Acesso em: 17 nov. 2026. | 1.3 |
@@ -60,7 +60,7 @@ Lista final, conferida em 18/11/2026 contra a seção "Fontes" de cada item da `
 | NODE.JS. *Node.js Documentation*. [20--]d. Disponível em: https://nodejs.org/docs/latest/api/. Acesso em: 17 nov. 2026. | 1.1, 2.4 |
 | NODE.JS. *The Node.js Event Loop*. [20--]e. Disponível em: https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick. Acesso em: 17 nov. 2026. | 1.5 |
 | NOTTINGHAM, M.; FIELDING, R. *Additional HTTP Status Codes*. RFC 6585. [S. l.]: IETF, abr. 2012. Disponível em: https://www.rfc-editor.org/rfc/rfc6585. Acesso em: 18 nov. 2026. | 2.5 |
-| OPENAI. *ChatGPT*. Assistente de IA. Disponível em: https://chatgpt.com. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.3, I.4, I.5, I.7, I.12 e I.14. | Apêndice I, I.3, I.4, I.5, I.7, I.12, I.14 |
+| OPENAI. *ChatGPT*. Assistente de IA. 2026. Disponível em: https://chatgpt.com. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.3, I.4, I.5, I.7, I.12 e I.14. | Apêndice I, I.3, I.4, I.5, I.7, I.12, I.14 |
 | OWASP. *Authentication Cheat Sheet*. [20--]a. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.8 |
 | OWASP. *Logging Cheat Sheet*. [20--]b. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.8 |
 | OWASP. *Password Storage Cheat Sheet*. [20--]c. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.4, 2.6, 2.8 |

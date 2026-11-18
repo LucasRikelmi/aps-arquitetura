@@ -294,10 +294,28 @@ def lista_de_referencias(texto: str, onde: str, rel: Relatorio) -> str:
     return "# Referências\n\n::: referencias\n" + "\n\n".join(refs) + "\n:::\n"
 
 
+def registros_de_ia(est: dict, rel: Relatorio) -> dict[str, tuple[str, str]]:
+    """Lê o Apêndice I: para cada item (1.1, 2.5...), a seção I.N e a chamada da
+    entrada da ferramenta nas Referências (linha "**Referência:** (ORG, ano)")."""
+    ap = next((p for p in est["partes"] if p.get("ancora") == "ap1"), None)
+    if not ap or not (RAIZ / ap["arquivo"]).exists():
+        return {}
+    res, sec, item = {}, None, None
+    for ln in (RAIZ / ap["arquivo"]).read_text(encoding="utf-8").split("\n"):
+        m = re.match(r"### (I\.\d+) Item (\d\.\d)\b", ln)
+        if ln.startswith("### "):
+            sec, item = (m.group(1), m.group(2)) if m else (None, None)
+        m = re.match(r"\*\*Referência:\*\* \((.+)\)\.?$", ln)
+        if m and item:
+            res[item] = (sec, m.group(1))
+    return res
+
+
 def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[tuple[int, str, str]]]:
     pessoas = est["pessoas"]
     remover_uso_ia = bool(est.get("opcoes", {}).get("remover_uso_ia_dos_itens", False))
     compactar = bool(est.get("opcoes", {}).get("fontes_dos_itens_em_linha", False))
+    uso_ia = registros_de_ia(est, rel)
     blocos, sumario = [], []
 
     for nome in pessoas.values():
@@ -356,6 +374,14 @@ def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[t
             texto = lista_de_referencias(texto, onde, rel)
         verificar_texto(texto, onde, rel)
         corpo = normalizar(texto, parte, pessoas, rel, remover_uso_ia, compactar)
+        if tipo == "item" and parte["id"] in uso_ia:
+            # Regras 6 e 8: a entrada da ferramenta nas Referências é chamada no próprio item.
+            sec, chave = uso_ia[parte["id"]]
+            corpo += (f"\nUso de IA neste item: ({chave}), com os prompts registrados "
+                      f"no Apêndice I, Seção {sec}.\n")
+        if parte.get("ancora") == "ap1":
+            # Transcrições longas de prompt podem quebrar entre páginas.
+            corpo = f"::: apendice-ia\n{corpo}\n:::\n"
         blocos.append(f"{cab}\n{autoria}\n{corpo}")
 
     md = "\n\n".join(blocos)

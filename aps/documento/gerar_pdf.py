@@ -33,7 +33,7 @@ RAIZ = Path(__file__).resolve().parents[2]
 DIR_DOC = Path(__file__).resolve().parent
 
 RE_TITULO = re.compile(r"^(#{1,6})\s+(.*?)\s*#*\s*$")
-RE_CERCA = re.compile(r"^\s*(```|~~~)")
+RE_CERCA = re.compile(r"^\s{0,3}(`{3,}|~{3,})")
 RE_AUTORIA = re.compile(r"^[\s*_]*Autor(?:\(a\)|a|es)?\s*:.*Revisor", re.IGNORECASE)
 RE_IMAGEM_SO = re.compile(r"^\s*!\[(?P<alt>[^\]]*)\]\((?P<src>[^)\s]+)(?:\s+\"[^\"]*\")?\)(?P<attr>\{[^}]*\})?\s*$")
 RE_IMAGEM = re.compile(r"!\[[^\]]*\]\((?P<src>[^)\s]+)")
@@ -67,14 +67,21 @@ def chave_ordem(nome: str) -> str:
 
 
 def separar_cercas(linhas: list[str]) -> list[bool]:
-    """Para cada linha, True se está dentro de bloco de código cercado."""
-    dentro, marca = False, []
+    """Para cada linha, True se está dentro de bloco de código cercado.
+    Como no CommonMark, a cerca só fecha com o mesmo caractere e comprimento
+    igual ou maior, sem texto depois (``` dentro de ~~~~ não fecha o bloco)."""
+    aberta, marca = "", []
     for ln in linhas:
-        if RE_CERCA.match(ln):
-            marca.append(True)
-            dentro = not dentro
+        m = RE_CERCA.match(ln)
+        if not aberta:
+            if m:
+                aberta = m.group(1)
+            marca.append(bool(m))
             continue
-        marca.append(dentro)
+        marca.append(True)
+        if m and m.group(1)[0] == aberta[0] and len(m.group(1)) >= len(aberta) \
+                and not ln.strip()[len(m.group(1)):].strip():
+            aberta = ""
     return marca
 
 

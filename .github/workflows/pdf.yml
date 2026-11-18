@@ -27,17 +27,22 @@ concurrency:
 jobs:
   pdf:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Dependências
+        # Sem apt-get update nem "playwright install --with-deps": o espelho apt
+        # do runner às vezes passa de 10 min. Usa o Chrome que já vem no runner
+        # e o .deb oficial do pandoc.
         run: |
-          sudo apt-get update -q && sudo apt-get install -y -q pandoc fonts-liberation
+          curl -fsSL -o /tmp/pandoc.deb https://github.com/jgm/pandoc/releases/download/3.1.13/pandoc-3.1.13-1-amd64.deb
+          sudo dpkg -i /tmp/pandoc.deb
           pip install -q playwright pypdf pyyaml
-          python -m playwright install --with-deps chromium
+          echo "CHROME_PATH=$(command -v google-chrome || command -v chromium)" >> "$GITHUB_ENV"
+          fc-list | grep -qi liberation && echo "fonte Liberation presente" || echo "aviso: fonte Liberation ausente; o CSS cai para serif"
       - name: Gerar PDF
         run: python aps/documento/gerar_pdf.py ${{ inputs.final && '--final' || '' }}
       - uses: actions/upload-artifact@v4

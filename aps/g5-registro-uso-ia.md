@@ -8,7 +8,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Ferramenta:** Claude (Anthropic). Disponível em: claude.ai
 
-**Data de uso:** 5 nov. 2026 (prompt 1); [Lucas confirma a data dos prompts 2 a 4]
+**Data de uso:** 5 nov. 2026
 
 **Prompts literais submetidos:**
 

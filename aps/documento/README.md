@@ -11,15 +11,16 @@ O PDF de entrega é gerado a partir dos `.md` dos itens, sem copiar texto à mã
 
 ## Ordem do documento
 
-1. Capa: instituição, disciplina, tarefa, título, autores em ordem alfabética (regra 4).
-2. Sumário com páginas.
-3. Controle de autoria e revisão: Tabela 1, gerada de `estrutura.yaml` (regra 7).
-4. Seção 1, itens 1.1 a 1.7; Seção 2, itens 2.1 a 2.8 (regra 5). Cada item abre com "Autor(a) · Revisor(a)".
-5. Referências: `aps/referencias.md` (G6), depois da última seção e antes dos apêndices (regra 6).
-6. Apêndice I, prompts de IA: `aps/apendices/apendice-I.md` (G5, regra 8).
-7. Apêndice II, registros da equipe: `aps/gestao/G3.md` (G3).
+1. Capa: instituição, autores em ordem alfabética (regra 4), título, cidade e ano.
+2. Folha de rosto: autores, título, natureza do trabalho, docente, cidade e ano.
+3. Sumário com páginas.
+4. Controle de autoria e revisão: Tabela 1, gerada de `estrutura.yaml` (regra 7).
+5. Seção 1, itens 1.1 a 1.7; Seção 2, itens 2.1 a 2.8 (regra 5). Cada item abre com "Autor(a) · Revisor(a)".
+6. Referências: `aps/referencias.md` (G6), depois da última seção e antes dos apêndices (regra 6).
+7. Apêndice I, prompts de IA: `aps/apendices/apendice-I.md` (G5, regra 8).
+8. Apêndice II, registros da equipe: `aps/gestao/G3.md` (G3).
 
-Todas as páginas, menos a capa, têm cabeçalho com instituição, disciplina, tarefa e autores (regra 4) e número no rodapé.
+Formatação no padrão da NBR 14724, conferida contra o modelo da equipe: margens de 3 cm (superior e esquerda) e 2 cm (inferior e direita), fonte 12, entrelinha de 1,5 linha, recuo de 1,25 cm na primeira linha, sem linha em branco entre parágrafos, título de figura e tabela acima e fonte abaixo. A capa não é contada; a folha de rosto é a página 1; o número aparece no canto superior direito a partir da parte textual, junto do cabeçalho com instituição, disciplina, tarefa e autores (regra 4 do enunciado).
 
 ## O que o script faz com cada `.md`
 

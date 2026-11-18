@@ -59,7 +59,8 @@ partes:
   - {tipo: item, id: "2.8", titulo: "Segurança e tratamento de erros",        arquivo: aps/secoes/2.8.md, artefato: "Segurança e tratamento de erros",   autor: andre,    revisor: lucas}
 
   # Regra 6: referências depois da última seção e antes dos apêndices.
-  - {tipo: pos, titulo: "Referências",                                        arquivo: aps/referencias.md,  ancora: refs, autor: lucas, revisor: lucas, artefato: "Referências (G6)"}
+  # somente_parte_a: entra só a lista da Parte A (citadas), sem a coluna "Citada em" nem as notas.
+  - {tipo: pos, titulo: "Referências",                                        arquivo: aps/referencias.md,  ancora: refs, autor: lucas, revisor: lucas, artefato: "Referências (G6)", somente_parte_a: true}
   - {tipo: pos, titulo: "Apêndice I – Prompts submetidos à IA",               arquivo: aps/apendices/apendice-I.md, ancora: ap1, autor: grazieli, revisor: lucas, artefato: "Registro de IA (G5)"}
   - {tipo: pos, titulo: "Apêndice II – Registros de comunicação da equipe",   arquivo: aps/gestao/G3.md,    ancora: ap2, autor: lucas, revisor: lucas, artefato: "Atas e registros (G3)"}
 

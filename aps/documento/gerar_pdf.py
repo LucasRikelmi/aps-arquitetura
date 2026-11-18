@@ -190,6 +190,25 @@ def verificar_numeracao(md: str, rel: Relatorio) -> None:
             rel.aviso("numeração", f"{tipo} mistura numeração simples e por item: {nums}")
 
 
+def lista_de_referencias(texto: str, onde: str, rel: Relatorio) -> str:
+    """Do aps/referencias.md, entra no PDF só a Parte A (citadas), sem a coluna
+    "Citada em" e sem as notas de trabalho; uma referência por parágrafo."""
+    linhas = texto.replace("\r\n", "\n").split("\n")
+    ini = next((k for k, ln in enumerate(linhas) if ln.startswith("## Parte A")), None)
+    if ini is None:
+        rel.aviso(onde, "Parte A não encontrada; a lista entra como está no arquivo")
+        return texto
+    refs = []
+    for ln in linhas[ini + 1:]:
+        if ln.startswith("## "):
+            break
+        if not ln.startswith("|") or ln.startswith("|---") or ln.startswith("| Referência"):
+            continue
+        celulas = ln.strip().strip("|").rsplit("|", 1)
+        refs.append(celulas[0].strip())
+    return "# Referências\n\n" + "\n\n".join(refs) + "\n"
+
+
 def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[tuple[int, str, str]]]:
     pessoas = est["pessoas"]
     remover_uso_ia = bool(est.get("opcoes", {}).get("remover_uso_ia_dos_itens", False))
@@ -247,6 +266,8 @@ def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[t
             continue
 
         texto = arquivo.read_text(encoding="utf-8")
+        if parte.get("somente_parte_a"):
+            texto = lista_de_referencias(texto, onde, rel)
         verificar_texto(texto, onde, rel)
         corpo = normalizar(texto, parte, pessoas, rel, remover_uso_ia)
         blocos.append(f"{cab}\n{autoria}\n{corpo}")

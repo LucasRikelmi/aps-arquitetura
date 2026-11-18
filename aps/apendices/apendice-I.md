@@ -186,7 +186,7 @@ Material anexado anteriormente na mesma sessão: enunciado da APS, documento de 
 
 Material fornecido como referência: item 2.2 (decisões arquiteturais), Figura 4 e orientações de revisão do item 2.4.
 
-**Resumo do Uso:** a ferramenta foi empregada na aplicação dos ajustes apontados na revisão do item: nomenclatura do repositório alinhada à DA03, inclusão do `AuthController` na camada de apresentação, inserção da Figura 4, fonte abaixo da Tabela 5 e padronização do formato das fontes.
+**Resumo do Uso:** a ferramenta foi empregada na aplicação dos ajustes apontados na revisão do item: nomenclatura do repositório alinhada à DA03, inclusão do `AuthController` na camada de apresentação, inserção da Figura 4, fonte abaixo da tabela de componentes e padronização do formato das fontes.
 
 ### I.13 Item 2.5 — Grazieli
 

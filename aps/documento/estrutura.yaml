@@ -36,9 +36,6 @@ pessoas:
 # O primeiro título do arquivo (linha "# ..." ou linha que começa com o id) é
 # substituído pelo título daqui. Os demais títulos do arquivo descem um nível.
 partes:
-  - tipo: autoria
-    titulo: "Controle de autoria e revisão"
-    ancora: autoria
 
   - tipo: secao
     titulo: "1 Ambiente operacional da aplicação Web"
@@ -68,9 +65,18 @@ partes:
   - {tipo: pos, titulo: "Referências",                                        arquivo: aps/referencias.md,  ancora: refs, autor: lucas, revisor: lucas, artefato: "Referências (G6)", somente_parte_a: true}
   - {tipo: pos, titulo: "Apêndice I – Prompts submetidos à IA",               arquivo: aps/apendices/apendice-I.md, ancora: ap1, autor: grazieli, revisor: lucas, artefato: "Registro de IA (G5)"}
   - {tipo: pos, titulo: "Apêndice II – Registros de comunicação da equipe",   arquivo: aps/gestao/G3.md,    ancora: ap2, autor: lucas, revisor: lucas, artefato: "Atas e registros (G3)"}
+  # Regra 7: tabela de artefato, autor e revisor, reunida em apêndice no fim.
+  # A identificação por item (regra 5) continua no início de cada item.
+  - tipo: autoria
+    titulo: "Apêndice III – Autoria e revisão dos itens de informação"
+    ancora: ap3
 
 opcoes:
   # As seções "## Uso de IA" no fim de cada item são consolidadas no Apêndice I (G5).
   # true: o PDF omite essas seções dos itens (evita prompt duplicado).
   # false: mantém nos itens. Decisão de 17/11: true.
   remover_uso_ia_dos_itens: true
+  # A lista "## Fontes" de cada item vira uma linha com as chamadas autor-data
+  # (NBR 10520), e a descrição completa fica só nas Referências. Mantém a citação
+  # no item (regra 6) sem a lista longa no meio do texto. Os .md não mudam.
+  fontes_dos_itens_em_linha: true

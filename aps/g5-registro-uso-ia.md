@@ -8,7 +8,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Ferramenta:** Claude (Anthropic). Disponível em: claude.ai
 
-**Data de uso:** 5 nov. 2026
+**Data de uso:** 5 e 7 nov. 2026
 
 **Prompts literais submetidos:**
 
@@ -19,7 +19,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Resumo do Uso:** no prompt 1, a ferramenta produziu o esboço do documento (`esboco-aps.pdf`, 17 páginas) e nove diagramas em PNG e Mermaid, a partir do enunciado. O texto do esboço foi rascunhado pela ferramenta e serviu de ponto de partida para os itens, com a indicação de que a equipe deveria reescrevê-lo, revisá-lo e citar o uso. É o uso a que remete a entrada bibliográfica prevista no esboço, com acesso em 5 nov. 2026. Nos prompts 2 a 4, a ferramenta indicou que os artefatos precisam estar versionados no GitHub e recomendou que cada autor faça commit do próprio item, com revisão por pull request. Para o G1, sugeriu a proteção da `main` com uma aprovação obrigatória, uma issue por atividade da WBS, um quadro no GitHub Projects com as colunas Backlog, Em escrita, Em revisão e Concluído e movimentação automática, e o fluxo por item com branch própria, pull request com `Closes #N` e revisor designado.
 
-**Observação:** os commits de 7 nov. 2026 que subiram o esboço, os diagramas, a WBS, o template de issue e o manual do fluxo constam no histórico com autoria da ferramenta. [Lucas confirma se pertencem a esta sessão ou a outra, e o prompt correspondente.]
+**Observação:** os commits de 7 nov. 2026 que subiram ao repositório o esboço, os diagramas, a WBS, o template de issue e o manual do fluxo, registrados no histórico com autoria da ferramenta, pertencem a este mesmo uso.
 
 ## Itens da Seção 1
 

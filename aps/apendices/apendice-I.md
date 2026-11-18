@@ -254,6 +254,49 @@ Material anexado anteriormente na mesma sessão: enunciado da APS, documento de 
 
 Material anexado anteriormente na mesma sessão: enunciado da APS, documento de quebra de escopo e atribuição, esboço do documento e os itens 2.1, 2.2, 2.3 e 2.7 já elaborados.
 
+**Resumo do Uso:** a ferramenta foi empregada na redação deste item a partir da tabela preliminar de ameaças constante do esboço da APS e dos requisitos, decisões e figuras definidos nos itens anteriores.
 
+A tabela do esboço trazia seis linhas. As cinco acrescentadas decorrem de requisitos e decisões definidos durante a elaboração dos itens 2.1 e 2.2, que o esboço não cobria: a quebra do hash por força bruta sobre banco vazado, a enumeração pelo tempo de resposta como ameaça distinta da enumeração pela resposta, a negação de serviço pelo custo do hash, a negação de serviço por corpo grande e a exposição de detalhe interno em mensagem de erro.
 
+A seção de riscos residuais decorre da orientação do autor, registrada no item 2.1, de que condições não cobertas pela solução devem constar do documento em vez de permanecerem implícitas.
 
+O autor determinou sucessivas rodadas de verificação do item, das quais resultaram as correções abaixo.
+
+- Inclusão das citações das fontes no corpo, que constavam da lista sem citação no texto.
+- Retirada da afirmação de que a segurança de infraestrutura constaria das premissas do item 2.1, o que não ocorre.
+- Realocação da citação sobre mensagens de erro para o parágrafo que ela sustenta.
+- Condicionamento da afirmação sobre dado pessoal à legislação aplicável.
+- Inclusão da classe do erro entre os campos registrados, sem a qual a política de registro não sustentava o diagnóstico prometido no tratamento de erros.
+- Separação entre o registro feito pelo servidor web e o feito pelo servidor de aplicação, que se contradiziam quanto ao endereço de origem.
+- Correção da mitigação de negação de serviço, que atribuía ao limite de comprimento dos campos um efeito que ele não produz, dado que o custo do Argon2id decorre dos parâmetros e não do tamanho da entrada.
+- Retirada, da seção de riscos residuais, de uma lacuna de documentação que não constitui risco de segurança e já estava declarada no item 2.7.
+- Declaração do trânsito da senha em texto claro no salto interno, que a tabela de ameaças não registrava.
+- Correção da remissão que atribuía à DA01 o registro da hipótese de implantação em hosts distintos, que consta do item 1.1.
+
+O conteúdo foi conferido e assumido pelo autor.
+
+## Itens de gestão
+
+### I.17 Itens G1 e G2 — Lucas
+
+**Ferramenta:** Claude Code (Anthropic). Disponível em: claude.ai/code
+
+**Data de uso:** 17/11/2026
+
+**Prompts literais submetidos para a elaboração destes itens:**
+
+1. "Vamos começar pelos itens sob minha responsabilidade. Antes, levante o que falta: o que está pendente entre os itens já iniciados e o que ainda não foi iniciado."
+
+**Resumo do Uso:** levantamento das pendências dos itens já iniciados e dos ainda não iniciados, a partir do qual foram redigidos o registro de infraestrutura da equipe (G1) e as premissas adotadas (G2), para revisão do autor. A montagem do repositório e do quadro Kanban, em 5 e 7 nov. 2026, consta do registro I.1.
+
+### I.18 Itens G3 e G4 — Lucas
+
+**Ferramenta:** Claude (Anthropic). Disponível em: claude.ai
+
+**Data de uso:** 17/11/2026
+
+**Prompts literais submetidos para a elaboração destes itens:**
+
+1. "A partir da exportação das conversas do grupo de WhatsApp da equipe, elaborar os registros de comunicação (G3) e o monitoramento de compromissos (G4)."
+
+**Resumo do Uso:** organização do registro a partir das conversas, para revisão do autor.

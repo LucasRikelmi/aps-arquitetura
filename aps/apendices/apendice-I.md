@@ -298,3 +298,42 @@ O conteúdo foi conferido e assumido pelo autor.
 1. "A partir da exportação das conversas do grupo de WhatsApp da equipe, elaborar os registros de comunicação (G3) e o monitoramento de compromissos (G4)."
 
 **Resumo do Uso:** organização do registro a partir das conversas, para revisão do autor.
+
+### I.19 Item G6 — Lucas
+
+**Ferramenta:** Claude Code (Anthropic). Disponível em: claude.ai/code
+
+**Data de uso:** 17 e 18/11/2026
+
+**Prompts submetidos para a elaboração deste item:**
+
+1. "Vamos começar pelos itens sob minha responsabilidade. Antes, levante o que falta: o que está pendente entre os itens já iniciados e o que ainda não foi iniciado." (17/11/2026)
+2. "Considere apenas os itens de minha autoria, sem a revisão, que será feita com a equipe. Monte uma tabela e trate cada issue separadamente, registrando o texto em comentário na própria issue e abrindo os PRs quando necessário." (17/11/2026)
+3. "G6 e G7 podem ser finalizados agora que acabaram as outras issues? (não merge ainda, espere minha revisão)" (18/11/2026)
+
+**Resumo do Uso:** lista de referências montada pela ferramenta a partir do item 1.1, da lista do esboço e dos rascunhos anexados às issues, com conferência de título, autoria e data na página oficial de cada obra. Na finalização, a ferramenta comparou as chamadas no corpo de cada item com as seções "Fontes" e com a lista, acrescentou as fontes dos itens 2.4, 2.5 e 2.6 que faltavam e atribuiu as letras de mesmo autor e mesma data, aplicadas nos itens 1.1, 1.5, 2.5 e 2.8. Registro de origem: seção "Uso de IA" de `aps/referencias.md`.
+
+### I.20 Item G7 — Lucas
+
+**Ferramenta:** Claude Code (Anthropic). Disponível em: claude.ai/code
+
+**Data de uso:** 17 e 18/11/2026
+
+**Prompts submetidos para a elaboração deste item:**
+
+1. "Prepare a leitura final de consistência do G7: monte a checklist a partir do README e da issue, confira os itens abertos e mesclados, aplique as correções de integração e abra o PR para revisão, sem mesclar."
+
+**Resumo do Uso:** checklist de consistência, conferência dos itens e correções de integração, entre elas a numeração única das tabelas, feitas pela ferramenta e revisadas pelo autor. Registro de origem: seção "Uso de IA" de `aps/gestao/G7.md`.
+
+### I.21 Item G8 — Lucas
+
+**Ferramenta:** Claude Code (Anthropic). Disponível em: claude.ai/code
+
+**Data de uso:** 17 e 18/11/2026
+
+**Prompts submetidos para a elaboração deste item:**
+
+1. "Considere apenas os itens de minha autoria, sem a revisão, que será feita com a equipe. Monte uma tabela e trate cada issue separadamente, registrando o texto em comentário na própria issue e abrindo os PRs quando necessário." (17/11/2026)
+2. "O PDF gerado segue as normas da ABNT? Compare com o estilo deste trabalho." (18/11/2026, com o PDF de outro trabalho da equipe anexado como referência visual)
+
+**Resumo do Uso:** no prompt 1, a ferramenta definiu a estrutura do documento final (ordem das partes, capa, sumário, tabela de autoria, posição das referências e dos apêndices) e escreveu o script que gera o PDF a partir dos arquivos dos itens, com verificação de pendências. No prompt 2, comparou a prévia com o trabalho de referência e com a NBR 14724 e ajustou a formatação: fonte 12, margens, entrelinha, recuo de parágrafo, paginação, folha de rosto e posição dos títulos de figuras e tabelas. O texto dos itens não foi alterado pela ferramenta. Registro de origem: comentário do plano na issue #8.

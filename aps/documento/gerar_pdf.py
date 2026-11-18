@@ -244,7 +244,7 @@ def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[t
             continue
         if tipo == "autoria":
             linhas = [f"# {parte['titulo']} {{#{parte['ancora']}}}", "",
-                      "Tabela 1 – Autoria e revisão dos itens de informação", "",
+                      "Quadro 1 – Autoria e revisão dos itens de informação", "",
                       "| Item | Artefato | Autor(a) | Revisor(a) |", "|---|---|---|---|"]
             for p in est["partes"]:
                 if p["tipo"] in ("item", "pos") and p.get("autor"):

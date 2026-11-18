@@ -1,0 +1,54 @@
+name: PDF da APS
+
+# Gera o PDF a partir de aps/documento/estrutura.yaml.
+# - PR que mexe em aps/: gera prévia em modo rascunho (avisos não falham o PR).
+# - Push na main e execução manual: idem; o PDF fica em "Artifacts" da execução.
+# - Execução manual com "final" marcado: roda em modo --final (falha se houver pendência).
+on:
+  pull_request:
+    paths: ["aps/**", ".github/workflows/pdf.yml"]
+  push:
+    branches: [main]
+    paths: ["aps/**", ".github/workflows/pdf.yml"]
+  workflow_dispatch:
+    inputs:
+      final:
+        description: "Modo final (falha com pendências)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pdf-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pdf:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Dependências
+        # Sem apt-get update nem "playwright install --with-deps": o espelho apt
+        # do runner às vezes passa de 10 min. Usa o Chrome que já vem no runner
+        # e o .deb oficial do pandoc.
+        run: |
+          curl -fsSL -o /tmp/pandoc.deb https://github.com/jgm/pandoc/releases/download/3.1.13/pandoc-3.1.13-1-amd64.deb
+          sudo dpkg -i /tmp/pandoc.deb
+          pip install -q playwright pypdf pyyaml
+          echo "CHROME_PATH=$(command -v google-chrome || command -v chromium)" >> "$GITHUB_ENV"
+          fc-list | grep -qi liberation && echo "fonte Liberation presente" || echo "aviso: fonte Liberation ausente; o CSS cai para serif"
+      - name: Gerar PDF
+        run: python aps/documento/gerar_pdf.py ${{ inputs.final && '--final' || '' }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: APS-autenticacao-web
+          path: |
+            dist/APS-autenticacao-web.pdf
+            dist/build/documento.md
+          if-no-files-found: error

@@ -1,0 +1,71 @@
+# Estrutura do documento final (G8).
+# Única fonte de verdade para: ordem das partes, títulos e numeração,
+# autoria/revisão de cada item (Tabela de autoria e linha "Autor(a) · Revisor(a)"),
+# capa e cabeçalho. Os arquivos .md dos itens fornecem só o corpo do texto.
+#
+# Gerar o PDF:  python3 aps/documento/gerar_pdf.py            (rascunho)
+#               python3 aps/documento/gerar_pdf.py --final    (falha se houver pendências)
+
+documento:
+  titulo: "Projeto de Software Web para Autenticação de Usuários"
+  instituicao: "Pontifícia Universidade Católica de Goiás"
+  disciplina: "Arquitetura e Design de Software"
+  tarefa: "Atividade Prática Supervisionada (APS)"
+  periodo: "2026/2"
+  docente: "Profa. Adriana Silveira de Souza"   # conferir grafia
+  local_data: "Goiânia, novembro de 2026"
+
+# Chave curta -> nome completo. A capa e o cabeçalho listam os autores em ordem
+# alfabética do nome completo (regra 4). Só entra quem contribuiu.
+pessoas:
+  andre:    "André Barbosa Alancardete"
+  grazieli: "Grazieli da Silva Macedo"
+  kamilly:  "Kamilly Benigno de Paula"
+  lucas:    "Lucas Rikelmi Macedo da Silva"
+
+# Partes, na ordem do PDF.
+#   tipo: secao     -> título de seção numerada (nível 1), sem arquivo
+#   tipo: item      -> item de informação (nível 2): título, arquivo, autor, revisor
+#   tipo: pos       -> parte após o corpo (Referências, Apêndices): nível 1, com arquivo
+#   tipo: autoria   -> tabela gerada a partir dos itens (regra 7)
+# O primeiro título do arquivo (linha "# ..." ou linha que começa com o id) é
+# substituído pelo título daqui. Os demais títulos do arquivo descem um nível.
+partes:
+  - tipo: autoria
+    titulo: "Controle de autoria e revisão"
+    ancora: autoria
+
+  - tipo: secao
+    titulo: "1 Ambiente operacional da aplicação Web"
+    ancora: s1
+  - {tipo: item, id: "1.1", titulo: "Visão geral e pilha adotada",            arquivo: aps/secoes/1.1.md, artefato: "Visão geral e Figura 1",            autor: grazieli, revisor: andre}
+  - {tipo: item, id: "1.2", titulo: "Cliente: browser",                       arquivo: aps/secoes/1.2.md, artefato: "Cliente: browser",                  autor: kamilly,  revisor: lucas}
+  - {tipo: item, id: "1.3", titulo: "Rede: DNS, TCP e TLS",                   arquivo: aps/secoes/1.3.md, artefato: "Rede: DNS, TCP e TLS",              autor: kamilly,  revisor: lucas}
+  - {tipo: item, id: "1.4", titulo: "Servidor web: Nginx",                    arquivo: aps/secoes/1.4.md, artefato: "Servidor web",                      autor: kamilly,  revisor: lucas}
+  - {tipo: item, id: "1.5", titulo: "Servidor de aplicação: Node.js/Express", arquivo: aps/secoes/1.5.md, artefato: "Servidor de aplicação",             autor: grazieli, revisor: lucas}
+  - {tipo: item, id: "1.6", titulo: "SGBD: PostgreSQL",                       arquivo: aps/secoes/1.6.md, artefato: "SGBD",                              autor: kamilly,  revisor: lucas}
+  - {tipo: item, id: "1.7", titulo: "Ciclo completo de uma requisição de login", arquivo: aps/secoes/1.7.md, artefato: "Ciclo da requisição e Figura 2", autor: lucas,    revisor: lucas}
+
+  - tipo: secao
+    titulo: "2 Projeto da aplicação de autenticação"
+    ancora: s2
+  - {tipo: item, id: "2.1", titulo: "Requisitos e escopo",                    arquivo: aps/secoes/2.1.md, artefato: "Requisitos e escopo",               autor: andre,    revisor: lucas}
+  - {tipo: item, id: "2.2", titulo: "Decisões arquiteturais",                 arquivo: aps/secoes/2.2.md, artefato: "Decisões arquiteturais",            autor: andre,    revisor: lucas}
+  - {tipo: item, id: "2.3", titulo: "Visão de contexto",                      arquivo: aps/secoes/2.3.md, artefato: "Contexto e Figura 3",               autor: andre,    revisor: lucas}
+  - {tipo: item, id: "2.4", titulo: "Componentes",                            arquivo: aps/secoes/2.4.md, artefato: "Componentes e Figura 4",            autor: kamilly,  revisor: lucas}
+  - {tipo: item, id: "2.5", titulo: "Contrato da API",                        arquivo: aps/secoes/2.5.md, artefato: "Contrato da API",                   autor: grazieli, revisor: lucas}
+  - {tipo: item, id: "2.6", titulo: "Modelo de dados",                        arquivo: aps/secoes/2.6.md, artefato: "Modelo de dados e Figura 5",        autor: kamilly,  revisor: lucas}
+  - {tipo: item, id: "2.7", titulo: "Desenho detalhado",                      arquivo: aps/secoes/2.7.md, artefato: "Desenho detalhado, Figuras 6 a 9",  autor: andre,    revisor: lucas}
+  - {tipo: item, id: "2.8", titulo: "Segurança e tratamento de erros",        arquivo: aps/secoes/2.8.md, artefato: "Segurança e tratamento de erros",   autor: andre,    revisor: lucas}
+
+  # Regra 6: referências depois da última seção e antes dos apêndices.
+  # somente_parte_a: entra só a lista da Parte A (citadas), sem a coluna "Citada em" nem as notas.
+  - {tipo: pos, titulo: "Referências",                                        arquivo: aps/referencias.md,  ancora: refs, autor: lucas, revisor: lucas, artefato: "Referências (G6)", somente_parte_a: true}
+  - {tipo: pos, titulo: "Apêndice I – Prompts submetidos à IA",               arquivo: aps/apendices/apendice-I.md, ancora: ap1, autor: grazieli, revisor: lucas, artefato: "Registro de IA (G5)"}
+  - {tipo: pos, titulo: "Apêndice II – Registros de comunicação da equipe",   arquivo: aps/gestao/G3.md,    ancora: ap2, autor: lucas, revisor: lucas, artefato: "Atas e registros (G3)"}
+
+opcoes:
+  # As seções "## Uso de IA" no fim de cada item são consolidadas no Apêndice I (G5).
+  # true: o PDF omite essas seções dos itens (evita prompt duplicado).
+  # false: mantém nos itens. Decisão de 17/11: true.
+  remover_uso_ia_dos_itens: true

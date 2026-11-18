@@ -12,8 +12,13 @@ documento:
   disciplina: "Arquitetura e Design de Software"
   tarefa: "Atividade Prática Supervisionada (APS)"
   periodo: "2026/2"
-  docente: "Profa. Adriana Silveira de Souza"   # conferir grafia
-  local_data: "Goiânia, novembro de 2026"
+  docente: "Professora: Adriana Silveira de Souza"   # conferir grafia
+  unidade:                                            # linhas abaixo da instituição na capa
+    - "Escola Politécnica e de Artes"                 # conferir (copiado do trabalho Benigno da mesma equipe)
+    - "Graduação em Ciência da Computação"
+  natureza: "Atividade Prática Supervisionada (APS) apresentada à disciplina Arquitetura e Design de Software, da Pontifícia Universidade Católica de Goiás, 2026/2, como requisito parcial de avaliação."
+  cidade: "Goiânia"
+  ano: 2026
 
 # Chave curta -> nome completo. A capa e o cabeçalho listam os autores em ordem
 # alfabética do nome completo (regra 4). Só entra quem contribuiu.

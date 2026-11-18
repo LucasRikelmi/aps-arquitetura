@@ -134,8 +134,15 @@ def normalizar(texto: str, parte: dict, pessoas: dict, rel: Relatorio,
     # 4) Desce um nível os títulos restantes (o item é nível 2 no documento).
     nivel_extra = 1 if parte["tipo"] == "item" else 0
     saida = []
-    for ln, cod in zip(linhas, cercas):
+    for k, (ln, cod) in enumerate(zip(linhas, cercas)):
         m = None if cod else RE_TITULO.match(ln)
+        if m and re.match(r"Figura\s+\d+\b", m.group(2)):
+            prox = next((x for x in linhas[k + 1:] if x.strip()), "")
+            if RE_IMAGEM_SO.match(prox):
+                # Título "## Figura N" logo acima da imagem: o título da figura
+                # já sai acima dela (pos_html); um título de seção a duplicaria.
+                saida.append("")
+                continue
         if m:
             n = min(len(m.group(1)) + nivel_extra, 6)
             n = max(n, 2)  # nada no arquivo pode virar nível 1
@@ -237,8 +244,7 @@ def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[t
             continue
         if tipo == "autoria":
             linhas = [f"# {parte['titulo']} {{#{parte['ancora']}}}", "",
-                      "Tabela 1 – Autoria e revisão dos itens de informação (regra 7). "
-                      "Fonte: elaborado pelos autores.", "",
+                      "Tabela 1 – Autoria e revisão dos itens de informação", "",
                       "| Item | Artefato | Autor(a) | Revisor(a) |", "|---|---|---|---|"]
             for p in est["partes"]:
                 if p["tipo"] in ("item", "pos") and p.get("autor"):
@@ -248,6 +254,7 @@ def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[t
                                   f"{pessoas[p['autor']]} | {pessoas[p['revisor']]} |")
                     if p["autor"] == p["revisor"]:
                         rel.notas.append(f"[{rotulo}] autor = revisor (regra 7); ressalva registrada no README")
+            linhas += ["", "Fonte: elaborado pelos autores."]
             blocos.append("\n".join(linhas) + "\n")
             sumario.append((1, parte["titulo"], parte["ancora"]))
             continue
@@ -289,36 +296,46 @@ def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[t
 
 
 def pos_html(corpo: str) -> str:
-    """Ajustes no HTML do pandoc: figuras centralizadas e parágrafos de legenda."""
+    """Ajustes no HTML do pandoc para o padrão da NBR 14724: título da figura
+    acima da imagem ("Figura N – ..."), "Fonte: ..." abaixo; título de tabela
+    acima e fonte abaixo, como os itens já escrevem."""
     corpo = re.sub(r"<p>\s*(<img [^>]*>)\s*</p>", r'<div class="figura">\1</div>', corpo)
 
-    def legenda(m: re.Match) -> str:
-        classe = "legenda tabela" if m.group(2) in ("Tabela", "Quadro") else "legenda"
-        return f'<p class="{classe}">{m.group(1)}'
-    return re.sub(r"<p>((?:<strong>|<em>)?(Figura|Tabela|Quadro)\s+[\dA-Z][\w.]*\s*[–—-])",
-                  legenda, corpo)
+    # Figura seguida do parágrafo "Figura N – título. Fonte: ..." -> título acima, fonte abaixo.
+    def figura(m: re.Match) -> str:
+        img, leg = m.group(1), m.group(2).strip()
+        partes = re.split(r"\s*(?=Fonte:)", leg, maxsplit=1)
+        titulo = partes[0].rstrip(" .")
+        fonte = f'<p class="fonte">{partes[1]}</p>' if len(partes) > 1 else ""
+        return f'<p class="legenda">{titulo}</p>\n{img}\n{fonte}'
+    corpo = re.sub(
+        r'(<div class="figura">.*?</div>)\s*<p>((?:<strong>|<em>)?Figura\s+\d+\s*[–—-].*?)</p>',
+        figura, corpo, flags=re.S)
+
+    corpo = re.sub(r"<p>((?:<strong>|<em>)?(?:Tabela|Quadro)\s+[\dA-Z][\w.]*\s*[–—-])",
+                   r'<p class="legenda">\1', corpo)
+    corpo = re.sub(r"<p>((?:<em>)?Fonte:)", r'<p class="fonte">\1', corpo)
+    return corpo
 
 
 def html_capa(est: dict) -> str:
     d = est["documento"]
     autores = sorted(est["pessoas"].values(), key=chave_ordem)
     e = html.escape
+    insts = "".join(f"<p>{e(x)}</p>" for x in d.get("unidade", []))
     return f"""
 <section class="capa">
-  <div>
-    <p class="inst">{e(d['instituicao'])}</p>
-    <p>{e(d['disciplina'])} · {e(d['periodo'])}</p>
-    <p>{e(d['tarefa'])}</p>
-    <p>Docente: {e(d.get('docente', ''))}</p>
-  </div>
-  <div>
-    <p class="titulo">{e(d['titulo'])}</p>
-  </div>
-  <div class="autores">
-    <p><strong>Autores (ordem alfabética)</strong></p>
-    {''.join(f'<p>{e(a)}</p>' for a in autores)}
-  </div>
-  <div><p>{e(d.get('local_data', ''))}</p></div>
+  <div class="inst"><p>{e(d['instituicao'])}</p>{insts}</div>
+  <div class="autores">{''.join(f'<p>{e(a)}</p>' for a in autores)}</div>
+  <div><p class="titulo">{e(d['titulo'])}</p></div>
+  <div><p>{e(d['cidade'])}</p><p>{e(str(d['ano']))}</p></div>
+</section>
+<section class="folha-rosto">
+  <div class="autores">{''.join(f'<p>{e(a)}</p>' for a in autores)}</div>
+  <div><p class="titulo">{e(d['titulo'])}</p></div>
+  <div class="natureza"><p>{e(d['natureza'])}</p></div>
+  <div><p>{e(d.get('docente', ''))}</p></div>
+  <div><p>{e(d['cidade'])}</p><p>{e(str(d['ano']))}</p></div>
 </section>"""
 
 
@@ -384,7 +401,9 @@ def imprimir(html_path: Path, pdf_path: Path) -> None:
 def paginas_dos_titulos(pdf_path: Path) -> dict[str, int]:
     import pypdf
     leitor = pypdf.PdfReader(str(pdf_path))
-    return {nome.lstrip("/"): leitor.get_destination_page_number(dest) + 1
+    # A capa não é contada (pdf.css: counter-reset na primeira página), então o
+    # número impresso é o índice da página a partir de 0.
+    return {nome.lstrip("/"): leitor.get_destination_page_number(dest)
             for nome, dest in leitor.named_destinations.items()}
 
 

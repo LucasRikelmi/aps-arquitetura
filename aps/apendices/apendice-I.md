@@ -39,7 +39,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Ferramenta:** ChatGPT, da OpenAI. URL: https://chatgpt.com
 
-**Data de uso:** [a autora confirma a data de uso]
+**Data de uso:** 17/11/2026
 
 **Prompts literais submetidos para a elaboração deste item:**
 
@@ -51,7 +51,7 @@ Registro do uso de IA por item de informação, conforme a regra 8. A fonte de c
 
 **Ferramenta:** ChatGPT, da OpenAI. URL: https://chatgpt.com
 
-**Data de uso:** [a autora confirma a data de uso]
+**Data de uso:** 17/11/2026
 
 **Prompts literais submetidos para a elaboração deste item:**
 
@@ -95,15 +95,13 @@ Os prompts 1, 3, 4 e 5 trazem o item colado na íntegra; transcrição em `aps/s
 
 **Ferramenta:** ChatGPT, da OpenAI. URL: https://chatgpt.com
 
-**Data de uso:** [a autora informa]
+**Data de uso:** 17/11/2026
 
 **Prompts literais submetidos para a elaboração deste item:**
 
-1. "CHATGPT - IA) PROMT O que acha que precisa melhorar para atender esses requisitos do item 1.6 1.6 — Sistema Gerenciador de Banco de Dados (SGBD) […]" — segue o texto-base da autora sobre SGBD, pool de conexões, consulta parametrizada com marcadores `$1`, e retorno ao driver com `rows`, `fields` e `rowCount`. Transcrição integral no comentário da issue #15.
+1. "CHATGPT - IA) PROMT O que acha que precisa melhorar para atender esses requisitos do item 1.6 1.6 — Sistema Gerenciador de Banco de Dados (SGBD) […]" — segue o texto-base da autora sobre SGBD, pool de conexões, consulta parametrizada com marcadores `$1`, e retorno ao driver com `rows`, `fields` e `rowCount`. Transcrição integral em `aps/secoes/1.6.md`.
 
 **Resumo do Uso:** a ferramenta foi empregada para indicar pontos de melhoria no texto-base da autora contra o escopo do item (pool de conexões, consulta parametrizada e resultado retornado ao driver). O retorno foi incorporado ao item mesclado pelo PR #42.
-
-**Observação:** este registro foi transcrito do comentário da issue #15. O arquivo `aps/secoes/1.6.md` ainda não contém o bloco de uso de IA.
 
 ### I.8 Item 1.7 — Lucas
 

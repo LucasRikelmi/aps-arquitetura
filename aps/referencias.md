@@ -13,12 +13,17 @@ Lista consolidada em ABNT (regra 6). Só entram na lista final as referências c
 
 ## Parte A – Citadas nos itens
 
-Lista final, conferida em 18/11/2026 contra a seção "Fontes" de cada item da `main` e contra as chamadas no corpo. Entram aqui as 47 referências citadas por algum item, em ordem alfabética.
+Lista final, conferida em 18/11/2026 contra a seção "Fontes" de cada item da `main` e contra as chamadas no corpo. Entram aqui as 47 referências citadas por algum item e as 6 entradas das ferramentas de IA (regra 8), em ordem alfabética. Cada entrada de IA agrupa os usos com a mesma ferramenta e a mesma data de acesso, e a questão remete às seções do Apêndice I.
 
 **Letras para o mesmo autor.** Quando o mesmo autor tem mais de uma obra com a mesma data, cada obra recebe uma letra minúscula logo após a data, na ordem alfabética dos títulos: (EXPRESS, [20--]c), (FIELDING; NOTTINGHAM; RESCHKE, 2022a). As letras valem para o documento inteiro, porque a lista é única; a mesma obra tem a mesma letra em todos os itens. A posição da letra depois do colchete segue a forma já usada no item 2.5; a norma ABNT NBR 10520 não foi consultada para o caso de data entre colchetes, e isso fica para conferência no G8.
 
 | Referência | Citada em |
 |---|---|
+| ANTHROPIC. *Claude*. Assistente de IA. Disponível em: https://claude.ai. Acesso em: 5 e 7 nov. 2026. Questão: Apêndice I, Seção I.1. | Apêndice I, I.1 |
+| ANTHROPIC. *Claude*. Assistente de IA. Disponível em: https://claude.ai. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.6, I.9, I.10, I.11, I.15, I.16 e I.18. | Apêndice I, I.6, I.9, I.10, I.11, I.15, I.16, I.18 |
+| ANTHROPIC. *Claude Code*. Assistente de IA. Disponível em: https://claude.ai/code. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.2, I.8 e I.17. | Apêndice I, I.2, I.8, I.17 |
+| ANTHROPIC. *Claude Code*. Assistente de IA. Disponível em: https://claude.ai/code. Acesso em: 17 e 18 nov. 2026. Questão: Apêndice I, Seções I.19, I.20 e I.21. | Apêndice I, I.19, I.20, I.21 |
+| ANTHROPIC. *Claude Code*. Assistente de IA. Disponível em: https://claude.ai/code. Acesso em: 18 nov. 2026. Questão: Apêndice I, Seção I.13. | Apêndice I, I.13 |
 | BIRYUKOV, A.; DINU, D.; KHOVRATOVICH, D.; JOSEFSSON, S. *Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications*. RFC 9106. [S. l.]: IETF, set. 2021. Disponível em: https://www.rfc-editor.org/rfc/rfc9106. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.6 |
 | CLOUDFLARE. *O que é DNS?* [20--]a. Disponível em: https://www.cloudflare.com/pt-br/learning/dns/what-is-dns. Acesso em: 17 nov. 2026. | 1.3 |
 | CLOUDFLARE. *What happens in a TLS handshake?* [20--]b. Disponível em: https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake. Acesso em: 17 nov. 2026. | 1.3 |
@@ -55,6 +60,7 @@ Lista final, conferida em 18/11/2026 contra a seção "Fontes" de cada item da `
 | NODE.JS. *Node.js Documentation*. [20--]d. Disponível em: https://nodejs.org/docs/latest/api/. Acesso em: 17 nov. 2026. | 1.1, 2.4 |
 | NODE.JS. *The Node.js Event Loop*. [20--]e. Disponível em: https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick. Acesso em: 17 nov. 2026. | 1.5 |
 | NOTTINGHAM, M.; FIELDING, R. *Additional HTTP Status Codes*. RFC 6585. [S. l.]: IETF, abr. 2012. Disponível em: https://www.rfc-editor.org/rfc/rfc6585. Acesso em: 18 nov. 2026. | 2.5 |
+| OPENAI. *ChatGPT*. Assistente de IA. Disponível em: https://chatgpt.com. Acesso em: 17 nov. 2026. Questão: Apêndice I, Seções I.3, I.4, I.5, I.7, I.12 e I.14. | Apêndice I, I.3, I.4, I.5, I.7, I.12, I.14 |
 | OWASP. *Authentication Cheat Sheet*. [20--]a. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.8 |
 | OWASP. *Logging Cheat Sheet*. [20--]b. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.8 |
 | OWASP. *Password Storage Cheat Sheet*. [20--]c. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.4, 2.6, 2.8 |
@@ -119,11 +125,7 @@ A NIST SP 800-63B saiu desta tabela porque o item 2.1 a cita. A citação passou
 
 ## Parte C – Uso de IA
 
-As entradas de IA (regra 8) seguem o modelo abaixo e são montadas no G5 a partir das seções "Uso de IA" de cada item, com a questão remetendo ao Apêndice I.
-
-ORGANIZAÇÃO. *Ferramenta*. Assistente de IA. Disponível em: URL. Acesso em: data. Questão: Apêndice I, Seção I.N.
-
-Entrada já prevista no esboço: ANTHROPIC. *Claude*. Assistente de IA. Disponível em: claude.ai. Acesso em: 5 nov. 2026. Questão: Apêndice I, Seção I.1.
+As entradas de IA (regra 8) estão na Parte A, montadas a partir dos campos **Ferramenta** e **Data de uso** de cada registro do Apêndice I (I.1 a I.21). Modelo: ORGANIZAÇÃO. *Ferramenta*. Assistente de IA. Disponível em: URL. Acesso em: data. Questão: Apêndice I, Seção I.N.
 
 ## Uso de IA
 

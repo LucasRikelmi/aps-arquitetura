@@ -290,7 +290,8 @@ def lista_de_referencias(texto: str, onde: str, rel: Relatorio) -> str:
             continue
         celulas = ln.strip().strip("|").rsplit("|", 1)
         refs.append(celulas[0].strip())
-    return "# Referências\n\n" + "\n\n".join(refs) + "\n"
+    # NBR 6023: alinhadas à esquerda, espaço simples, separadas por uma linha em branco.
+    return "# Referências\n\n::: referencias\n" + "\n\n".join(refs) + "\n:::\n"
 
 
 def montar_markdown(est: dict, rel: Relatorio, final: bool) -> tuple[str, list[tuple[int, str, str]]]:

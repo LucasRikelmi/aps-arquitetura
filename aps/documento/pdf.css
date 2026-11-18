@@ -46,6 +46,12 @@ h3 { font-size: 12pt; font-weight: normal; font-style: italic; margin: 1.2em 0 0
 h4 { font-size: 12pt; font-weight: normal; margin: 1em 0 0.5em; }
 
 .autoria-item { font-style: italic; margin-bottom: 0.8em; }
+/* Rótulo em negrito ("Prompts literais submetidos...") não fica sozinho no pé da página. */
+p:has(> strong:only-child) { break-after: avoid; }
+
+/* Referências (NBR 6023): alinhadas à esquerda, sem recuo, espaço simples e
+   uma linha em branco entre elas. */
+.referencias p { text-align: left; text-indent: 0; line-height: 1.15; margin: 0 0 1.15em; hyphens: none; }
 
 /* Capa e folha de rosto */
 .capa, .folha-rosto { height: 24.6cm; display: flex; flex-direction: column; justify-content: space-between; text-align: center; line-height: 1.5; }

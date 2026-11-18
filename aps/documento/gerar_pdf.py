@@ -39,7 +39,7 @@ RE_IMAGEM_SO = re.compile(r"^\s*!\[(?P<alt>[^\]]*)\]\((?P<src>[^)\s]+)(?:\s+\"[^
 RE_IMAGEM = re.compile(r"!\[[^\]]*\]\((?P<src>[^)\s]+)")
 RE_LEGENDA_MD = re.compile(r"^[\s*_]*(Figura|Tabela|Quadro)\s+([\dA-Z][\w.]*)\s*[–—-]")
 RE_PENDENCIA = re.compile(
-    r"\[(?:\s*|data|NOME[^\]]*|SOBRENOME|conferir[^\]]*|TODO[^\]]*|[A-ZÁÉÍÓÚÂÊÔÃÕÇ][^\]\n]{25,})\](?!\()"
+    r"\[(?:\s*|data|NOME[^\]]*|SOBRENOME|conferir[^\]]*|TODO[^\]]*|[A-Za-zÀ-ÿ][^\]\n]{25,})\](?!\()"
 )
 RE_ESBOCO = re.compile(r"\bESBOÇO\b|\bTODO\b|\bFIXME\b")
 

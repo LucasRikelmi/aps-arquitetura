@@ -9,6 +9,7 @@
 documento:
   titulo: "Projeto de Software Web para Autenticação de Usuários"
   instituicao: "Pontifícia Universidade Católica de Goiás"
+  logo: aps/documento/logo-puc.png   # logo da PUC Goiás na capa
   disciplina: "Arquitetura e Design de Software"
   tarefa: "Atividade Prática Supervisionada (APS)"
   periodo: "2026/2"

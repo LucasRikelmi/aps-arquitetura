@@ -417,9 +417,14 @@ def html_capa(est: dict) -> str:
     autores = sorted(est["pessoas"].values(), key=chave_ordem)
     e = html.escape
     insts = "".join(f"<p>{e(x)}</p>" for x in d.get("unidade", []))
+    logo = ""
+    if d.get("logo"):
+        caminho = RAIZ / d["logo"]
+        if caminho.exists():
+            logo = f'<img class="logo" src="{caminho.resolve().as_uri()}" alt="">'
     return f"""
 <section class="capa">
-  <div class="inst"><p>{e(d['instituicao'])}</p>{insts}</div>
+  <div class="inst">{logo}<p>{e(d['instituicao'])}</p>{insts}</div>
   <div class="autores">{''.join(f'<p>{e(a)}</p>' for a in autores)}</div>
   <div><p class="titulo">{e(d['titulo'])}</p></div>
   <div><p>{e(d['cidade'])}</p><p>{e(str(d['ano']))}</p></div>

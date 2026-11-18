@@ -12,9 +12,9 @@ documento:
   disciplina: "Arquitetura e Design de Software"
   tarefa: "Atividade Prática Supervisionada (APS)"
   periodo: "2026/2"
-  docente: "Professora: Adriana Silveira de Souza"   # conferir grafia
+  docente: "Professora: Adriana Silveira de Souza"
   unidade:                                            # linhas abaixo da instituição na capa
-    - "Escola Politécnica e de Artes"                 # conferir (copiado do trabalho Benigno da mesma equipe)
+    - "Escola Politécnica e de Artes"
     - "Graduação em Ciência da Computação"
   natureza: "Atividade Prática Supervisionada (APS) apresentada à disciplina Arquitetura e Design de Software, da Pontifícia Universidade Católica de Goiás, 2026/2, como requisito parcial de avaliação."
   cidade: "Goiânia"

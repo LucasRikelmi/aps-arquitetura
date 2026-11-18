@@ -6,61 +6,89 @@ Lista consolidada em ABNT (regra 6). Só entram na lista final as referências c
 
 ## Como citar no corpo do item
 
-- Chamada no texto pelo sistema autor-data, como no item 1.1: (NGINX, [20--]), (FIELDING; NOTTINGHAM; RESCHKE, 2022).
+- Chamada no texto pelo sistema autor-data, com a letra da Parte A quando o autor tem mais de uma obra na mesma data: (NGINX, [20--]f), (FIELDING; NOTTINGHAM; RESCHKE, 2022b).
 - Página sem data de publicação: `[20--]`. Norma viva, como o Fetch Standard: data de atualização exibida na página no dia do acesso.
 - Toda referência on-line leva "Disponível em:" e "Acesso em:" com a data em que o autor consultou a página.
 - Quem citar uma referência da Parte B a move para a Parte A no PR do próprio item e preenche a data de acesso.
 
-## Parte A – Citadas em itens já mesclados
+## Parte A – Citadas nos itens
 
-Atualizada em 17/11/2026 com as fontes dos itens 1.2, 1.3, 1.4, 1.5, 1.6, 2.1 e 2.2, e com as do 1.1 após a revisão (#27 e #29). Várias entradas têm o mesmo autor e a data [20--] (NGINX, NODE.JS, MOZILLA, OWASP); no G7, as chamadas recebem letras para desambiguar, como (NGINX, [20--a]). A forma de cada entrada foi padronizada aqui; os itens ainda trazem a forma original de cada autor, e a padronização no corpo fica para o G7.
+Lista final, conferida em 18/11/2026 contra a seção "Fontes" de cada item da `main` e contra as chamadas no corpo. Entram aqui as 47 referências citadas por algum item, em ordem alfabética.
+
+**Letras para o mesmo autor.** Quando o mesmo autor tem mais de uma obra com a mesma data, cada obra recebe uma letra minúscula logo após a data, na ordem alfabética dos títulos: (EXPRESS, [20--]c), (FIELDING; NOTTINGHAM; RESCHKE, 2022a). As letras valem para o documento inteiro, porque a lista é única; a mesma obra tem a mesma letra em todos os itens. A posição da letra depois do colchete segue a forma já usada no item 2.5; a norma ABNT NBR 10520 não foi consultada para o caso de data entre colchetes, e isso fica para conferência no G8.
 
 | Referência | Citada em |
 |---|---|
-| BIRYUKOV, A.; DINU, D.; KHOVRATOVICH, D.; JOSEFSSON, S. *Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications*. RFC 9106. [S. l.]: IETF, set. 2021. Disponível em: https://www.rfc-editor.org/rfc/rfc9106. Acesso em: 17 nov. 2026. | 2.1, 2.2 |
-| CLOUDFLARE. *O que é DNS?* [20--]. Disponível em: https://www.cloudflare.com/pt-br/learning/dns/what-is-dns. Acesso em: 17 nov. 2026. | 1.3 |
-| CLOUDFLARE. *What happens in a TLS handshake?* [20--]. Disponível em: https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake. Acesso em: 17 nov. 2026. | 1.3 |
-| CLOUDFLARE. *What is TCP/IP?* [20--]. Disponível em: https://www.cloudflare.com/learning/ddos/glossary/tcp-ip. Acesso em: 17 nov. 2026. | 1.3 |
-| EXPRESS. *Express Object*. [20--]. Disponível em: https://expressjs.com/en/api/express/. Acesso em: 17 nov. 2026. | 1.5 |
-| EXPRESS. *Express: Node.js web application framework*. [20--]. Disponível em: https://expressjs.com/. Acesso em: 17 nov. 2026. | 1.1 |
-| EXPRESS. *Response*. [20--]. Disponível em: https://expressjs.com/en/api/response/. Acesso em: 17 nov. 2026. | 1.5 |
-| EXPRESS. *Routing*. [20--]. Disponível em: https://expressjs.com/en/guide/routing/. Acesso em: 17 nov. 2026. | 1.5 |
-| EXPRESS. *Using middleware*. [20--]. Disponível em: https://expressjs.com/en/guide/using-middleware/. Acesso em: 17 nov. 2026. | 1.5 |
-| FIELDING, R.; NOTTINGHAM, M.; RESCHKE, J. (ed.). *HTTP Semantics*. RFC 9110. [S. l.]: IETF, jun. 2022. Disponível em: https://www.rfc-editor.org/rfc/rfc9110. Acesso em: 17 nov. 2026. | 1.2, 2.1, 2.2 |
-| FIELDING, R.; NOTTINGHAM, M.; RESCHKE, J. (ed.). *HTTP/1.1*. RFC 9112. [S. l.]: IETF, jun. 2022. Disponível em: https://www.rfc-editor.org/rfc/rfc9112. Acesso em: 17 nov. 2026. | 1.1 |
+| BIRYUKOV, A.; DINU, D.; KHOVRATOVICH, D.; JOSEFSSON, S. *Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications*. RFC 9106. [S. l.]: IETF, set. 2021. Disponível em: https://www.rfc-editor.org/rfc/rfc9106. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.6 |
+| CLOUDFLARE. *O que é DNS?* [20--]a. Disponível em: https://www.cloudflare.com/pt-br/learning/dns/what-is-dns. Acesso em: 17 nov. 2026. | 1.3 |
+| CLOUDFLARE. *What happens in a TLS handshake?* [20--]b. Disponível em: https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake. Acesso em: 17 nov. 2026. | 1.3 |
+| CLOUDFLARE. *What is TCP/IP?* [20--]c. Disponível em: https://www.cloudflare.com/learning/ddos/glossary/tcp-ip. Acesso em: 17 nov. 2026. | 1.3 |
+| EXPRESS. *5.x API Reference*. [20--]a. Disponível em: https://expressjs.com/en/5x/api/. Acesso em: 17 nov. 2026. | 2.4 |
+| EXPRESS. *Error Handling*. [20--]b. Disponível em: https://expressjs.com/en/guide/error-handling.html. Acesso em: 18 nov. 2026. | 2.5 |
+| EXPRESS. *Express Object*. [20--]c. Disponível em: https://expressjs.com/en/5x/api/express/. Acesso em: 17 nov. 2026. | 1.5, 2.5 |
+| EXPRESS. *Express: Node.js web application framework*. [20--]d. Disponível em: https://expressjs.com/. Acesso em: 17 nov. 2026. | 1.1 |
+| EXPRESS. *Response*. [20--]e. Disponível em: https://expressjs.com/en/api/response/. Acesso em: 17 nov. 2026. | 1.5 |
+| EXPRESS. *Routing*. [20--]f. Disponível em: https://expressjs.com/en/guide/routing/. Acesso em: 17 nov. 2026. | 1.5 |
+| EXPRESS. *Using middleware*. [20--]g. Disponível em: https://expressjs.com/en/guide/using-middleware/. Acesso em: 17 nov. 2026. | 1.5 |
+| EXPRESSJS. *body-parser*. [20--]. Disponível em: https://github.com/expressjs/body-parser. Acesso em: 18 nov. 2026. | 2.5 |
+| FIELDING, R.; NOTTINGHAM, M.; RESCHKE, J. (ed.). *HTTP Semantics*. RFC 9110. [S. l.]: IETF, jun. 2022a. Disponível em: https://www.rfc-editor.org/rfc/rfc9110. Acesso em: 17 nov. 2026. | 1.2, 2.1, 2.2, 2.4, 2.5 |
+| FIELDING, R.; NOTTINGHAM, M.; RESCHKE, J. (ed.). *HTTP/1.1*. RFC 9112. [S. l.]: IETF, jun. 2022b. Disponível em: https://www.rfc-editor.org/rfc/rfc9112. Acesso em: 17 nov. 2026. | 1.1 |
+| INTEROPERABLE EUROPE PORTAL. *API contract*. [20--]. Disponível em: https://interoperable-europe.ec.europa.eu/taxonomy/term/19431. Acesso em: 18 nov. 2026. | 2.5 |
 | ISO/IEC/IEEE. *42010:2022 – Software, systems and enterprise — Architecture description*. 2. ed. Genebra: ISO/IEC; IEEE, 2022. 62 p. Disponível em: https://www.iso.org/standard/74393.html. Acesso em: 17 nov. 2026. | 2.2 |
-| MOZILLA. *Document Object Model (DOM)*. MDN Web Docs. [20--]. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model. Acesso em: 17 nov. 2026. | 1.2 |
-| MOZILLA. *HTML: HyperText Markup Language*. MDN Web Docs. [20--]. Disponível em: https://developer.mozilla.org/en-US/docs/Web/HTML. Acesso em: 17 nov. 2026. | 1.2 |
-| MOZILLA. *HTTPS*. MDN Web Docs. [20--]. Disponível em: https://developer.mozilla.org/pt-BR/docs/Glossary/HTTPS. Acesso em: 17 nov. 2026. | 1.3 |
-| MOZILLA. *Using the Fetch API*. MDN Web Docs. [20--]. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch. Acesso em: 17 nov. 2026. | 1.2 |
-| NGINX. *Beginner's Guide*. [20--]. Disponível em: https://nginx.org/en/docs/beginners_guide.html. Acesso em: 17 nov. 2026. | 1.4 |
-| NGINX. *Configuring HTTPS servers*. [20--]. Disponível em: https://nginx.org/en/docs/http/configuring_https_servers.html. Acesso em: 17 nov. 2026. | 1.4 |
-| NGINX. *Module ngx_http_core_module*. [20--]. Disponível em: https://nginx.org/en/docs/http/ngx_http_core_module.html. Acesso em: 17 nov. 2026. | 1.4 |
-| NGINX. *Module ngx_http_limit_req_module*. [20--]. Disponível em: https://nginx.org/en/docs/http/ngx_http_limit_req_module.html. Acesso em: 17 nov. 2026. | 1.4 |
-| NGINX. *Module ngx_http_proxy_module*. [20--]. Disponível em: https://nginx.org/en/docs/http/ngx_http_proxy_module.html. Acesso em: 17 nov. 2026. | 1.1, 1.4 |
-| NGINX. *Module ngx_http_v2_module*. [20--]. Disponível em: https://nginx.org/en/docs/http/ngx_http_v2_module.html. Acesso em: 17 nov. 2026. | 1.1 |
-| NGINX. *nginx documentation*. [20--]. Disponível em: https://nginx.org/en/docs/. Acesso em: 17 nov. 2026. | 1.1 |
-| NODE-POSTGRES. *Pooling*. [20--]. Disponível em: https://node-postgres.com/features/pooling. Acesso em: 17 nov. 2026. | 1.6 |
-| NODE-POSTGRES. *Queries*. [20--]. Disponível em: https://node-postgres.com/features/queries. Acesso em: 17 nov. 2026. | 1.6 |
-| NODE-POSTGRES. *Result*. [20--]. Disponível em: https://node-postgres.com/apis/result. Acesso em: 17 nov. 2026. | 1.6 |
-| NODE.JS. *AsyncWorker*. In: node-addon-api. [20--]. Disponível em: https://github.com/nodejs/node-addon-api/blob/main/doc/async_worker.md. Acesso em: 17 nov. 2026. | 1.5 |
-| NODE.JS. *Don't Block the Event Loop (or the Worker Pool)*. [20--]. Disponível em: https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop. Acesso em: 10 nov. 2026. | 1.1, 1.5 |
-| NODE.JS. *Introduction to Node.js*. [20--]. Disponível em: https://nodejs.org/learn/getting-started/introduction-to-nodejs. Acesso em: 17 nov. 2026. | 1.5 |
-| NODE.JS. *Node.js Documentation*. [20--]. Disponível em: https://nodejs.org/docs/latest/api/. Acesso em: 17 nov. 2026. | 1.1 |
-| NODE.JS. *The Node.js Event Loop*. [20--]. Disponível em: https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick. Acesso em: 17 nov. 2026. | 1.5 |
-| OWASP. *Authentication Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.8 |
-| OWASP. *Logging Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.8 |
-| OWASP. *Password Storage Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.8 |
-| OWASP. *SQL Injection Prevention Cheat Sheet*. [20--]. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 1.6, 2.1, 2.8 |
-| POSTGRESQL GLOBAL DEVELOPMENT GROUP. *PostgreSQL Documentation*. [20--]. Disponível em: https://www.postgresql.org/docs/current/. Acesso em: 17 nov. 2026. | 1.1, 1.6 |
-| RANISALT. *argon2.cpp*. In: node-argon2. [20--]. Disponível em: https://github.com/ranisalt/node-argon2/blob/master/argon2.cpp. Acesso em: 17 nov. 2026. | 1.5 |
-| RANISALT. *node-argon2*. [20--]. Disponível em: https://github.com/ranisalt/node-argon2#readme. Acesso em: 17 nov. 2026. | 1.5 |
+| MOZILLA. *Document Object Model (DOM)*. MDN Web Docs. [20--]a. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model. Acesso em: 17 nov. 2026. | 1.2 |
+| MOZILLA. *HTML: HyperText Markup Language*. MDN Web Docs. [20--]b. Disponível em: https://developer.mozilla.org/en-US/docs/Web/HTML. Acesso em: 17 nov. 2026. | 1.2 |
+| MOZILLA. *HTTPS*. MDN Web Docs. [20--]c. Disponível em: https://developer.mozilla.org/pt-BR/docs/Glossary/HTTPS. Acesso em: 17 nov. 2026. | 1.3 |
+| MOZILLA. *Using the Fetch API*. MDN Web Docs. [20--]d. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch. Acesso em: 17 nov. 2026. | 1.2 |
+| NGINX. *Beginner's Guide*. [20--]a. Disponível em: https://nginx.org/en/docs/beginners_guide.html. Acesso em: 17 nov. 2026. | 1.4, 2.4 |
+| NGINX. *Configuring HTTPS servers*. [20--]b. Disponível em: https://nginx.org/en/docs/http/configuring_https_servers.html. Acesso em: 17 nov. 2026. | 1.4 |
+| NGINX. *Module ngx_http_core_module*. [20--]c. Disponível em: https://nginx.org/en/docs/http/ngx_http_core_module.html. Acesso em: 17 nov. 2026. | 1.4 |
+| NGINX. *Module ngx_http_limit_req_module*. [20--]d. Disponível em: https://nginx.org/en/docs/http/ngx_http_limit_req_module.html. Acesso em: 17 nov. 2026. | 1.4 |
+| NGINX. *Module ngx_http_proxy_module*. [20--]e. Disponível em: https://nginx.org/en/docs/http/ngx_http_proxy_module.html. Acesso em: 17 nov. 2026. | 1.1, 1.4 |
+| NGINX. *Module ngx_http_v2_module*. [20--]f. Disponível em: https://nginx.org/en/docs/http/ngx_http_v2_module.html. Acesso em: 17 nov. 2026. | 1.1 |
+| NGINX. *nginx documentation*. [20--]g. Disponível em: https://nginx.org/en/docs/. Acesso em: 17 nov. 2026. | 1.1 |
+| NODE-POSTGRES. *Pooling*. [20--]a. Disponível em: https://node-postgres.com/features/pooling. Acesso em: 17 nov. 2026. | 1.6 |
+| NODE-POSTGRES. *Queries*. [20--]b. Disponível em: https://node-postgres.com/features/queries. Acesso em: 17 nov. 2026. | 1.6 |
+| NODE-POSTGRES. *Result*. [20--]c. Disponível em: https://node-postgres.com/apis/result. Acesso em: 17 nov. 2026. | 1.6 |
+| NODE.JS. *AsyncWorker*. In: node-addon-api. [20--]a. Disponível em: https://github.com/nodejs/node-addon-api/blob/main/doc/async_worker.md. Acesso em: 17 nov. 2026. | 1.5 |
+| NODE.JS. *Don't Block the Event Loop (or the Worker Pool)*. [20--]b. Disponível em: https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop. Acesso em: 17 nov. 2026. | 1.1, 1.5 |
+| NODE.JS. *Introduction to Node.js*. [20--]c. Disponível em: https://nodejs.org/learn/getting-started/introduction-to-nodejs. Acesso em: 17 nov. 2026. | 1.5 |
+| NODE.JS. *Node.js Documentation*. [20--]d. Disponível em: https://nodejs.org/docs/latest/api/. Acesso em: 17 nov. 2026. | 1.1, 2.4 |
+| NODE.JS. *The Node.js Event Loop*. [20--]e. Disponível em: https://nodejs.org/learn/asynchronous-work/event-loop-timers-and-nexttick. Acesso em: 17 nov. 2026. | 1.5 |
+| NOTTINGHAM, M.; FIELDING, R. *Additional HTTP Status Codes*. RFC 6585. [S. l.]: IETF, abr. 2012. Disponível em: https://www.rfc-editor.org/rfc/rfc6585. Acesso em: 18 nov. 2026. | 2.5 |
+| OWASP. *Authentication Cheat Sheet*. [20--]a. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.8 |
+| OWASP. *Logging Cheat Sheet*. [20--]b. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.8 |
+| OWASP. *Password Storage Cheat Sheet*. [20--]c. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 2.1, 2.2, 2.4, 2.6, 2.8 |
+| OWASP. *SQL Injection Prevention Cheat Sheet*. [20--]d. Disponível em: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html. Acesso em: 17 nov. 2026. | 1.6, 2.1, 2.8 |
+| POSTGRESQL GLOBAL DEVELOPMENT GROUP. *Constraints*. [20--]a. Disponível em: https://www.postgresql.org/docs/current/ddl-constraints.html. Acesso em: 17 nov. 2026. | 2.6 |
+| POSTGRESQL GLOBAL DEVELOPMENT GROUP. *PostgreSQL Documentation*. [20--]b. Disponível em: https://www.postgresql.org/docs/current/. Acesso em: 17 nov. 2026. | 1.1, 1.6, 2.4 |
+| POSTGRESQL GLOBAL DEVELOPMENT GROUP. *UUID Type*. [20--]c. Disponível em: https://www.postgresql.org/docs/current/datatype-uuid.html. Acesso em: 17 nov. 2026. | 2.6 |
+| RANISALT. *argon2.cpp*. In: node-argon2. [20--]a. Disponível em: https://github.com/ranisalt/node-argon2/blob/master/argon2.cpp. Acesso em: 17 nov. 2026. | 1.5 |
+| RANISALT. *node-argon2*. [20--]b. Disponível em: https://github.com/ranisalt/node-argon2#readme. Acesso em: 17 nov. 2026. | 1.5 |
 | RESCORLA, E. *The Transport Layer Security (TLS) Protocol Version 1.3*. RFC 9846. [S. l.]: IETF, jul. 2026. Disponível em: https://www.rfc-editor.org/rfc/rfc9846. Acesso em: 17 nov. 2026. | 1.3, 2.1 |
 | TEMOSHOK, D. *et al.* *Digital Identity Guidelines: Authentication and Authenticator Management*. NIST SP 800-63B-4. Gaithersburg: NIST, jul. 2025. DOI: 10.6028/NIST.SP.800-63b-4. Disponível em: https://pages.nist.gov/800-63-4/sp800-63b.html. Acesso em: 17 nov. 2026. | 2.1, 2.8 |
 
-## Parte B – Candidatas, previstas no esboço e nos rascunhos
+## Conferência das citações (18/11/2026)
 
-Título, autoria e data conferidos na página oficial em 17/11/2026. A coluna "Item previsto" vem do esboço; a referência só entra na Parte A quando o item a citar.
+Cada chamada no corpo foi comparada com a seção "Fontes" do próprio item e com a Parte A.
+
+| Item | Chamadas no corpo | Situação |
+|---|---|---|
+| 1.1 | Autor-data, com letras | A seção "Fontes" tinha saído do item na revisão do PR #52; foi recolocada com as 8 obras que o texto cita. |
+| 1.2, 1.3, 1.4, 1.6, 2.4, 2.6 | Nenhuma chamada autor-data | O item lista fontes, mas o corpo não as chama (o 1.3 menciona a RFC 9846 pelo número). A regra 6 pede a citação no corpo; fica para o G7 decidir se cada item recebe as chamadas. |
+| 1.5 | Autor-data, com letras | Letras aplicadas a EXPRESS, NODE.JS e RANISALT. A página *Express Object* passou ao endereço canônico da versão 5.x, o mesmo citado no 2.5. |
+| 1.7, 2.3, 2.7 | Nenhuma | O item declara que não usa bibliografia externa. |
+| 2.1, 2.2 | Título da obra em coluna de tabela | Ex.: "OWASP, *Password Storage Cheat Sheet*"; "RFC 9110". A obra é identificável, mas não está no formato autor-data. Fica para o G7. |
+| 2.5 | Autor-data, com letras | As 6 fontes do item estão na Parte A. A chamada do Interoperable Europe Portal foi acrescentada na definição de contrato de API. A entrada *express() – API Reference 5.x* passou ao título que a página exibe, *Express Object*. |
+| 2.8 | Autor-data | As chamadas "(OWASP, *título*)" passaram a "(OWASP, [20--]a–d)". |
+
+Pontos de conteúdo para o G7, vistos ao conferir as páginas do 2.5:
+
+- A página do Interoperable Europe Portal atribui a definição de contrato de API ao TOGAF, da The Open Group; o texto do 2.5 a atribui ao portal.
+- O README do `body-parser` confirma o status 400 para JSON malformado, mas não diz que o erro é repassado ao próximo middleware. O repasse está descrito na página *Error Handling* do Express, que o mesmo parágrafo já cita.
+
+## Parte B – Previstas no esboço e não citadas
+
+Nenhum item da `main` cita estas referências em 18/11/2026; por isso ficam fora da lista final. Título, autoria e data foram conferidos na página oficial em 17/11/2026.
 
 | Referência | Item previsto |
 |---|---|
@@ -106,3 +134,7 @@ Prompt (versão inicial): "Vamos começar pelos itens sob minha responsabilidade
 Prompt (revisão): "Considere apenas os itens de minha autoria, sem a revisão, que será feita com a equipe. Monte uma tabela e trate cada issue separadamente, registrando o texto em comentário na própria issue e abrindo os PRs quando necessário."
 
 Uso: lista montada pela ferramenta a partir do item 1.1, da lista de referências do esboço e dos rascunhos anexados às issues. Na revisão, a ferramenta conferiu título, autoria e data de cada referência da Parte B na página oficial e registrou as observações e lacunas acima.
+
+Prompt (finalização, 18/11/2026): "G6 e G7 podem ser finalizados agora que acabaram as outras issues? (não merge ainda, espere minha revisão)"
+
+Uso na finalização: a ferramenta comparou as chamadas no corpo de cada item com as seções "Fontes" e com esta lista, acrescentou as fontes dos itens 2.4, 2.5 e 2.6 que faltavam, atribuiu as letras de mesmo autor e as aplicou nos itens 1.1, 1.5, 2.5 e 2.8, e conferiu na página oficial as fontes novas do 2.5.

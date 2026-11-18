@@ -1,5 +1,5 @@
 # 2.4 — Componentes
-
+Autor(a): Kamilly · Revisor(a): Lucas
 ## Organização dos componentes
 
 A arquitetura da aplicação é organizada em quatro camadas: apresentação, negócio, dados e infraestrutura. Essa divisão permite separar as responsabilidades de cada parte do sistema, facilitando a manutenção, a compreensão do funcionamento e a substituição de implementações específicas sem alterar diretamente as regras de negócio.

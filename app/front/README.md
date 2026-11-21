@@ -39,6 +39,17 @@ Exigem Python com Playwright e um Chrome. Verificam estrutura e comportamento. N
 | `js/dom.js` | criação de DOM sem `innerHTML`, campos, avisos, tabela responsiva, diálogo |
 | `js/screens/` | TL-01 e TL-17 (`acesso`), TL-02 a TL-05 (`colaborador`), TL-06 a TL-10 (`gestao`), TL-11 a TL-16 (`rh-admin`) |
 
+## Valores padrão assumidos (para as issues de integração)
+
+| Dependência | Valor assumido | Onde trocar | Dono da definição |
+| --- | --- | --- | --- |
+| K8: diretório de estáticos | `app/front/dist` | variável `FRONT_DIST` do `build.mjs` | M3, item 3.12 |
+| Prefixo da API | `/api`, mesma origem | `API_BASE` (variável do build, ou `config.js` em desenvolvimento) | M3, item 3.10 |
+| Rotas e corpos da API v2.0 | as de `js/api.js` | só `js/api.js` | M3, item 3.10 |
+| Proteção CSRF | cabeçalho `X-Requested-With: fetch`, sem token | `chamar()` em `js/api.js` | M3, item 3.11 |
+| Respostas de erro | JSON com `mensagem`; 401 volta ao login, 404 vai a TL-17 | `chamar()` e `js/app.js` | M3, itens 3.2 e 3.12 |
+| Massa de dados | a de `js/mock.js` | `js/mock.js`, só demonstração | M1, item 1.2 |
+
 ## Decisões e limites
 
 - A guarda de perfil no cliente é só navegação. A autorização é do servidor (DA11): recurso de outro perfil responde 404 e a tela vai para TL-17.

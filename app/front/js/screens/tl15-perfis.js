@@ -1,39 +1,56 @@
-// TL-15 Perfis de acesso (+ estado "mudança")
-import { h, aviso, tabela, confirmar, anunciar, focarAviso } from '../dom.js';
-import { api, ApiError } from '../api.js';
-import { PERFIS, ROTULO_PERFIL } from '../dominio.js';
+// TL-15 Perfis de acesso (+ estado "mudança"). Gestor e Diretoria vêm da estrutura organizacional; RH e Administração são atribuídos aqui.
+import { h, preencher, aviso, tabela, confirmar, anunciar, focarAviso } from '../dom.js';
+import { api } from '../api.js';
 
-export async function telaPerfis(ctx) {
-  let pessoas = await api.perfis();
+const fmt = iso => iso.split('-').reverse().join('/');
+
+export async function telaPerfis() {
+  let pessoas = (await api.pessoas()).filter(p => p.ativo);
+  const tabelaSlot = h('div');
   const avisoSlot = h('div', { 'aria-live': 'polite' });
-  const corpo = h('div');
-  async function mudar(p, novo) {
-    if (novo === p.perfil) return;
-    const ok = await confirmar({ titulo: `Mudar o perfil de ${p.nome}?`, texto: `De ${ROTULO_PERFIL[p.perfil]} para ${ROTULO_PERFIL[novo]}. A sessão atual da pessoa é encerrada e ela entra de novo com o perfil novo.`, rotuloOk: 'Mudar perfil' });
-    if (!ok) { desenhar(); return; }
+  const ROTULO = { rh: 'RH', administracao: 'Administração' };
+
+  async function alternar(p, perfil, marcado, caixa) {
+    const antes = !marcado;
+    const ok = await confirmar({ titulo: `${marcado ? 'Atribuir' : 'Remover'} o perfil ${ROTULO[perfil]} ${marcado ? 'a' : 'de'} ${p.nome}?`, texto: 'A sessão atual da pessoa é encerrada e ela entra de novo com o perfil novo. A alteração fica registrada com autor e data.', rotuloOk: marcado ? 'Atribuir' : 'Remover' });
+    if (!ok) { caixa.checked = antes; caixa.focus(); return; }
+    const novos = p.perfis.filter(x => x !== perfil && x !== 'colaborador');
+    if (marcado) novos.push(perfil);
     try {
-      await api.alterarPerfil(p.id, novo);
-      pessoas = await api.perfis();
+      await api.alterarPerfis(p.id, novos);
+      pessoas = (await api.pessoas()).filter(x => x.ativo);
       desenhar();
-      // estado "TL-15 mudança"
-      avisoSlot.replaceChildren(aviso('ok', 'Perfil alterado', `${p.nome} agora é ${ROTULO_PERFIL[novo]}. Sessão anterior encerrada.`));
-      focarAviso(avisoSlot);
-      anunciar('Perfil alterado.');
-    } catch (e) { avisoSlot.replaceChildren(aviso('erro', 'Não foi possível alterar', e instanceof ApiError && e.status === 404 ? 'Esta pessoa não está disponível.' : 'Tente novamente.')); desenhar(); }
+      avisoSlot.replaceChildren(aviso('ok', 'Perfil alterado', `${p.nome}: perfil ${ROTULO[perfil]} ${marcado ? 'atribuído' : 'removido'}. A sessão da pessoa foi encerrada.`)); // estado "TL-15 mudança"
+      focarAviso(avisoSlot); anunciar('Perfil alterado.');
+    } catch (e) {
+      caixa.checked = antes;
+      avisoSlot.replaceChildren(aviso('erro', 'Não foi possível alterar', e.status === 422 ? e.message : 'Tente novamente.')); focarAviso(avisoSlot);
+    }
   }
+  const caixa = (p, perfil) => {
+    const c = h('input', { type: 'checkbox', checked: p.perfis.includes(perfil) || null, 'aria-label': `${ROTULO[perfil]}: ${p.nome}` });
+    c.addEventListener('change', () => alternar(p, perfil, c.checked, c));
+    return c;
+  };
+  const desde = (p, perfil) => (p.perfis.includes(perfil) && p.desde?.[perfil] ? `Atribuído em ${fmt(p.desde[perfil])}` : 'Não');
   function desenhar() {
-    corpo.replaceChildren(tabela({
-      legenda: 'Perfis de acesso',
+    preencher(tabelaSlot, tabela({
+      legenda: 'Perfis de acesso por pessoa',
       colunas: [
         { rotulo: 'Pessoa', celula: p => p.nome },
-        { rotulo: 'E-mail', celula: p => p.email },
-        { rotulo: 'Perfil atual', celula: p => ROTULO_PERFIL[p.perfil] },
-        { rotulo: 'Novo perfil', celula: p => h('select', { 'aria-label': `Novo perfil de ${p.nome}`, onchange: ev => mudar(p, ev.target.value), disabled: !p.ativo || null },
-          PERFIS.map(([v, t]) => h('option', { value: v, selected: v === p.perfil || null }, t))) }
+        { rotulo: 'Gestor', celula: p => desde(p, 'gestor') },
+        { rotulo: 'Diretoria', celula: p => desde(p, 'diretoria') },
+        { rotulo: 'RH', celula: p => caixa(p, 'rh') },
+        { rotulo: 'Administração', celula: p => caixa(p, 'administracao') }
       ],
       linhas: pessoas
     }));
+    tabelaSlot.firstChild.classList.add('tabela-matriz');
   }
   desenhar();
-  return h('section', null, h('h1', null, 'Perfis de acesso'), avisoSlot, corpo);
+  return h('section', null,
+    h('h1', null, 'Perfis de acesso'),
+    h('p', { class: 'sub' }, 'Todo usuário é colaborador. Gestor, Diretoria, RH e Administração são atribuídos aqui, com data de início e autor, e o histórico fica guardado. Ter dois perfis não soma permissões por inferência.'),
+    avisoSlot, tabelaSlot,
+    aviso('aviso', null, 'Cada atribuição registra perfil, início, fim e quem atribuiu (ATRIBUIÇÃO_PERFIL no modelo ER). Gerenciar um departamento não dá o perfil Gestor sozinho, e a Diretoria, isoladamente, só vê agregados (ERS 1.3, seção 2.3).'));
 }

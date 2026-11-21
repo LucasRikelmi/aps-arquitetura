@@ -5,8 +5,8 @@ from playwright.sync_api import sync_playwright
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 os.makedirs('/tmp/shots-front', exist_ok=True)
 SENHA = 'senha-dev-123'
-EMAIL = {'colaborador': 'ana.souza@empresa.com.br', 'gestor': 'carlos.lima@empresa.com.br', 'rh': 'paula.reis@empresa.com.br',
-         'diretoria': 'helena.prado@empresa.com.br', 'administracao': 'admin@empresa.com.br'}
+EMAIL = {'colaborador': 'ana.souza@empresa.com.br', 'gestor': 'rafael.torres@empresa.com.br', 'rh': 'marina.costa@empresa.com.br',
+         'diretoria': 'helena.martins@empresa.com.br', 'administracao': 'sergio.dias@empresa.com.br'}
 
 def servidor(porta, **env):
     p = subprocess.Popen(['node', str(RAIZ / 'dev' / 'servidor.mjs')], env={**os.environ, 'PORTA': str(porta), **env},

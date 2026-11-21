@@ -24,7 +24,7 @@ function logotipo() {
 
 function casca(rota, conteudo) {
   if (!sessao) return h('div', { class: 'pagina-simples' }, h('main', { id: 'conteudo', tabindex: '-1', 'data-tela': rota.tl }, conteudo));
-  const atual = rota.caminho;
+  const atual = rota.menu || rota.caminho; // telas internas destacam o item de menu de origem
   const itens = MENU[sessao.perfil] || [];
   const sair = h('button', { type: 'button', class: 'link-botao', onclick: sairDoSistema }, 'Sair');
   return h('div', { class: 'casca' },
@@ -37,7 +37,7 @@ function casca(rota, conteudo) {
     h('div', { class: 'corpo' },
       h('nav', { class: 'menu', 'aria-label': 'Principal' },
         h('ul', null, itens.map(([c, t]) =>
-          h('li', null, h('a', { href: `#${c}`, 'aria-current': atual === c || (c === 'metas' && atual === 'metas-nova') ? 'page' : null }, t))))),
+          h('li', null, h('a', { href: `#${c}`, 'aria-current': atual === c ? 'page' : null }, t))))),
       h('main', { id: 'conteudo', tabindex: '-1', 'data-tela': rota.tl }, conteudo)));
 }
 
@@ -55,7 +55,8 @@ function primeiraRota() {
 async function renderizar() {
   const minha = ++geracao;
   if (!raiz.firstChild) raiz.append(h('p', { class: 'carregando', role: 'status' }, 'Carregando…'));
-  const caminho = (location.hash.replace(/^#\/?/, '').split('?')[0]) || '';
+  const [caminho, consulta = ''] = (location.hash.replace(/^#\/?/, '').split('?'));
+  const params = Object.fromEntries(new URLSearchParams(consulta));
   if (!sessao) sessao = await api.sessao().catch(() => null);
   if (minha !== geracao) return;
 
@@ -65,7 +66,7 @@ async function renderizar() {
   if (!rota.publica && !sessao) return navegar('entrar');
   if (rota.caminho === 'entrar' && sessao) return navegar(primeiraRota());
 
-  const ctx = { sessao, navegar, anunciar, rota };
+  const ctx = { sessao, navegar, anunciar, rota, params };
   let conteudo;
   try {
     conteudo = await rota.tela(ctx);

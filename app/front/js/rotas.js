@@ -19,13 +19,13 @@ import { telaNaoEncontrado } from './screens/tl17-nao-encontrado.js';
 export const ROTAS = [
   { caminho: 'entrar', tl: 'TL-01', rastro: 'RF09', publica: true, tela: telaEntrar },
   { caminho: 'checkin', tl: 'TL-02', rastro: 'UC01 · RF01 RF04 RNF03 RNF08', perfis: ['colaborador'], tela: telaCheckin },
-  { caminho: 'checkin-encerrado', tl: 'TL-04', rastro: 'UC01 ext. 2b · RF01', perfis: ['colaborador'], tela: telaJanelaEncerrada },
+  { caminho: 'checkin-encerrado', menu: 'checkin', tl: 'TL-04', rastro: 'UC01 ext. 2b · RF01', perfis: ['colaborador'], tela: telaJanelaEncerrada },
   { caminho: 'historico', tl: 'TL-05', rastro: 'UC05 · RF10 RNF07', perfis: ['colaborador'], tela: telaHistorico },
   { caminho: 'painel', tl: 'TL-06', rastro: 'UC03 · RF05 RF06 RF08 RNF06', perfis: ['gestor', 'rh'], tela: telaPainel },
-  { caminho: 'alertas', tl: 'TL-07', rastro: 'UC04 UC15 · RF07 RF15', perfis: ['gestor', 'rh'], tela: telaAlerta },
+  { caminho: 'alerta', menu: 'painel', tl: 'TL-07', rastro: 'UC04 UC15 · RF07 RF15', perfis: ['gestor', 'rh'], tela: telaAlerta },
   { caminho: 'metas', tl: 'TL-08', rastro: 'UC02 ext. 1a · RF03', perfis: ['gestor'], tela: telaMetas },
-  { caminho: 'metas-nova', tl: 'TL-09', rastro: 'UC02 · RF03 RNF04', perfis: ['gestor'], tela: telaMetaNova },
-  { caminho: 'progresso', tl: 'TL-10', rastro: 'UC06 · RF04', perfis: ['gestor'], tela: telaProgresso },
+  { caminho: 'metas-nova', menu: 'metas', tl: 'TL-09', rastro: 'UC02 · RF03 RNF04', perfis: ['gestor'], tela: telaMetaNova },
+  { caminho: 'validar', menu: 'metas', tl: 'TL-10', rastro: 'UC06 · RF04', perfis: ['gestor'], tela: telaProgresso },
   { caminho: 'cadastro', tl: 'TL-11', rastro: 'UC07 · RF02 RNF04', perfis: ['rh', 'administracao'], tela: telaCadastro },
   { caminho: 'formulario', tl: 'TL-12', rastro: 'UC10 · RF11', perfis: ['rh'], tela: telaFormulario },
   { caminho: 'parametros', tl: 'TL-13', rastro: 'UC16 · RF01 RF06 RF07 RNF01', perfis: ['rh'], tela: telaParametros },
@@ -35,10 +35,11 @@ export const ROTAS = [
 ];
 export const NAO_ENCONTRADO = { caminho: '404', tl: 'TL-17', rastro: 'ext. *a · RF09 RNF07', publica: true, tela: telaNaoEncontrado };
 
+// Menus conforme o Figma. Diretoria não tem menu desenhado; usa só Relatórios (a conferir com o RH).
 export const MENU = {
   colaborador: [['checkin', 'Check-in da semana'], ['historico', 'Meu histórico']],
-  gestor: [['painel', 'Painel da equipe'], ['alertas', 'Alertas'], ['metas', 'Metas da equipe'], ['progresso', 'Validar progresso'], ['relatorios', 'Relatórios']],
-  rh: [['painel', 'Painel'], ['alertas', 'Alertas'], ['cadastro', 'Cadastro'], ['formulario', 'Formulário de check-in'], ['parametros', 'Parâmetros'], ['relatorios', 'Relatórios']],
-  diretoria: [['relatorios', 'Relatórios agregados']],
+  gestor: [['painel', 'Painel da equipe'], ['metas', 'Metas'], ['relatorios', 'Relatórios']],
+  rh: [['painel', 'Painel da empresa'], ['cadastro', 'Cadastro'], ['formulario', 'Formulário'], ['parametros', 'Parâmetros'], ['relatorios', 'Relatórios']],
+  diretoria: [['relatorios', 'Relatórios']],
   administracao: [['cadastro', 'Cadastro'], ['perfis', 'Perfis de acesso'], ['log', 'Log de acesso']]
 };

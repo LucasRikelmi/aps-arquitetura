@@ -50,7 +50,7 @@ export function aviso(tipo, titulo, corpo, { role } = {}) {
     h('div', null, titulo && h('strong', null, titulo), corpo && h('p', null, corpo)));
 }
 
-export function campo({ rotulo, nome, tipo = 'text', valor = '', obrigatorio = false, erro = '', ajuda = '', opcoes, autocomplete }) {
+export function campo({ rotulo, nome, tipo = 'text', valor = '', obrigatorio = false, erro = '', ajuda = '', opcoes, autocomplete, marca = true }) {
   const id = uid(nome);
   const idErro = `${id}-erro`;
   const idAjuda = `${id}-ajuda`;
@@ -65,7 +65,7 @@ export function campo({ rotulo, nome, tipo = 'text', valor = '', obrigatorio = f
     ctl = h('input', { ...base, type: tipo, value: valor });
   }
   return h('div', { class: `campo${erro ? ' tem-erro' : ''}` },
-    h('label', { for: id }, rotulo, obrigatorio ? h('span', { class: 'obrig' }, ' (obrigatório)') : ' (opcional)'),
+    h('label', { for: id }, rotulo, !marca ? null : obrigatorio ? h('span', { class: 'obrig' }, ' (obrigatório)') : ' (opcional)'),
     ajuda && h('p', { id: idAjuda, class: 'ajuda' }, ajuda),
     ctl,
     erro && h('p', { id: idErro, class: 'msg-erro' }, h('span', { 'aria-hidden': 'true' }, '! '), erro));
@@ -114,5 +114,31 @@ export function confirmar({ titulo, texto, rotuloOk, perigo = false }) {
     dlg.addEventListener('close', () => { dlg.remove(); antes?.focus?.(); resolve(dlg.returnValue === 'ok'); });
     document.body.append(dlg);
     dlg.showModal();
+  });
+}
+
+// Selo de situação: texto sempre presente, cor só reforça (RNF08).
+export const selo = (texto, tipo = 'neutro') => h('span', { class: `selo selo-${tipo}` }, texto);
+
+// Cartão-resumo (indicador, valor e nota).
+export const cartaoMini = (titulo, valor, nota) =>
+  h('li', { class: 'cartao-mini' }, h('span', { class: 'cartao-mini-titulo' }, titulo), h('strong', null, valor), nota && h('span', null, nota));
+
+// Diálogo com um campo de texto (alterar texto de pergunta). Devolve o texto ou null.
+export function pedirTexto({ titulo, rotulo, valor = '', rotuloOk = 'Salvar' }) {
+  return new Promise(resolve => {
+    const antes = document.activeElement;
+    const entrada = h('input', { type: 'text', id: 'dlg-texto', value: valor, required: true });
+    const erro = h('p', { class: 'msg-erro', role: 'alert' });
+    const dlg = h('dialog', { class: 'dialogo', 'aria-labelledby': 'dlg-t' },
+      h('h2', { id: 'dlg-t' }, titulo),
+      h('div', { class: 'campo' }, h('label', { for: 'dlg-texto' }, rotulo), entrada, erro),
+      h('div', { class: 'acoes' },
+        botao('Cancelar', { variante: 'secundario', onClick: () => dlg.close('cancel') }),
+        botao(rotuloOk, { onClick: () => { if (!entrada.value.trim()) { erro.textContent = 'Informe o texto.'; entrada.focus(); return; } dlg.close('ok'); } })));
+    dlg.addEventListener('close', () => { const ok = dlg.returnValue === 'ok'; const v = entrada.value.trim(); dlg.remove(); antes?.focus?.(); resolve(ok ? v : null); });
+    document.body.append(dlg);
+    dlg.showModal();
+    entrada.focus();
   });
 }

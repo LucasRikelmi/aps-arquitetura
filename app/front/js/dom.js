@@ -23,6 +23,15 @@ export function add(el, children) {
 // replaceChildren converte null/false em texto; este helper os ignora.
 export function preencher(el, ...filhos) { el.replaceChildren(); return add(el, filhos); }
 
+// Leva o foco ao primeiro aviso do contêiner, para o leitor de tela anunciar o resultado (HU-17).
+export function focarAviso(raiz, seletor = '[role=alert], [role=status]') {
+  const a = raiz.querySelector(seletor);
+  if (!a) return null;
+  a.setAttribute('tabindex', '-1');
+  a.focus();
+  return a;
+}
+
 let seq = 0;
 export const uid = (p = 'id') => `${p}-${++seq}`;
 

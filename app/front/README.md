@@ -33,11 +33,14 @@ Exigem Python com Playwright e um Chrome. Verificam estrutura e comportamento. N
 
 | Caminho | Conteúdo |
 | --- | --- |
-| `js/app.js` | casca, roteador com guarda de perfil, menu por perfil |
-| `js/api.js` | cliente da API (fetch, mesma origem) e escolha mock ou real |
+| `js/app.js` | casca, sessão e roteador por hash com guarda de perfil |
+| `js/rotas.js` | tabela de rotas (TL ↔ UC ↔ RF), perfis autorizados e menu por perfil |
+| `js/api.js`, `js/errors.js` | cliente da API (fetch, mesma origem) e escolha entre mock e real |
 | `js/mock.js` | servidor fictício; removido do build |
-| `js/dom.js` | criação de DOM sem `innerHTML`, campos, avisos, tabela responsiva, diálogo |
-| `js/screens/` | TL-01 e TL-17 (`acesso`), TL-02 a TL-05 (`colaborador`), TL-06 a TL-10 (`gestao`), TL-11 a TL-16 (`rh-admin`) |
+| `js/dominio.js` | constantes e formatadores compartilhados (perfis, humor, carga, datas, e-mail) |
+| `js/dom.js` | primitivos: `h`, `campo`, `grupoRadio`, `botao`, `aviso`, `tabela`, `confirmar`, `focarAviso` |
+| `js/componentes/` | `barra-progresso`, `dialogo-valor`, `formulario-checkin` |
+| `js/screens/` | um arquivo por tela: `tl01-entrar.js` até `tl17-nao-encontrado.js` |
 
 ## Valores padrão assumidos (para as issues de integração)
 

@@ -52,7 +52,8 @@ with sync_playwright() as p:
     # Gestor: TL-07 tratado, TL-09 erro/salvo
     pg,e=novo(); entrar(pg,'Gestor'); pg.goto(U+'#/alertas'); pg.wait_for_selector('.item-alerta')
     pg.locator('.item-alerta').first.click(); pg.get_by_label('Ação realizada').select_option('Conversa individual'); pg.get_by_role('button',name='Registrar tratamento').click()
-    pg.wait_for_selector('text=Alerta tratado'); ok('TL-07 tratado',True)
+    pg.wait_for_selector('text=Alerta tratado'); ok('TL-07 tratado',True); ok('Foco após ação não fica no body: TL-07', pg.evaluate("document.activeElement!==document.body"))
+
     pg.screenshot(path='/tmp/shots-front/estado_TL07_tratado.png',full_page=True)
     pg.goto(U+'#/metas/nova'); pg.wait_for_selector('form')
     pg.get_by_label('Meta').first.fill('Nova meta'); pg.get_by_label('Responsável').select_option('Ana Souza'); pg.get_by_label('Início').fill('2026-12-10'); pg.get_by_label('Prazo').fill('2026-12-01'); pg.get_by_label('Indicador').fill('x')
@@ -66,9 +67,11 @@ with sync_playwright() as p:
     pg.get_by_label('Nome').fill('Teste'); pg.get_by_label('E-mail corporativo').fill('ana.souza@empresa.com.br'); pg.get_by_label('Cargo').fill('x'); pg.get_by_label('Departamento').fill('y')
     pg.get_by_role('button',name='Cadastrar').click(); pg.wait_for_selector('text=já está cadastrado'); ok('TL-11 e-mail duplicado',True)
     pg.screenshot(path='/tmp/shots-front/estado_TL11_duplicado.png',full_page=True)
-    pg.get_by_role('button',name='Desligar Bruno Matos').click(); pg.get_by_role('dialog').get_by_role('button',name='Desligar').click(); pg.wait_for_selector('text=perdeu o acesso'); ok('TL-11 desligado',True)
+    pg.get_by_role('button',name='Desligar Bruno Matos').click(); pg.get_by_role('dialog').get_by_role('button',name='Desligar').click(); pg.wait_for_selector('text=perdeu o acesso'); ok('TL-11 desligado',True); ok('Foco após ação não fica no body: TL-11', pg.evaluate("document.activeElement!==document.body"))
+
     pg.goto(U+'#/perfis'); pg.wait_for_selector('select')
-    pg.get_by_label('Novo perfil de Ana Souza').select_option('gestor'); pg.get_by_role('dialog').get_by_role('button',name='Mudar perfil').click(); pg.wait_for_selector('text=Perfil alterado'); ok('TL-15 mudança',True)
+    pg.get_by_label('Novo perfil de Ana Souza').select_option('gestor'); pg.get_by_role('dialog').get_by_role('button',name='Mudar perfil').click(); pg.wait_for_selector('text=Perfil alterado'); ok('TL-15 mudança',True); ok('Foco após ação não fica no body: TL-15', pg.evaluate("document.activeElement!==document.body"))
+
     pg.screenshot(path='/tmp/shots-front/estado_TL15_mudanca.png',full_page=True)
     ok('Admin erros de console',not e,e)
     # Acessibilidade básica em todas as telas de um perfil
@@ -82,5 +85,16 @@ with sync_playwright() as p:
             ok(f'A11y foco no conteúdo {perfil} #{r}',foco=='conteudo',foco)
             ok(f'A11y um único h1 {perfil} #{r}',pg.locator('h1').count()==1,pg.locator('h1').count())
             ok(f'A11y lang e landmarks {perfil} #{r}',pg.evaluate("document.documentElement.lang=='pt-BR' && !!document.querySelector('main') && !!document.querySelector('nav')"))
+    # TL-10: ajuste de progresso por diálogo acessível (sem window.prompt)
+    pg,e=novo(); entrar(pg,'Gestor'); pg.goto(U+'#/progresso'); pg.wait_for_selector('table')
+    pg.get_by_role('button',name='Ajustar progresso de Ana Souza').click(); pg.wait_for_selector('dialog[open]')
+    ok('TL-10 diálogo com rótulo e foco no campo', pg.evaluate("document.activeElement.tagName=='INPUT' && document.activeElement.labels.length==1"))
+    pg.get_by_label('Novo progresso (%)').fill('150'); pg.get_by_role('button',name='Salvar ajuste').click(); pg.wait_for_selector('.msg-erro')
+    ok('TL-10 valor fora da faixa rejeitado', pg.locator('dialog[open]').count()==1)
+    pg.get_by_label('Novo progresso (%)').fill('70'); pg.get_by_role('button',name='Salvar ajuste').click(); pg.wait_for_selector('td:has-text("ajustado pelo gestor")')
+    ok('TL-10 ajuste aplicado e origem rotulada', '70%' in pg.inner_text('main') and pg.locator('dialog[open]').count()==0)
+    ok('TL-10 foco no aviso de resultado', pg.evaluate("document.activeElement.getAttribute('role')=='status'"))
+    pg.get_by_role('button',name='Validar progresso de Bruno Matos').click(); pg.wait_for_selector('td:has-text("validado pelo gestor")'); ok('TL-10 validar',True)
+    ok('TL-10 erros de console',not e,e)
     b.close()
 srv.terminate(); print('\n'.join(res)); print('\nFALHAS:',sum(1 for r in res if r.startswith('FALHA')))

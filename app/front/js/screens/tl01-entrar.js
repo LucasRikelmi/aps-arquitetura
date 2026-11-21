@@ -1,5 +1,5 @@
-// TL-01 Entrar (+ estado "TL-01 erro") e TL-17 Recurso inexistente.
-import { h, preencher, campo, botao, aviso } from '../dom.js';
+// TL-01 Entrar (+ estado "TL-01 erro")
+import { h, preencher, campo, botao, aviso, focarAviso } from '../dom.js';
 import { api, ApiError } from '../api.js';
 
 const cfg = window.APP_CONFIG || {};
@@ -25,10 +25,8 @@ export async function telaEntrar(ctx) {
     slot.replaceChildren();
     if (erro) {
       // Mensagem única, sem dizer se o e-mail existe (RF03; item 3.1a).
-      const a = aviso('erro', 'Não foi possível entrar', erro);
-      a.setAttribute('tabindex', '-1');
-      slot.append(a);
-      a.focus();
+      slot.append(aviso('erro', 'Não foi possível entrar', erro));
+      focarAviso(slot);
     }
   };
 
@@ -73,13 +71,4 @@ export async function telaEntrar(ctx) {
       h('p', { class: 'ajuda' }, 'Atalhos existem só no protótipo. No sistema o perfil vem do cadastro e é validado no servidor (RF09).')));
   }
   return raiz;
-}
-
-export async function telaNaoEncontrado(ctx) {
-  const logado = !!ctx.sessao;
-  return h('section', { class: 'vazio' },
-    h('h1', null, 'Recurso inexistente'),
-    h('p', null, 'O endereço que você abriu não existe ou não está disponível para o seu perfil.'),
-    h('p', { class: 'ajuda' }, 'Código 404'),
-    h('a', { class: 'btn btn-primario', href: logado ? '#/' : '#/entrar' }, logado ? 'Voltar ao início' : 'Ir para a entrada'));
 }

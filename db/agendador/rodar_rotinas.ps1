@@ -49,6 +49,7 @@ function Invoke-Psql([string]$sqlTexto) {
 }
 
 $rotinas = @'
+SET search_path TO rh, public;
 SELECT 'checkins: '   || retencao_anonimizar_checkins();
 SELECT 'desligados: ' || retencao_anonimizar_desligados();
 SELECT 'log: '        || retencao_expurgar_log();
@@ -70,7 +71,7 @@ if (Test-Path $falhas) { $seguidas = [int](Get-Content $falhas | Select-Object -
 $seguidas++
 Set-Content -Path $falhas -Value $seguidas
 
-if ($seguidas -ge 3) {
+if ($seguidas -eq 3) {   # aviso uma vez por sequência de falhas
   $aviso = @'
 INSERT INTO notificacao (matricula, tipo, canal, mensagem, situacao)
 VALUES ('M001', 'aviso operacional', 'sistema',

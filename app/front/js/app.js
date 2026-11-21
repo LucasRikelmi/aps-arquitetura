@@ -13,7 +13,7 @@ const raiz = document.getElementById('app');
 let sessao = null;
 let geracao = 0; // descarta renderizações obsoletas quando o usuário navega rápido
 
-export const navegar = destino => { location.hash = `#/${destino}`; };
+export const navegar = destino => { location.hash = `#${destino}`; };
 export const sessaoAtual = () => sessao;
 export function encerrarSessaoLocal() { sessao = null; }
 
@@ -26,7 +26,11 @@ function logotipo() {
 function casca(rota, conteudo) {
   if (!sessao) return h('div', { class: 'pagina-simples' }, h('main', { id: 'conteudo', tabindex: '-1' }, conteudo));
   const atual = rota.caminho;
-  const itens = MENU[sessao.perfil] || [];
+  const itens = [...(MENU[sessao.perfil] || [])];
+  if (cfg.ATALHOS_DEMO) { // só no protótipo: abre telas que não têm entrada própria no menu
+    if (sessao.perfil === 'colaborador') itens.push(['checkin-celular', 'TL-03 no celular (demo)'], ['checkin-encerrado', 'TL-04 janela encerrada (demo)']);
+    itens.push(['recurso-inexistente', 'TL-17 recurso inexistente (demo)']);
+  }
   const sair = h('button', { type: 'button', class: 'link-botao', onclick: sairDoSistema }, 'Sair');
   return h('div', { class: 'casca' },
     h('header', { class: 'topo' },
@@ -39,7 +43,7 @@ function casca(rota, conteudo) {
     h('div', { class: 'corpo' },
       h('nav', { class: 'menu', 'aria-label': 'Principal' },
         h('ul', null, itens.map(([c, t]) =>
-          h('li', null, h('a', { href: `#/${c}`, 'aria-current': atual === c || (c === 'checkin' && atual.startsWith('checkin')) || (c === 'metas' && atual.startsWith('metas')) ? 'page' : null }, t))))),
+          h('li', null, h('a', { href: `#${c}`, 'aria-current': atual === c || (c === 'metas' && atual === 'metas-nova') ? 'page' : null }, t))))),
       h('main', { id: 'conteudo', tabindex: '-1' }, conteudo)));
 }
 

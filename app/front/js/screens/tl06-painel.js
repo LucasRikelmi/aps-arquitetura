@@ -26,5 +26,5 @@ export async function telaPainel() {
       ],
       linhas: p.equipe
     }),
-    h('p', { class: 'ajuda' }, h('a', { href: '#/alertas' }, 'Ver e tratar alertas')));
+    h('p', { class: 'ajuda' }, h('a', { href: '#alertas' }, 'Ver e tratar alertas')));
 }

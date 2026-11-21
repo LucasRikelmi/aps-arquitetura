@@ -16,7 +16,7 @@ export async function telaMetaNova(ctx) {
       campo({ rotulo: 'Início', nome: 'inicio', tipo: 'date', valor: v.inicio || '', obrigatorio: true, erro: erros.inicio }),
       campo({ rotulo: 'Prazo', nome: 'prazo', tipo: 'date', valor: v.prazo || '', obrigatorio: true, erro: erros.prazo }),
       campo({ rotulo: 'Indicador', nome: 'indicador', valor: v.indicador || '', obrigatorio: true, erro: erros.indicador, ajuda: 'Como o progresso será medido.' }),
-      h('div', { class: 'acoes' }, botao('Salvar meta', { tipo: 'submit' }), h('a', { class: 'btn btn-secundario', href: '#/metas' }, 'Voltar')));
+      h('div', { class: 'acoes' }, botao('Salvar meta', { tipo: 'submit' }), h('a', { class: 'btn btn-secundario', href: '#metas' }, 'Voltar')));
     if (n || salvo) focarAviso(form);
   };
   form.addEventListener('submit', async ev => {

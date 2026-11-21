@@ -26,7 +26,7 @@ export const ROTAS = [
   { caminho: 'painel', tl: 'TL-06', rastro: 'UC03 · RF05 RF06 RF08 RNF06', perfis: ['gestor', 'rh'], tela: telaPainel },
   { caminho: 'alertas', tl: 'TL-07', rastro: 'UC04 UC15 · RF07 RF15', perfis: ['gestor', 'rh'], tela: telaAlerta },
   { caminho: 'metas', tl: 'TL-08', rastro: 'UC02 ext. 1a · RF03', perfis: ['gestor'], tela: telaMetas },
-  { caminho: 'metas/nova', tl: 'TL-09', rastro: 'UC02 · RF03 RNF04', perfis: ['gestor'], tela: telaMetaNova },
+  { caminho: 'metas-nova', tl: 'TL-09', rastro: 'UC02 · RF03 RNF04', perfis: ['gestor'], tela: telaMetaNova },
   { caminho: 'progresso', tl: 'TL-10', rastro: 'UC06 · RF04', perfis: ['gestor'], tela: telaProgresso },
   { caminho: 'cadastro', tl: 'TL-11', rastro: 'UC07 · RF02 RNF04', perfis: ['rh', 'administracao'], tela: telaCadastro },
   { caminho: 'formulario', tl: 'TL-12', rastro: 'UC10 · RF11', perfis: ['rh'], tela: telaFormulario },

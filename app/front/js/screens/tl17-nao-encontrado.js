@@ -7,5 +7,5 @@ export async function telaNaoEncontrado(ctx) {
     h('h1', null, 'Recurso inexistente'),
     h('p', null, 'O endereço que você abriu não existe ou não está disponível para o seu perfil.'),
     h('p', { class: 'ajuda' }, 'Código 404'),
-    h('a', { class: 'btn btn-primario', href: logado ? '#/' : '#/entrar' }, logado ? 'Voltar ao início' : 'Ir para a entrada'));
+    h('a', { class: 'btn btn-primario', href: logado ? '#' : '#entrar' }, logado ? 'Voltar ao início' : 'Ir para a entrada'));
 }

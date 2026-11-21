@@ -9,7 +9,7 @@ time.sleep(1)
 URL = 'http://127.0.0.1:8765/index.html'
 PERFIS = {
  'colaborador': ['checkin','checkin-celular','checkin-encerrado','historico','painel'],
- 'gestor': ['painel','alertas','metas','metas/nova','progresso','relatorios','cadastro'],
+ 'gestor': ['painel','alertas','metas','metas-nova','progresso','relatorios','cadastro'],
  'rh': ['painel','alertas','cadastro','formulario','parametros','relatorios','perfis'],
  'diretoria': ['relatorios','painel'],
  'administracao': ['cadastro','perfis','log','relatorios'],
@@ -25,11 +25,11 @@ with sync_playwright() as p:
             erros = []
             pg.on('console', lambda m: erros.append(m.text) if m.type == 'error' else None)
             pg.on('pageerror', lambda e: erros.append(str(e)))
-            pg.goto(URL + '#/entrar')
+            pg.goto(URL + '#entrar')
             pg.get_by_role('button', name={'colaborador':'Colaborador','gestor':'Gestor','rh':'RH','diretoria':'Diretoria','administracao':'Administração'}[perfil], exact=True).click()
             pg.wait_for_selector('h1')
             for r in rotas:
-                pg.evaluate(f"location.hash = '#/{r}'")
+                pg.evaluate(f"location.hash = '#{r}'")
                 pg.wait_for_timeout(450)
                 h1 = pg.evaluate("document.querySelector('h1')?.textContent || ''")
                 sw = pg.evaluate("document.documentElement.scrollWidth - document.documentElement.clientWidth")

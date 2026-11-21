@@ -515,4 +515,40 @@ REVOKE DELETE ON lotacao, afastamento, gerencia, cobertura, atribuicao_perfil,
 REVOKE UPDATE, DELETE ON log_acesso FROM rh_app;
 REVOKE UPDATE, DELETE ON alteracao_parametro FROM rh_app;
 
+-- ---------------------------------------------------------------------
+-- Índices nas chaves estrangeiras e nas colunas de consulta frequente.
+-- Sem eles, DELETE/UPDATE nas tabelas pai e os JOINs fazem varredura completa.
+-- ---------------------------------------------------------------------
+CREATE INDEX IF NOT EXISTS idx_departamento_superior   ON departamento (superior_cod);
+CREATE INDEX IF NOT EXISTS idx_lotacao_departamento    ON lotacao (cod_departamento);
+CREATE INDEX IF NOT EXISTS idx_lotacao_cargo           ON lotacao (cod_cargo);
+CREATE INDEX IF NOT EXISTS idx_gerencia_gestor         ON gerencia (matricula_gestor);
+CREATE INDEX IF NOT EXISTS idx_cobertura_departamento  ON cobertura (cod_departamento);
+CREATE INDEX IF NOT EXISTS idx_cobertura_substituto    ON cobertura (matricula_substituto);
+CREATE INDEX IF NOT EXISTS idx_atribuicao_perfil       ON atribuicao_perfil (cod_perfil);
+CREATE INDEX IF NOT EXISTS idx_atribuicao_autor        ON atribuicao_perfil (matricula_autor);
+CREATE INDEX IF NOT EXISTS idx_designacao_gestor       ON designacao (matricula_gestor);
+CREATE INDEX IF NOT EXISTS idx_designacao_rh           ON designacao (matricula_rh);
+CREATE INDEX IF NOT EXISTS idx_meta_responsavel        ON meta (matricula_responsavel);
+CREATE INDEX IF NOT EXISTS idx_meta_cadastrante        ON meta (matricula_cadastrante);
+CREATE INDEX IF NOT EXISTS idx_checkin_coorte          ON checkin (coorte_departamento);
+CREATE INDEX IF NOT EXISTS idx_checkin_ano_semana      ON checkin (ano, semana);
+CREATE INDEX IF NOT EXISTS idx_progresso_meta          ON progresso_meta (cod_meta);
+CREATE INDEX IF NOT EXISTS idx_progresso_validador     ON progresso_meta (matricula_validador);
+CREATE INDEX IF NOT EXISTS idx_alerta_meta_envolvida   ON alerta (cod_meta_envolvida);
+CREATE INDEX IF NOT EXISTS idx_alerta_checkin_checkin  ON alerta_checkin (cod_checkin);
+CREATE INDEX IF NOT EXISTS idx_alerta_meta_meta        ON alerta_meta (cod_meta);
+CREATE INDEX IF NOT EXISTS idx_destinatario_matricula  ON destinatario_alerta (matricula);
+CREATE INDEX IF NOT EXISTS idx_acao_colaborador        ON acao_acompanhamento (matricula_colaborador);
+CREATE INDEX IF NOT EXISTS idx_acao_alerta             ON acao_acompanhamento (cod_alerta);
+CREATE INDEX IF NOT EXISTS idx_acao_meta               ON acao_acompanhamento (cod_meta);
+CREATE INDEX IF NOT EXISTS idx_acao_gestor             ON acao_acompanhamento (matricula_gestor);
+CREATE INDEX IF NOT EXISTS idx_acao_rh                 ON acao_acompanhamento (matricula_rh);
+CREATE INDEX IF NOT EXISTS idx_notificacao_alerta      ON notificacao (cod_alerta);
+CREATE INDEX IF NOT EXISTS idx_notificacao_acao        ON notificacao (cod_acao);
+CREATE INDEX IF NOT EXISTS idx_log_ator                ON log_acesso (matricula_ator);
+CREATE INDEX IF NOT EXISTS idx_log_titular             ON log_acesso (matricula_titular);
+CREATE INDEX IF NOT EXISTS idx_log_data_hora           ON log_acesso (data_hora);
+CREATE INDEX IF NOT EXISTS idx_alteracao_rh            ON alteracao_parametro (matricula_rh);
+
 -- Fim do recorte 001.

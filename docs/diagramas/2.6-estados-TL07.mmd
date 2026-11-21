@@ -1,0 +1,16 @@
+---
+title: Figura 2.6b - Transição de estados de TL-07 Tratar alerta
+---
+stateDiagram-v2
+    direction LR
+    [*] --> Lista: abrir tela
+    Lista --> AlertaAberto: selecionar alerta aberto
+    Lista --> Tratado: selecionar alerta tratado
+    AlertaAberto --> SemAcao: registrar sem escolher ação
+    SemAcao --> AlertaAberto: escolher a ação
+    AlertaAberto --> Tratado: registrar tratamento (gestor)
+    AlertaAberto --> SomenteLeitura: perfil RH observador
+    AlertaAberto --> Inexistente: servidor responde 404 (TL-17)
+    Tratado --> Lista: selecionar outro alerta
+    SomenteLeitura --> Lista: selecionar outro alerta
+    Inexistente --> [*]

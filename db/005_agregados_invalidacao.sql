@@ -173,6 +173,8 @@ CREATE TRIGGER parametro_invalida AFTER INSERT ON alteracao_parametro
 -- Recálculo de uma semana de um departamento.
 -- Elegíveis: usuários lotados no departamento na segunda-feira da semana.
 -- Respostas: check-ins da semana cujo departamento é esse.
+-- Cada consulta usa a subconsulta k (check-ins da semana no departamento).
+-- Sem tabela temporária: a versão anterior criava uma a cada chamada.
 -- ---------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION agregado_recalcular(p_dep text, p_ano smallint, p_semana smallint)
 RETURNS void
@@ -192,32 +194,30 @@ BEGIN
      AND v_seg >= l.data_inicio
      AND (l.data_fim IS NULL OR v_seg <= l.data_fim);
 
-  CREATE TEMP TABLE IF NOT EXISTS agr_ck (
-    cod_checkin bigint, humor smallint, carga text, dep text
-  ) ON COMMIT DROP;
-  TRUNCATE agr_ck;
-
-  INSERT INTO agr_ck
-  SELECT c.cod_checkin, c.humor, c.carga, checkin_departamento(c)
-    FROM checkin c
-   WHERE c.ano = p_ano AND c.semana = p_semana;
-
-  SELECT count(*),
-         avg(humor),
-         100.0 * count(*) FILTER (WHERE carga = 'Pesada') / nullif(count(*), 0)
+  SELECT count(*), avg(k.humor),
+         100.0 * count(*) FILTER (WHERE k.carga = 'Pesada') / nullif(count(*), 0)
     INTO v_resp, v_humor, v_pesada
-    FROM agr_ck WHERE dep = p_dep;
+    FROM (SELECT c.cod_checkin, c.humor, c.carga, checkin_departamento(c) AS dep
+            FROM checkin c
+           WHERE c.ano = p_ano AND c.semana = p_semana) k
+   WHERE k.dep = p_dep;
 
   SELECT avg(COALESCE(p.perc_validado, p.perc_informado))
     INTO v_prog
     FROM progresso_meta p
-    JOIN agr_ck k ON k.cod_checkin = p.cod_checkin
+    JOIN (SELECT c.cod_checkin, checkin_departamento(c) AS dep
+            FROM checkin c
+           WHERE c.ano = p_ano AND c.semana = p_semana) k
+      ON k.cod_checkin = p.cod_checkin
    WHERE k.dep = p_dep;
 
   SELECT count(DISTINCT a.cod_alerta)
     INTO v_alertas
     FROM alerta_checkin ac
-    JOIN agr_ck k ON k.cod_checkin = ac.cod_checkin
+    JOIN (SELECT c.cod_checkin, checkin_departamento(c) AS dep
+            FROM checkin c
+           WHERE c.ano = p_ano AND c.semana = p_semana) k
+      ON k.cod_checkin = ac.cod_checkin
     JOIN alerta a ON a.cod_alerta = ac.cod_alerta
    WHERE k.dep = p_dep AND a.data_encerramento IS NULL;
 

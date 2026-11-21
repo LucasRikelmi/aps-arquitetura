@@ -1,10 +1,11 @@
-// Cliente da API. Modo mock (config.js) ou fetch na mesma origem, com sessão por cookie (DA13).
+// Cliente da API: fetch na mesma origem, com sessão por cookie (DA13).
 import { ApiError } from './errors.js';
 
 export { ApiError };
 const cfg = window.APP_CONFIG || {};
 
-async function chamar(metodo, caminho, corpo) {
+// Sessão expirada em qualquer chamada autenticada (401) avisa a aplicação, que volta ao login.
+async function chamar(metodo, caminho, corpo, { autenticada = true } = {}) {
   let res;
   try {
     res = await fetch(cfg.API_BASE + caminho, {
@@ -18,14 +19,18 @@ async function chamar(metodo, caminho, corpo) {
   }
   let json = null;
   try { json = await res.json(); } catch { /* corpo vazio ou não JSON (error_page do Nginx deve ser JSON, item 3.12) */ }
-  if (!res.ok) throw new ApiError(res.status, json?.mensagem || json?.message || 'Falha na requisição.', json);
+  if (!res.ok) {
+    if (res.status === 401 && autenticada) window.dispatchEvent(new CustomEvent('sessao-expirada'));
+    throw new ApiError(res.status, json?.mensagem || json?.message || 'Falha na requisição.', json);
+  }
   return json;
 }
 
 // Rotas assumidas até a publicação do contrato v2.0 (item 3.10). Centralizadas aqui para ajustar em um ponto só.
-const real = {
-  login: (email, senha) => chamar('POST', '/auth/login', { email, senha }),
-  sessao: () => chamar('GET', '/auth/sessao').catch(e => (e.status === 401 ? null : Promise.reject(e))),
+// As rotas abaixo seguem o contrato assumido; ajustar aqui quando a API v2.0 (item 3.10) for publicada.
+export const api = {
+  login: (email, senha) => chamar('POST', '/auth/login', { email, senha }, { autenticada: false }),
+  sessao: () => chamar('GET', '/auth/sessao', undefined, { autenticada: false }).catch(e => (e.status === 401 ? null : Promise.reject(e))),
   logout: () => chamar('POST', '/auth/logout'),
   checkinAtual: () => chamar('GET', '/checkins/atual'),
   enviarCheckin: d => chamar('PUT', '/checkins/atual', d),
@@ -50,5 +55,3 @@ const real = {
   log: () => chamar('GET', '/log-acesso')
 };
 
-// O mock só é carregado em modo de demonstração. O build de produção remove js/mock.js (build.mjs).
-export const api = cfg.USE_MOCK ? (await import('./mock.js')).mock : real;

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Build dos estáticos (item 2.7). Sem dependências: copia o cliente para o diretório de saída
-// e gera config.js de produção. O mock (js/mock.js) e a senha de demonstração NÃO vão para a saída.
+// e gera config.js de produção. O servidor de desenvolvimento (dev/) e os testes NÃO vão para a saída.
 //
 //   FRONT_DIST=<diretório de estáticos do Nginx, K8> node build.mjs
 //
@@ -17,19 +17,14 @@ const apiBase = process.env.API_BASE || '/api';
 if (destino === aqui || aqui.startsWith(destino + sep) || destino === resolve('/')) {
   console.error(`Destino inseguro: ${destino}`); process.exit(1);
 }
-const EXCLUIR = new Set(['build.mjs', 'README.md', 'dist', 'node_modules', 'docs', 'testes', 'config.js', 'mock.js']);
+const EXCLUIR = new Set(['build.mjs', 'README.md', 'dist', 'node_modules', 'docs', 'testes', 'dev', 'config.js']);
 
 rmSync(destino, { recursive: true, force: true });
 mkdirSync(destino, { recursive: true });
 cpSync(aqui, destino, { recursive: true, filter: src => !EXCLUIR.has(src.split(sep).pop()) || src === aqui });
 
 writeFileSync(join(destino, 'config.js'), `// Gerado por build.mjs. Não editar.
-window.APP_CONFIG = {
-  USE_MOCK: false,
-  API_BASE: ${JSON.stringify(apiBase)},
-  MOSTRAR_RASTRO: false,
-  ATALHOS_DEMO: false
-};
+window.APP_CONFIG = { API_BASE: ${JSON.stringify(apiBase)} };
 `);
 
 const arquivos = [];

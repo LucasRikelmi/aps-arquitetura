@@ -1,13 +1,12 @@
-// Casca da aplicação: sessão, roteador por hash com guarda de perfil e menu por perfil.
-// A guarda aqui é só conveniência de navegação. A autorização de verdade é do servidor (DA11, RF09):
-// recurso de outro perfil responde 404 e a tela cai em TL-17.
+// Casca da aplicação: sessão, roteador por hash e menu por perfil.
+// O cliente não decide acesso (DA11, RF09): cada tela pede seus dados ao servidor, que responde 404
+// para recurso de outro perfil, e a aplicação mostra TL-17. O menu por perfil é só conveniência.
 import { h, anunciar } from './dom.js';
 import { api, ApiError } from './api.js';
 import { ROTAS, NAO_ENCONTRADO, MENU } from './rotas.js';
 import { ROTULO_PERFIL } from './dominio.js';
 import { telaNaoEncontrado } from './screens/tl17-nao-encontrado.js';
 
-const cfg = window.APP_CONFIG || {};
 const raiz = document.getElementById('app');
 
 let sessao = null;
@@ -24,19 +23,14 @@ function logotipo() {
 }
 
 function casca(rota, conteudo) {
-  if (!sessao) return h('div', { class: 'pagina-simples' }, h('main', { id: 'conteudo', tabindex: '-1' }, conteudo));
+  if (!sessao) return h('div', { class: 'pagina-simples' }, h('main', { id: 'conteudo', tabindex: '-1', 'data-tela': rota.tl }, conteudo));
   const atual = rota.caminho;
-  const itens = [...(MENU[sessao.perfil] || [])];
-  if (cfg.ATALHOS_DEMO) { // só no protótipo: abre telas que não têm entrada própria no menu
-    if (sessao.perfil === 'colaborador') itens.push(['checkin-celular', 'TL-03 no celular (demo)'], ['checkin-encerrado', 'TL-04 janela encerrada (demo)']);
-    itens.push(['recurso-inexistente', 'TL-17 recurso inexistente (demo)']);
-  }
+  const itens = MENU[sessao.perfil] || [];
   const sair = h('button', { type: 'button', class: 'link-botao', onclick: sairDoSistema }, 'Sair');
   return h('div', { class: 'casca' },
     h('header', { class: 'topo' },
       logotipo(),
       h('div', { class: 'topo-direita' },
-        cfg.MOSTRAR_RASTRO && h('span', { class: 'selo-tl', title: 'Identificador de rastreabilidade' }, `${rota.tl} · ${rota.rastro}`),
         h('span', { class: 'selo-perfil' }, ROTULO_PERFIL[sessao.perfil]),
         h('span', { class: 'nome' }, sessao.nome),
         sair)),
@@ -44,7 +38,7 @@ function casca(rota, conteudo) {
       h('nav', { class: 'menu', 'aria-label': 'Principal' },
         h('ul', null, itens.map(([c, t]) =>
           h('li', null, h('a', { href: `#${c}`, 'aria-current': atual === c || (c === 'metas' && atual === 'metas-nova') ? 'page' : null }, t))))),
-      h('main', { id: 'conteudo', tabindex: '-1' }, conteudo)));
+      h('main', { id: 'conteudo', tabindex: '-1', 'data-tela': rota.tl }, conteudo)));
 }
 
 async function sairDoSistema() {
@@ -60,6 +54,7 @@ function primeiraRota() {
 
 async function renderizar() {
   const minha = ++geracao;
+  if (!raiz.firstChild) raiz.append(h('p', { class: 'carregando', role: 'status' }, 'Carregando…'));
   const caminho = (location.hash.replace(/^#\/?/, '').split('?')[0]) || '';
   if (!sessao) sessao = await api.sessao().catch(() => null);
   if (minha !== geracao) return;
@@ -69,8 +64,6 @@ async function renderizar() {
   if (!rota) rota = NAO_ENCONTRADO;
   if (!rota.publica && !sessao) return navegar('entrar');
   if (rota.caminho === 'entrar' && sessao) return navegar(primeiraRota());
-  // Perfil sem acesso: mesma resposta de recurso inexistente (RB-07, HU-09.C01), sem revelar que existe.
-  if (rota.perfis && !rota.perfis.includes(sessao.perfil)) rota = NAO_ENCONTRADO;
 
   const ctx = { sessao, navegar, anunciar, rota };
   let conteudo;
@@ -93,5 +86,13 @@ async function renderizar() {
   anunciar(`${titulo}. Tela carregada.`);
 }
 
+// Qualquer chamada autenticada que volte 401 encerra a sessão local e leva ao login.
+window.addEventListener('sessao-expirada', () => {
+  if (!sessao) return;
+  sessao = null;
+  try { sessionStorage.setItem('aviso-entrada', 'Sua sessão expirou. Entre novamente.'); } catch { /* armazenamento indisponível */ }
+  navegar('entrar');
+  if (location.hash === '#entrar') renderizar();
+});
 window.addEventListener('hashchange', renderizar);
 renderizar();

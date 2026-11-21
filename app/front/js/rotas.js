@@ -1,7 +1,6 @@
-// Tabela de rotas (TL-xx ↔ UC ↔ RF), perfis autorizados e menu por perfil.
+// Tabela de rotas (TL ↔ UC ↔ RF). O campo `perfis` documenta quem deve acessar cada tela; NÃO autoriza nada: quem decide é o servidor (DA11).
 import { telaEntrar } from './screens/tl01-entrar.js';
 import { telaCheckin } from './screens/tl02-checkin.js';
-import { telaCheckinCelular } from './screens/tl03-checkin-celular.js';
 import { telaJanelaEncerrada } from './screens/tl04-janela-encerrada.js';
 import { telaHistorico } from './screens/tl05-historico.js';
 import { telaPainel } from './screens/tl06-painel.js';
@@ -20,7 +19,6 @@ import { telaNaoEncontrado } from './screens/tl17-nao-encontrado.js';
 export const ROTAS = [
   { caminho: 'entrar', tl: 'TL-01', rastro: 'RF09', publica: true, tela: telaEntrar },
   { caminho: 'checkin', tl: 'TL-02', rastro: 'UC01 · RF01 RF04 RNF03 RNF08', perfis: ['colaborador'], tela: telaCheckin },
-  { caminho: 'checkin-celular', tl: 'TL-03', rastro: 'UC01 · RNF02', perfis: ['colaborador'], tela: telaCheckinCelular },
   { caminho: 'checkin-encerrado', tl: 'TL-04', rastro: 'UC01 ext. 2b · RF01', perfis: ['colaborador'], tela: telaJanelaEncerrada },
   { caminho: 'historico', tl: 'TL-05', rastro: 'UC05 · RF10 RNF07', perfis: ['colaborador'], tela: telaHistorico },
   { caminho: 'painel', tl: 'TL-06', rastro: 'UC03 · RF05 RF06 RF08 RNF06', perfis: ['gestor', 'rh'], tela: telaPainel },

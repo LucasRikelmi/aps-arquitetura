@@ -21,6 +21,7 @@ a { color: var(--primaria); }
 .skip-link { position: absolute; left: .5rem; top: -4rem; background: var(--primaria); color: #fff; padding: .5rem .75rem; border-radius: 6px; z-index: 20; }
 .skip-link:focus { top: .5rem; }
 .noscript { padding: 1rem; }
+.carregando { padding: 2rem 1rem; text-align: center; color: var(--suave); }
 
 :focus-visible { outline: 3px solid #0b57d0; outline-offset: 2px; }
 #conteudo:focus { outline: none; }
@@ -34,7 +35,6 @@ a { color: var(--primaria); }
 .marca-sub { display: block; font-size: .75rem; color: var(--suave); }
 .marca-icone { display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 8px; background: var(--primaria); color: #fff; font-weight: 700; font-size: .8rem; }
 .marca-grande { justify-content: center; margin-bottom: 1rem; }
-.selo-tl { border: 1px dashed var(--borda); border-radius: 6px; padding: .1rem .5rem; color: var(--suave); font-size: .75rem; }
 .selo-perfil { background: var(--primaria-clara); color: var(--primaria-escura); border-radius: 999px; padding: .1rem .6rem; font-weight: 600; }
 .link-botao { background: none; border: 0; padding: .25rem; color: var(--primaria); text-decoration: underline; cursor: pointer; font: inherit; }
 .corpo { display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); gap: 1.5rem; padding: 1.25rem; flex: 1; width: 100%; max-width: 1200px; margin: 0 auto; }
@@ -50,7 +50,6 @@ main { min-width: 0; }
 .cartao { background: var(--papel); border: 1px solid var(--borda); border-radius: var(--raio); box-shadow: var(--sombra); padding: 1.25rem; margin-bottom: 1rem; }
 .cartao-estreito { max-width: 28rem; margin-inline: auto; }
 .entrar { padding-top: 1rem; }
-.atalhos h2 { font-size: 1rem; }
 .vazio { max-width: 36rem; margin: 2rem auto; text-align: center; }
 .vazio .aviso { text-align: left; }
 .btn { display: inline-block; font: inherit; font-weight: 600; border-radius: 999px; padding: .55rem 1.1rem; border: 2px solid var(--primaria); cursor: pointer; text-decoration: none; text-align: center; min-height: 2.5rem; }
@@ -134,8 +133,6 @@ fieldset { border: 0; margin: 0 0 1.25rem; padding: 0; min-width: 0; }
 .detalhe:empty::before { content: "Selecione um alerta para tratar."; color: var(--suave); }
 .lista-form { list-style: none; padding: 0; margin: 0 0 .5rem; }
 
-.quadro-celular { width: 100%; max-width: 360px; margin: 0 auto; border: 8px solid #2b3a37; border-radius: 28px; padding: .75rem; background: var(--fundo); }
-.quadro-celular h1 { font-size: 1.3rem; }
 
 .dialogo { border: 0; border-radius: var(--raio); padding: 1.25rem; max-width: min(28rem, calc(100vw - 2rem)); box-shadow: 0 10px 40px rgba(0, 0, 0, .3); }
 .dialogo::backdrop { background: rgba(20, 30, 28, .5); }

@@ -1,0 +1,20 @@
+Como executar
+Extraia o ZIP, configure o .env e execute os comandos abaixo na ordem indicada:
+npm install
+npm run db:init
+npm run db:sessions
+npm run db:authorization
+npm run db:checkin
+npm run db:metas
+npm run db:progresso
+npm test
+npm start
+
+Validação
+Foram executados 71 testes unitários, todos aprovados, considerando os módulos integrados das Listas A, B e C.
+Pendências
+Execução de testes integrados com PostgreSQL.
+Integração do valor efetivo de progresso com os indicadores dos painéis e alertas.
+Homologação das regras de substituição e designação com o cadastro organizacional definitivo.
+Referências
+ERS RF04, RB-01, HU-05.C01 a C07 e UC06.

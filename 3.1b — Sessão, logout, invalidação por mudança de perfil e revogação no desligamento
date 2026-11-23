@@ -1,0 +1,20 @@
+Como executar
+Extraia o projeto, abra a pasta no VS Code e execute:
+npm install
+
+
+Copie .env.example para .env, configure o PostgreSQL e execute:
+npm run db:init
+npm run db:sessions
+npm run user:create -- kamilly@exemplo.com "SenhaApenasDeTeste2026!"
+npm run profile:change -- kamilly@exemplo.com Colaborador
+npm test
+npm start
+
+Validação
+Foram executados 16 testes automatizados, todos aprovados. A validação integrada com PostgreSQL e os testes no ambiente de homologação permanecem pendentes.
+Referências
+Marco 05, tópico 4, Seção 4 — mecanismos de sessão e estado.
+ERS RF09, HU-09.C04 e HU-09.C05.
+DA09 — pendente de conferência com o documento de origem.
+Observação: A implementação está preparada para integração ao módulo de controle de acesso por perfis. A autorização completa por recurso não faz parte desta entrega.

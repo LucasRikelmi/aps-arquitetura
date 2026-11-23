@@ -1,0 +1,22 @@
+Como executar
+Após extrair o ZIP e configurar o .env, execute as migrações anteriores e, em seguida, o novo módulo:
+npm install
+npm run db:organizacao
+npm test
+npm start
+
+
+
+
+Validação
+130 testes unitários aprovados no projeto integrado, incluindo 13 testes do módulo de cadastro organizacional.
+Pendências
+Testes integrados com PostgreSQL.
+Implementação do fluxo de primeiro acesso e ativação de senha.
+Integração efetiva com ERP/folha de pagamento.
+Integração dos afastamentos com as rotinas existentes de alertas e lembretes.
+Tratamento completo das metas e designações durante o desligamento.
+Homologação dos históricos de lotação e substituições.
+Referências
+ERS RF02, HU-03.C01 a C07 e UC07.
+O módulo complementa a autenticação da APS-WEB, que não contemplava o cadastro de usuários.

@@ -1,0 +1,23 @@
+Como executar
+Após configurar o PostgreSQL e aplicar as migrações das entregas anteriores:
+npm install
+npm run db:alertas
+npm test
+npm start
+
+
+Para executar as rotinas:
+npm run alertas:daily
+npm run lembretes:run
+npm run emails:send
+
+Validação
+103 testes unitários aprovados no projeto integrado, incluindo 20 testes específicos do módulo de alertas e lembretes.
+Pendências
+Testes integrados com PostgreSQL.
+Configuração e homologação do envio real por SMTP.
+Integração com cadastros definitivos de afastamentos e hierarquia organizacional.
+Homologação do processamento agendado e das notificações.
+Conferência da decisão arquitetural DA12.
+Referências
+ERS RF07, RF12, RB-03 a RB-05, RB-08, seção 2.5 e Anexo B. DA12 pendente de conferência documental.

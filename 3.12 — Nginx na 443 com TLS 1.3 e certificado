@@ -1,0 +1,11 @@
+Validação
+A configuração Nginx passou pela validação sintática com nginx -t, utilizando certificado temporário e caminhos de teste.
+Pendências
+Instalação no servidor definitivo.
+Emissão e configuração do certificado TLS válido.
+Homologação de HTTP/2, cache, limites e proxy.
+Testes de inicialização e reinício pelo systemd.
+Validação integrada entre Nginx, Node.js e PostgreSQL.
+Conferência documental das referências DA14, DA16 e K8.
+Referências
+APS-WEB, itens 1.4 e 1.5; DA14, DA16 e K8 pendentes de conferência documental.

@@ -1,0 +1,11 @@
+Como executar:
+Extraia o ZIP, abra a pasta no VS Code e execute:
+  npm install
+
+Copie .env.example para .env e configure sua conexão com PostgreSQL. Depois, com o banco criado:
+npm run db:init
+npm run user:create -- kamilly@exemplo.com "SenhaApenasDeTeste2026!"
+npm test
+npm start
+
+A API ficará disponível em http://127.0.0.1:3000/api/auth/login.

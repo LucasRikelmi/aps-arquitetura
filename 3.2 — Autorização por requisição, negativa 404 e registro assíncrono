@@ -1,0 +1,14 @@
+Como executar
+Depois de extrair o ZIP, configure o arquivo .env conforme as instruções do README e execute:
+npm install
+npm run db:init
+npm run db:sessions
+npm run db:authorization
+npm test
+npm start
+
+Validação
+Foram executados 26 testes unitários, todos aprovados, considerando as Listas A, B e C.
+Pendências: testes integrados com PostgreSQL, integração com o modelo de dados definitivo da Benigno e adoção de persistência durável para a fila de auditoria antes da utilização em produção.
+Referências
+ERS RF09, RNF01 frentes (a) a (c), RB-07, HU-09.C01 a C10 e UC09.

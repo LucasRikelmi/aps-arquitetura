@@ -1,0 +1,19 @@
+Validação
+
+145 testes automatizados aprovados no projeto integrado. O script de coleta passou pela verificação de sintaxe.
+
+Pendências
+
+Executar os quatro cenários no ambiente completo de homologação.
+
+Avaliar estatisticamente a equivalência temporal dos caminhos de falha.
+
+Confirmar os retornos 413 e 429 pelo Nginx.
+
+Confirmar a correlação entre a negativa 404 e seu registro de auditoria.
+
+Anexar capturas e relatórios à apresentação de 25/11.
+
+Referências
+
+APS-WEB RNF03, RNF05, RNF06 e item 2.8; ERS HU-09.C01 e HU-09.C07; Marco 05, tópico 9.

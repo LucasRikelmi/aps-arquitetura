@@ -1,0 +1,19 @@
+Como executar
+Extraia o ZIP, configure o .env para seu PostgreSQL e execute:
+npm install
+npm run db:init
+npm run db:sessions
+npm run db:authorization
+npm run db:checkin
+npm run db:metas
+npm test
+npm start
+
+Validação
+55 testes unitários executados e aprovados, considerando os módulos integrados das Listas A, B e C.
+Pendências
+Testes integrados com PostgreSQL.
+Integração definitiva com cadastro organizacional e progresso das metas.
+Validação das designações excepcionais e auditoria de operações no ambiente de homologação.
+Referências
+ERS RF03, HU-04.C01 a C06 e UC02.

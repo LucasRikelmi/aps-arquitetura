@@ -1,0 +1,21 @@
+Como executar
+Extraia o ZIP, configure o .env, instale as dependências e aplique as migrações anteriores. Para o novo módulo:
+npm install
+npm run db:acoes
+npm test
+npm start
+
+
+Para processar os lembretes de revisão:
+npm run revisoes:daily
+npm run emails:send
+
+Validação
+117 testes unitários aprovados no projeto integrado, incluindo 14 novos testes do módulo de ações.
+Pendências
+Testes integrados com PostgreSQL.
+Homologação com os cadastros organizacionais definitivos.
+Configuração e validação do envio de lembretes por SMTP.
+Validação dos fluxos completos com diferentes perfis.
+Referências
+ERS RF07, RF15, HU-08.C07 a C11, HU-13, UC04 e UC15.

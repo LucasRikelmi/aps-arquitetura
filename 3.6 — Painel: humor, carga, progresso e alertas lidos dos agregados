@@ -1,0 +1,18 @@
+Como executar
+Após configurar o PostgreSQL no .env e executar as migrações anteriores:
+npm install
+npm run db:painel
+npm run painel:refresh
+npm test
+npm start
+
+Validação
+83 testes unitários aprovados no projeto integrado.
+Pendências
+Testes integrados com PostgreSQL.
+Integração com o módulo oficial de alertas (RF07).
+Integração com o cadastro organizacional definitivo.
+Homologação do painel com usuários e dados reais.
+Implementação da interface gráfica.
+Referências
+ERS RF05, RF06, RF08, RB-02, RB-06 e UC03.

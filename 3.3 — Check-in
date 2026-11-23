@@ -1,0 +1,16 @@
+Como executar
+Extraia o ZIP, configure o arquivo .env com os dados do PostgreSQL e execute:
+npm install
+npm run db:init
+npm run db:sessions
+npm run db:authorization
+npm run db:checkin
+npm test
+npm start
+
+Validação
+42 testes unitários aprovados no projeto integrado.
+Permanecem pendentes os testes integrados com PostgreSQL e a integração com as entidades definitivas de metas e alertas.
+Referências
+ERS RF01, UC01 — alternativas 2a, 2b e 2c.
+Observação: Na ERS 1.3, RB-08 corresponde à regra de lembretes, não à unicidade do check-in. Essa divergência de rastreabilidade deverá ser revisada.

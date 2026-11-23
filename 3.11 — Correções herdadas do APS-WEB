@@ -1,0 +1,23 @@
+Como executar
+Após extrair o projeto, configure o .env e execute:
+npm install
+npm run db:security
+npm test
+npm start
+
+Para medir o Argon2id:
+npm run bench:argon2
+
+Validação
+
+Os nove novos testes unitários foram executados e aprovados.
+Pendências
+Executar a suíte completa após instalar as dependências.
+Realizar testes integrados com PostgreSQL e Nginx.
+Executar os benchmarks em ambiente de homologação.
+Registrar os resultados de latência p95 e definir a meta quantitativa do item 4.6.
+Validar os limites de requisições no cenário de usuários compartilhando o mesmo IP.
+Homologar a proteção CSRF no navegador.
+Referências
+APS-WEB itens 1.4, 1.5 e 2.8.
+A meta quantitativa de desempenho será definida a partir das medições em ambiente representativo, sem presumir resultados não testados.

@@ -29,7 +29,10 @@ O build nunca apaga um diretório inteiro. `build-info.json` guarda a lista exat
 ```
 CHROME_PATH=/usr/bin/google-chrome python3 -I testes/estados.py     # login real (401 e 429), 9 estados, TL-07, 404 do servidor, sessão expirada, rótulos, h1 único
 CHROME_PATH=/usr/bin/google-chrome python3 -I testes/varredura.py   # sem rolagem horizontal da página em 360, 390, 768, 1024, 1280 e 1920 px; erros de console
+BASE=https://127.0.0.1:8443 AXE=<axe.min.js> CHROME_PATH=... python3 -I testes/nginx.py   # contra um Nginx real: CSP, proxy /api, axe WCAG 2.1 AA, só teclado, árvore de acessibilidade
 ```
+
+`testes/nginx.py` não sobe nada: precisa do build servido por um Nginx (exemplo testado em `dev/nginx-exemplo.conf`, TLS 1.3, CSP sem `unsafe-inline`) e da API atrás de `/api`. O axe-core é opcional (`npm install axe-core`, caminho em `AXE`). A árvore de acessibilidade de cada tela vai para `/tmp/shots-front/arvore-*.txt`.
 
 Sobem `dev/servidor.mjs` sozinhos. Exigem Node, Python com Playwright e um Chrome. Verificam estrutura e comportamento. Não substituem teste com leitor de tela.
 

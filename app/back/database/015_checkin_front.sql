@@ -1,0 +1,3 @@
+BEGIN;
+ALTER TABLE checkin_semanal ADD COLUMN IF NOT EXISTS obstaculo VARCHAR(2000);
+COMMIT;

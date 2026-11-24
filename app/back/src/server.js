@@ -1,0 +1,48 @@
+require('dotenv').config();
+const crypto = require('node:crypto');
+const { createPool } = require('./config/database');
+const { PgUserRepository } = require('./repositories/PgUserRepository');
+const { PgSessionRepository } = require('./repositories/PgSessionRepository');
+const { PasswordHasher } = require('./services/PasswordHasher');
+const { AuthenticationService } = require('./services/AuthenticationService');
+const { SessionService } = require('./services/SessionService');
+const { createApp } = require('./app');
+const {PgLoginRateLimiter}=require('./repositories/PgLoginRateLimiter');
+const {CheckinService}=require('./services/CheckinService');
+const {PgCheckinRepository}=require('./repositories/PgCheckinRepository');
+const {PgAuthorizationRepository}=require('./repositories/PgAuthorizationRepository');
+const {PgAuditRepository}=require('./repositories/PgAuditRepository');
+const {MetaService}=require('./services/MetaService');
+const {ProgressoService}=require('./services/ProgressoService');
+const {PgProgressoRepository}=require('./repositories/PgProgressoRepository');
+const {PgMetaRepository}=require('./repositories/PgMetaRepository');
+const {AuditService}=require('./services/AuditService');
+const {PgPainelRepository}=require('./repositories/PgPainelRepository');
+const {PainelService}=require('./services/PainelService');
+const {AlertaService}=require('./services/AlertaService');
+const {PgAlertaRepository}=require('./repositories/PgAlertaRepository');
+const {AcaoService}=require('./services/AcaoService');
+const {OrganizationalService}=require('./services/OrganizationalService');
+const {PgOrganizationalRepository}=require('./repositories/PgOrganizationalRepository');
+const {PgAcaoRepository}=require('./repositories/PgAcaoRepository');
+const {PgFrontIntegrationRepository}=require('./repositories/PgFrontIntegrationRepository');
+async function main() {
+  const pool = createPool();
+  const hasher=new PasswordHasher();
+  const dummyHash=await hasher.hash(crypto.randomBytes(32).toString('hex'));
+  const authentication=new AuthenticationService(new PgUserRepository(pool),hasher,dummyHash);
+  const inactivityMs=Number(process.env.SESSION_INACTIVITY_MINUTES || 30)*60000;
+  const absoluteMs=Number(process.env.SESSION_ABSOLUTE_HOURS || 8)*3600000;
+  if (![inactivityMs,absoluteMs].every(x => Number.isSafeInteger(x)&&x>0)) throw Error('Duracao de sessao invalida');
+  if(process.env.NODE_ENV==='production' && !process.env.PUBLIC_ORIGIN) throw Error('PUBLIC_ORIGIN obrigatorio em producao');
+  if(process.env.NODE_ENV==='production' && (!process.env.CSRF_SECRET || !process.env.LOGIN_RATE_SECRET)) throw Error('CSRF_SECRET e LOGIN_RATE_SECRET são obrigatórios em produção');
+  const loginRateLimiter=new PgLoginRateLimiter(pool,{secret:process.env.LOGIN_RATE_SECRET||'development-only-login-secret-change-12345',maxAttempts:Number(process.env.LOGIN_RATE_MAX||10),windowSeconds:Number(process.env.LOGIN_RATE_WINDOW_SECONDS||60)});
+  const sessions=new SessionService(new PgSessionRepository(pool),{inactivityMs,absoluteMs});
+  const auditRepository=new PgAuditRepository(pool);
+  const audit=new AuditService(auditRepository);
+  const access={repository:new PgAuthorizationRepository(pool),audit,auditRepository};
+  const server=createApp(authentication,sessions,{access,checkins:new CheckinService(new PgCheckinRepository(pool)),metas:new MetaService(new PgMetaRepository(pool)),progressos:new ProgressoService(new PgProgressoRepository(pool)),painel:new PainelService(new PgPainelRepository(pool),audit),alertas:new AlertaService(new PgAlertaRepository(pool)),acoes:new AcaoService(new PgAcaoRepository(pool)),organizacao:new OrganizationalService(new PgOrganizationalRepository(pool),hasher),frontIntegration:new PgFrontIntegrationRepository(pool),loginRateLimiter}).listen(Number(process.env.PORT || 3000),process.env.HOST || '127.0.0.1',()=>console.log('API pronta'));
+  function shutdown(){server.close(async()=>{await audit.flush();await pool.end();process.exit(0);});}
+  process.on('SIGINT',shutdown); process.on('SIGTERM',shutdown);
+}
+main().catch(err=>{console.error('Falha ao iniciar:',err.message);process.exitCode=1;});

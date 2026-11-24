@@ -1,0 +1,43 @@
+{
+  "name": "benigno-listas-a-b-c",
+  "version": "2.1.0",
+  "private": true,
+  "description": "Benigno Listas A/B/C + contrato de API v2.0 e verificações RFD03",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test tests/*.test.js",
+    "db:init": "psql \"$DATABASE_URL\" -f database/schema.sql",
+    "user:create": "node scripts/create-user.js",
+    "db:sessions": "psql \"$DATABASE_URL\" -f database/002_sessions.sql",
+    "profile:change": "node scripts/change-profile.js",
+    "user:deactivate": "node scripts/deactivate-user.js",
+    "db:authorization": "psql \"$DATABASE_URL\" -f database/003_authorization.sql",
+    "db:checkin": "psql \"$DATABASE_URL\" -f database/004_checkin.sql",
+    "db:metas": "psql \"$DATABASE_URL\" -f database/005_metas.sql",
+    "db:progresso": "psql \"$DATABASE_URL\" -f database/006_progresso.sql",
+    "db:painel": "psql \"$DATABASE_URL\" -f database/007_painel.sql",
+    "painel:refresh": "node scripts/refresh-painel.js",
+    "db:alertas": "psql \"$DATABASE_URL\" -f database/008_alertas_lembretes.sql",
+    "alertas:daily": "node scripts/run-alertas.js",
+    "lembretes:run": "node scripts/run-lembretes.js",
+    "emails:send": "node scripts/send-emails.js",
+    "db:acoes": "psql \"$DATABASE_URL\" -f database/009_acoes_acompanhamento.sql",
+    "revisoes:daily": "node scripts/run-revisoes.js",
+    "db:organizacao": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f database/010_cadastro_organizacional.sql",
+    "db:security": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f database/011_seguranca_login.sql",
+    "bench:argon2": "node scripts/benchmark-argon2.js",
+    "bench:login": "node scripts/benchmark-login-http.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "argon2": "^0.44.0",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "nodemailer": "^7.0.0"
+  }
+}

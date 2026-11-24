@@ -1,0 +1,48 @@
+# COLOCAR em http {}, NUNCA dentro de server {}:
+limit_req_zone $binary_remote_addr zone=login_by_ip:10m rate=10r/m;
+
+# Os blocos server abaixo ficam dentro de http {}, após a diretiva acima.
+server {
+    listen 80;
+    server_name exemplo.com;
+    return 301 https://$host$request_uri;
+}
+server {
+    listen 443 ssl;
+    server_name exemplo.com;
+    ssl_protocols TLSv1.3;
+    ssl_certificate /etc/letsencrypt/live/exemplo.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/exemplo.com/privkey.pem;
+
+    # Outros endpoints têm limite diferente do login.
+    client_max_body_size 100k;
+    error_page 413 = @body_too_large;
+    error_page 429 = @rate_exceeded;
+
+    location = /api/auth/login {
+        # Sobreposição de limite SOMENTE nessa location.
+        client_max_body_size 1k;
+        limit_req zone=login_by_ip burst=10 nodelay;
+        limit_req_status 429;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://127.0.0.1:3000;
+    }
+    location /api/ {
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://127.0.0.1:3000;
+    }
+    location @body_too_large {
+        internal;
+        default_type application/json;
+        return 413 '{"erro":"Requisicao muito grande."}';
+    }
+    location @rate_exceeded {
+        internal;
+        default_type application/json;
+        return 429 '{"erro":"Muitas requisicoes. Tente novamente mais tarde."}';
+    }
+}

@@ -1,0 +1,30 @@
+[Unit]
+Description=Benigno Solucoes - API Node.js
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=benigno
+Group=benigno
+WorkingDirectory=/opt/benigno/app
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=3000
+ExecStart=/usr/bin/node /opt/benigno/app/src/server.js
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=30s
+KillSignal=SIGTERM
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/benigno/app
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=benigno-api
+
+[Install]
+WantedBy=multi-user.target

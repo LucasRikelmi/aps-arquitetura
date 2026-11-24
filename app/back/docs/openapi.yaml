@@ -1,0 +1,715 @@
+openapi: 3.1.0
+info:
+  title: Benigno Solucoes - API M3 (integracao em validacao)
+  version: 2.1.0
+  description: Inventario das rotas solicitadas pelo front. As operacoes marcadas como parciais nao foram homologadas
+    contra PostgreSQL real; schemas de varias operacoes ainda estao pendentes.
+servers:
+- url: /
+  description: Mesma origem do front (Nginx)
+paths:
+  /api/auth/login:
+    post:
+      summary: Autenticar com email e senha
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Identidade'
+        '400': &id001
+          description: Erro no processamento
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Erro'
+          headers:
+            Retry-After:
+              description: Segundos ate nova tentativa
+              schema:
+                type: integer
+                minimum: 1
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - senha
+              properties:
+                email:
+                  type: string
+                  format: email
+                senha:
+                  type: string
+                  format: password
+              additionalProperties: false
+      security: []
+  /api/auth/sessao:
+    get:
+      summary: Consultar sessao
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Identidade'
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+  /api/auth/logout:
+    post:
+      summary: Encerrar sessao
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '204':
+          description: Sessao encerrada
+        '401': *id001
+        '403': *id001
+      security:
+      - sessionCookie: []
+  /api/checkins/atual:
+    get:
+      summary: Consultar semana atual
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+    put:
+      summary: Enviar check-in
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/checkins/historico:
+    get:
+      summary: Historico pessoal
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+  /api/painel:
+    get:
+      summary: Painel de equipe ou RH
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+  /api/alertas/{id}:
+    get:
+      summary: Detalhe de alerta
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/alertas/{id}/tratamento:
+    post:
+      summary: Tratar alerta
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/equipe:
+    get:
+      summary: Equipe do gestor
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+  /api/metas:
+    get:
+      summary: Metas da equipe
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+    post:
+      summary: Cadastrar meta
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/metas/{id}:
+    get:
+      summary: Detalhe da meta
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/metas/{id}/validacao:
+    post:
+      summary: Validar progresso
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/pessoas:
+    get:
+      summary: Listar pessoas
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+    post:
+      summary: Cadastrar pessoa
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/pessoas/{id}/desligamento:
+    post:
+      summary: Desligar pessoa
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/afastamentos:
+    post:
+      summary: Registrar afastamento
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/pessoas/{id}/perfis:
+    put:
+      summary: Atualizar perfis
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/formulario-checkin:
+    get:
+      summary: Consultar perguntas
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+  /api/formulario-checkin/perguntas:
+    post:
+      summary: Criar pergunta
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/formulario-checkin/perguntas/{id}:
+    put:
+      summary: Alterar pergunta com versionamento
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/formulario-checkin/perguntas/{id}/inativacao:
+    post:
+      summary: Inativar pergunta
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/parametros:
+    get:
+      summary: Consultar parametros
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+    put:
+      summary: Atualizar parametros
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+  /api/relatorios/agregados:
+    get:
+      summary: Relatorio agregado com supressao de grupos pequenos
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+  /api/sincronizacao-folha:
+    get:
+      summary: Situacao da sincronizacao da folha
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+  /api/log-acesso:
+    get:
+      summary: Consultar log de acessos
+      x-integracao-m3: parcial - validação de JSON, regras e testes reais pendente
+      responses:
+        '200':
+          description: Resposta do recurso (estrutura a homologar contra front/js/api.js e front/dev/servidor.mjs)
+        '400': *id001
+        '401': *id001
+        '403': *id001
+        '404': *id001
+        '409': *id001
+        '413': *id001
+        '422': *id001
+        '429': *id001
+        '500': *id001
+        '503': *id001
+      security:
+      - sessionCookie: []
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: __Host-benigno_session
+  schemas:
+    Identidade:
+      type: object
+      required:
+      - nome
+      - perfil
+      properties:
+        nome:
+          type: string
+        perfil:
+          type: string
+          enum:
+          - colaborador
+          - gestor
+          - rh
+          - diretoria
+          - administracao
+    Erro:
+      type: object
+      required:
+      - mensagem
+      properties:
+        mensagem:
+          type: string

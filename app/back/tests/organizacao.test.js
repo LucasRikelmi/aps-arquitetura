@@ -1,0 +1,24 @@
+const test=require('node:test');const assert=require('node:assert/strict');
+const {OrganizationalService,OrganizationalError}=require('../src/services/OrganizationalService');
+const {validatePessoa,validatePeriodo,sanitizePessoa}=require('../src/services/OrganizationalPolicy');
+const RH={id:'aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa',perfis:['RH']};
+const GESTOR={id:'bbbbbbbb-bbbb-4bbb-bbbb-bbbbbbbbbbbb',perfis:['Gestor']};
+const COL={id:'cccccccc-cccc-4ccc-cccc-cccccccccccc',perfis:['Colaborador']};
+const uuid='dddddddd-dddd-4ddd-dddd-dddddddddddd';
+const pessoa={nome:'Pessoa Exemplo',email:'pessoa@empresa.com'};
+const repo={createPerson:async(a,d,hash)=>({id:uuid,email:d.email,credencial:'pendente_de_ativacao',hashUsed:Boolean(hash)}),editPerson:async()=>({id:uuid}),getPerson:async(id,priv)=>({id,priv}),hasManagerScope:async()=>false,team:async()=>[],dictionary:async()=>({id:uuid}),assign:async()=>({id:uuid}),leave:async()=>({id:uuid}),substitute:async()=>({id:uuid}),terminate:async()=>({id:uuid,sessoes_revogadas:true}),sync:async(a,registros)=>({criados:registros.length})};
+const hash={hash:async()=>'$argon2id$v=19$teste'};const create=()=>new OrganizationalService(repo,hash);
+async function errorCode(promise,status){await assert.rejects(promise,e=>e instanceof OrganizationalError&&e.status===status);}
+test('HU-03 C01: RH cria usuário com credencial pendente',async()=>{const r=await create().createPerson(RH,pessoa);assert.equal(r.credencial,'pendente_de_ativacao');assert.ok(r.hashUsed);});
+test('somente RH cadastra pessoas',async()=>errorCode(create().createPerson(COL,pessoa),403));
+test('valida nome e e-mail normalizado',()=>{assert.ok(validatePessoa({...pessoa,email:'PESSOA@EMPRESA.COM'}));assert.equal(validatePessoa(pessoa),null);});
+test('HU-03 C02: e-mail duplicado é 409',async()=>{const s=new OrganizationalService({...repo,createPerson:async()=>{const e=new Error();e.code='23505';throw e;}},hash);await errorCode(s.createPerson(RH,pessoa),409);});
+test('HU-03 C03: campo da folha protegido',async()=>{const s=new OrganizationalService({...repo,editPerson:async()=>{const e=new Error();e.code='FOLHA_READONLY';throw e;}},hash);await errorCode(s.editPerson(RH,uuid,{nome:'Nome Novo'}),409);});
+test('HU-03 C04: RH registra férias e recusa períodos inversos',async()=>{const data={usuario_id:uuid,tipo:'ferias',inicio:'2026-11-01',fim:'2026-11-10'};assert.ok(validatePeriodo(data));assert.equal((await create().leave(RH,data)).id,uuid);await errorCode(create().leave(RH,{...data,fim:'2026-10-30'}),400);});
+test('HU-03 C05: colaborador vê apenas cadastro próprio',async()=>{assert.deepEqual(await create().own(COL),{id:COL.id,priv:true});await errorCode(create().person(COL,uuid),404);});
+test('HU-03 C06: gestor autorizado vê somente dados organizacionais',async()=>{const s=new OrganizationalService({...repo,hasManagerScope:async()=>true},hash);assert.deepEqual(await s.person(GESTOR,uuid),{id:uuid,priv:false});});
+test('não expõe CPF, nascimento ou endereço ao gestor',()=>{const row={id:uuid,cpf:'12345678901',nascimento:'2000-01-01',endereco:'Rua X',nome:'Exemplo',email:'a@b.com'};const r=sanitizePessoa(row,false);assert.equal(r.cpf,undefined);assert.equal(r.nascimento,undefined);assert.equal(r.endereco,undefined);});
+test('HU-03 C07: substituição válida exige RH e gestores diferentes',async()=>{const obj={gestor_id:uuid,substituto_id:GESTOR.id,inicio:'2026-11-20',fim:'2026-11-25'};assert.equal((await create().substitute(RH,obj)).id,uuid);await errorCode(create().substitute(COL,obj),403);await errorCode(create().substitute(RH,{...obj,substituto_id:uuid}),400);});
+test('desligamento revoga acesso e recusa não RH',async()=>{assert.equal((await create().terminate(RH,uuid,{data:'2026-11-23'})).sessoes_revogadas,true);await errorCode(create().terminate(GESTOR,uuid,{data:'2026-11-23'}),403);});
+test('cadastro de lotação precisa de identificadores e início',async()=>{await errorCode(create().assign(RH,{usuario_id:uuid}),400);await errorCode(create().assign(COL,{usuario_id:uuid}),403);});
+test('folha pode sincronizar até 500 registros válidos',async()=>{const row={email:pessoa.email,nome:pessoa.nome,situacao:'ativo',departamento_id:uuid,cargo_id:uuid};assert.equal((await create().sync(RH,{registros:[row]})).criados,1);await errorCode(create().sync(RH,{registros:[{...row,situacao:'desconhecido'}]}),400);});

@@ -1,0 +1,73 @@
+# Front-end (M2) — RH Soluções
+
+HTML, CSS e JavaScript sem framework (DA13), módulos ES, roteador por hash e sessão por cookie na mesma origem. Cobre os itens 2.1 a 2.4 e 2.7 do plano. Os itens 2.5 e 2.6 estão em `docs/secoes/`.
+
+## Desenvolvimento
+
+```
+cd app/front
+node dev/servidor.mjs        # PORTA (8080), HOST (127.0.0.1), JANELA=encerrada, LIMITE_LOGIN (5), BLOQUEIO_S (900)
+# abrir http://127.0.0.1:8080/
+```
+
+`dev/servidor.mjs` serve os estáticos e uma API local que segue as rotas de `js/api.js`, só para desenvolver e testar enquanto o back-end (M3) não entrega. O cliente é o mesmo de produção: login real pelo formulário, sessão por cookie HttpOnly, 401/404/409/429 vindos do servidor. Senha de desenvolvimento: `senha-dev-123`, com ana.souza (colaborador), rafael.torres (gestor), marina.costa (rh), helena.martins (diretoria) e sergio.dias (administracao), todos `@empresa.com.br`.
+
+O login simula a limitação de tentativas: depois de `LIMITE_LOGIN` falhas seguidas da mesma origem, responde 429 com `Retry-After: BLOQUEIO_S` até o prazo acabar. A chave é a origem, não a conta, porque o plano (3.3) não adota bloqueio por conta (P04). A tela TL-01 mostra o prazo que vier no `Retry-After` (segundos ou data HTTP) e, sem o cabeçalho, uma mensagem genérica sem duração. O diretório `dev/` não entra no build.
+
+## Build dos estáticos (item 2.7)
+
+```
+FRONT_DIST=<diretório de estáticos do Nginx> node build.mjs
+```
+
+O destino é o diretório congelado em K8. O valor de K8 ainda não foi informado ao M2; sem `FRONT_DIST` o build vai para `app/front/dist`. A saída não contém `dev/` nem `testes/`, e `config.js` sai só com `API_BASE`. `API_BASE` (padrão `/api`) também pode ser definido na chamada.
+
+O build nunca apaga um diretório inteiro. `build-info.json` guarda a lista exata dos arquivos gerados. No build seguinte, se o destino tiver qualquer arquivo fora dessa lista (ou não tiver `build-info.json`), o build recusa e não apaga nada; caso contrário apaga só os arquivos listados e as pastas que ficaram vazias, depois copia a versão nova. Entre a limpeza e a cópia o diretório fica incompleto por alguns milissegundos; se o Nginx não puder servir nada incompleto, gerar em outro diretório e trocar por link simbólico.
+
+## Testes
+
+```
+CHROME_PATH=/usr/bin/google-chrome python3 -I testes/estados.py     # login real (401 e 429), 9 estados, TL-07, 404 do servidor, sessão expirada, rótulos, h1 único
+CHROME_PATH=/usr/bin/google-chrome python3 -I testes/varredura.py   # sem rolagem horizontal da página em 360, 390, 768, 1024, 1280 e 1920 px; erros de console
+BASE=https://127.0.0.1:8443 AXE=<axe.min.js> CHROME_PATH=... python3 -I testes/nginx.py   # contra um Nginx real: CSP, proxy /api, axe WCAG 2.1 AA, só teclado, árvore de acessibilidade
+```
+
+`testes/nginx.py` não sobe nada: precisa do build servido por um Nginx (exemplo testado em `dev/nginx-exemplo.conf`, TLS 1.3, CSP sem `unsafe-inline`) e da API atrás de `/api`. O axe-core é opcional (`npm install axe-core`, caminho em `AXE`). A árvore de acessibilidade de cada tela vai para `/tmp/shots-front/arvore-*.txt`.
+
+Sobem `dev/servidor.mjs` sozinhos. Exigem Node, Python com Playwright e um Chrome. Verificam estrutura e comportamento. Não substituem teste com leitor de tela.
+
+## Estrutura
+
+| Caminho | Conteúdo |
+| --- | --- |
+| `js/app.js` | casca, sessão e roteador por hash; 401 volta ao login, 404 vai a TL-17 |
+| `js/rotas.js` | tabela de rotas (TL ↔ UC ↔ RF) e menu por perfil |
+| `js/api.js`, `js/errors.js` | cliente da API (fetch, mesma origem, cookie de sessão) |
+| `dev/servidor.mjs` | servidor local de desenvolvimento e teste; fora do build |
+| `js/dominio.js` | constantes e formatadores compartilhados (perfis, humor, carga, datas, e-mail) |
+| `js/dom.js` | primitivos: `h`, `campo`, `grupoRadio`, `botao`, `aviso`, `tabela`, `confirmar`, `focarAviso` |
+| `js/componentes/` | `barra-progresso`, `dialogo-valor`, `formulario-checkin` |
+| `js/screens/` | um arquivo por tela: `tl01-entrar.js` até `tl17-nao-encontrado.js` |
+
+## Valores padrão assumidos (para as issues de integração)
+
+| Dependência | Valor assumido | Onde trocar | Dono da definição |
+| --- | --- | --- | --- |
+| K8: diretório de estáticos | `app/front/dist` | variável `FRONT_DIST` do `build.mjs` | M3, item 3.12 |
+| Prefixo da API | `/api`, mesma origem | `API_BASE` (variável do build, ou `config.js` em desenvolvimento) | M3, item 3.10 |
+| Rotas e corpos da API v2.0 | as de `js/api.js` | só `js/api.js` | M3, item 3.10 |
+| Proteção CSRF | cabeçalho `X-Requested-With: fetch`, sem token | `chamar()` em `js/api.js` | M3, item 3.11 |
+| Respostas de erro | JSON com `mensagem`; 401 volta ao login, 404 vai a TL-17 | `chamar()` e `js/app.js` | M3, itens 3.2 e 3.12 |
+| Limite de tentativas de login | 429 com `Retry-After` (segundos ou data HTTP); sem o cabeçalho, mensagem genérica | `mensagemBloqueio()` em `js/screens/tl01-entrar.js` | M3, item 3.10 |
+| Massa de dados | a de `dev/servidor.mjs`, só desenvolvimento | `dev/servidor.mjs` | M1, item 1.2 |
+
+## Decisões e limites
+
+- O menu por perfil é só navegação. A autorização é do servidor (DA11): recurso de outro perfil responde 404 e a tela vai para TL-17.
+- Nenhum dado vindo da API entra como HTML. Largura de barras usa a API de estilo do DOM, então o Nginx pode aplicar CSP sem `unsafe-inline` em `style-src`.
+- As rotas da API em `js/api.js` são suposições. O contrato v2.0 (item 3.10) ainda não existe. Ajustar tudo em `js/api.js` quando for publicado.
+- O cabeçalho `X-Requested-With` é enviado em toda requisição. A proteção CSRF do item 3.11 pode exigir token; definir com o back-end.
+- Revogação de sessão (TL-11, TL-15) e registro de 404 (TL-16) são comportamentos do servidor; `dev/servidor.mjs` os reproduz para teste e o back-end real precisa implementá-los.
+- TL-03 é o mesmo formulário de TL-02 em layout responsivo; não há rota separada.
+- O estado vazio de TL-08 e a janela do UC02 ext. 1a precisam ser conferidos na ficha do caso de uso.
+- Tabelas de dados ficam dentro de uma região rolável com foco (`.tabela-rolagem`). Até 640 px viram cartões; entre 641 px e cerca de 1100 px, uma tabela larga (Metas, Cadastro) rola dentro da própria região e a página não rola na horizontal, o que o critério 1.4.10 da WCAG admite para tabelas.

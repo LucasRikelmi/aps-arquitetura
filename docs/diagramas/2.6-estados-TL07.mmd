@@ -1,0 +1,17 @@
+---
+title: Figura 2.6b - Transição de estados de TL-07 Tratar alerta
+---
+stateDiagram-v2
+    direction LR
+    [*] --> Aberto: abrir alerta aberto (gestor)
+    [*] --> Tratado: abrir alerta já tratado
+    [*] --> SomenteLeitura: abrir alerta (RH observador)
+    [*] --> Inexistente: servidor responde 404 (TL-17)
+    Aberto --> ErroValidacao: registrar com descrição vazia
+    ErroValidacao --> Aberto: informar o que foi feito
+    Aberto --> Aberto: falha do serviço (5xx ou sem conexão)
+    Aberto --> Tratado: registrar ação com descrição
+    Aberto --> [*]: voltar sem registrar (alerta segue aberto)
+    Tratado --> [*]: voltar ao painel
+    SomenteLeitura --> [*]: voltar ao painel
+    Inexistente --> [*]

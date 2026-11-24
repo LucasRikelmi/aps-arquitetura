@@ -1,0 +1,16 @@
+---
+title: Figura 2.6a - Transição de estados de TL-02 Check-in semanal
+---
+stateDiagram-v2
+    direction LR
+    [*] --> Preenchendo: janela aberta
+    [*] --> JanelaEncerrada: janela encerrada (TL-04)
+    Preenchendo --> Erro: enviar sem humor ou carga
+    Erro --> Preenchendo: corrigir os campos
+    Preenchendo --> Enviado: enviar com humor e carga
+    Enviado --> Editando: editar resposta
+    Editando --> Enviado: atualizar check-in
+    Preenchendo --> JanelaEncerrada: servidor responde 409
+    Editando --> JanelaEncerrada: servidor responde 409
+    JanelaEncerrada --> [*]
+    Enviado --> [*]

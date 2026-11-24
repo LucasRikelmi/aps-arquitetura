@@ -108,6 +108,9 @@ fieldset { border: 0; margin: 0 0 1.25rem; padding: 0; min-width: 0; }
 .resumo dt { font-weight: 600; } .resumo dd { margin: 0; }
 
 /* Tabela */
+.tabela-rolagem { max-width: 100%; overflow-x: auto; margin-bottom: 1rem; }
+.tabela-rolagem:focus-visible { outline: 3px solid var(--primaria); outline-offset: 2px; }
+.tabela-rolagem > .tabela { margin-bottom: 0; }
 .tabela { width: 100%; border-collapse: collapse; background: var(--papel); border: 1px solid var(--borda); border-radius: var(--raio); overflow: hidden; margin-bottom: 1rem; }
 .tabela caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .tabela th, .tabela td { padding: .6rem .6rem; text-align: left; vertical-align: top; border-bottom: 1px solid #e6e0d3; font-size: .875rem; overflow-wrap: break-word; }

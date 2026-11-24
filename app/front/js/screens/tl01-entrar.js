@@ -1,6 +1,7 @@
 // TL-01 Entrar (+ estado "TL-01 erro")
 import { h, preencher, campo, botao, aviso, focarAviso } from '../dom.js';
 import { api, ApiError } from '../api.js';
+import { segundosDeRetryAfter } from '../errors.js';
 
 function avisoDeEntrada() {
   try {
@@ -8,6 +9,15 @@ function avisoDeEntrada() {
     sessionStorage.removeItem('aviso-entrada');
     return m;
   } catch { return null; }
+}
+
+// 429: o prazo vem do servidor (Retry-After). Sem o cabeçalho, mensagem genérica, sem inventar duração.
+export function mensagemBloqueio(retryAfter) {
+  const s = segundosDeRetryAfter(retryAfter);
+  if (s == null) return 'Muitas tentativas. Aguarde um pouco e tente de novo.';
+  if (s < 60) return 'Muitas tentativas. Tente de novo em menos de 1 minuto.';
+  const min = Math.ceil(s / 60);
+  return `Muitas tentativas. Tente de novo em ${min} ${min === 1 ? 'minuto' : 'minutos'}.`;
 }
 
 export async function telaEntrar(ctx) {
@@ -44,7 +54,7 @@ export async function telaEntrar(ctx) {
       ctx.navegar('');
     } catch (e) {
       const msg = e instanceof ApiError && e.status === 401 ? 'E-mail ou senha incorretos.'
-        : e instanceof ApiError && e.status === 429 ? 'Muitas tentativas. Aguarde alguns minutos e tente de novo.'
+        : e instanceof ApiError && e.status === 429 ? mensagemBloqueio(e.retryAfter)
         : e instanceof ApiError && (e.status === 0 || e.status >= 500) ? 'O serviço está indisponível. Tente novamente em instantes.'
         : 'Não foi possível entrar. Tente novamente.';
       desenhar(msg, email);

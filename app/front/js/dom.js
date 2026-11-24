@@ -90,8 +90,11 @@ export function botao(texto, { tipo = 'button', variante = 'primario', classe = 
 }
 
 // Tabela que vira lista de cartões em telas estreitas (sem rolagem horizontal, RNF02).
+// Tabela de dados dentro de uma região rolável própria: a página nunca rola na horizontal (RNF02),
+// e em larguras intermediárias (641 a ~1100 px) uma tabela larga rola só dentro do contêiner,
+// o que o critério 1.4.10 da WCAG admite para tabelas. A região recebe foco para rolar pelo teclado.
 export function tabela({ legenda, colunas, linhas }) {
-  return h('table', { class: 'tabela' },
+  return h('div', { class: 'tabela-rolagem', role: 'region', 'aria-label': legenda, tabindex: '0' }, h('table', { class: 'tabela' },
     h('caption', null, legenda),
     h('thead', null, h('tr', null, colunas.map(c => h('th', { scope: 'col' }, c.rotulo)))),
     h('tbody', null, linhas.map(l => h('tr', null, colunas.map((c, i) => {
@@ -99,7 +102,7 @@ export function tabela({ legenda, colunas, linhas }) {
       return i === 0
         ? h('th', { scope: 'row', 'data-rotulo': c.rotulo }, cel)
         : h('td', { 'data-rotulo': c.rotulo }, cel);
-    })))));
+    }))))));
 }
 
 export function confirmar({ titulo, texto, rotuloOk, perigo = false }) {

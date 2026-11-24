@@ -21,7 +21,7 @@ async function chamar(metodo, caminho, corpo, { autenticada = true } = {}) {
   try { json = await res.json(); } catch { /* corpo vazio ou não JSON (error_page do Nginx deve ser JSON, item 3.12) */ }
   if (!res.ok) {
     if (res.status === 401 && autenticada) window.dispatchEvent(new CustomEvent('sessao-expirada'));
-    throw new ApiError(res.status, json?.mensagem || json?.message || 'Falha na requisição.', json);
+    throw new ApiError(res.status, json?.mensagem || json?.message || 'Falha na requisição.', json, res.headers.get('Retry-After'));
   }
   return json;
 }

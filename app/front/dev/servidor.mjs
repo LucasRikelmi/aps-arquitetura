@@ -6,6 +6,7 @@
 //
 //   node dev/servidor.mjs                    -> http://127.0.0.1:8080
 //   PORTA=9000 JANELA=encerrada node dev/servidor.mjs
+//   LIMITE_LOGIN=3 BLOQUEIO_S=60 node dev/servidor.mjs   (simulação do 429 no login, ver abaixo)
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, sep, dirname } from 'node:path';
@@ -17,6 +18,11 @@ const RAIZ = resolve(aqui, '..');
 const PORTA = Number(process.env.PORTA || 8080);
 const HOST = process.env.HOST || '127.0.0.1';
 const SENHA_DEV = 'senha-dev-123';
+// Simulação de limitação de tentativas de login (429 + Retry-After). Chave = endereço de origem,
+// não a conta: o plano (3.3) não adota bloqueio por conta (P04). Valores reais dependem do contrato 3.10.
+const LIMITE_LOGIN = Number(process.env.LIMITE_LOGIN || 5);
+const BLOQUEIO_S = Number(process.env.BLOQUEIO_S || 900);
+const FALHAS_LOGIN = new Map(); // origem -> { n, ate }
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.ico': 'image/x-icon' };
 const BLOQUEADOS = ['dev', 'testes', 'docs', '.git', 'node_modules', 'build.mjs', 'README.md'];
@@ -76,7 +82,7 @@ const E = {
 const SESSOES = new Map(); // token -> usuário (estado no servidor, DA09)
 const sessaoDe = u => ({ id: u.id, nome: u.nome, perfil: maisAlto(u.perfis) });
 
-class Erro extends Error { constructor(status, mensagem) { super(mensagem); this.status = status; } }
+class Erro extends Error { constructor(status, mensagem, cabecalhos = {}) { super(mensagem); this.status = status; this.cabecalhos = cabecalhos; } }
 const agora = () => new Date().toLocaleString('sv-SE', { timeZone: 'America/Sao_Paulo' }).slice(0, 16).replace('T', ' ');
 
 const ROT_PERFIL = { colaborador: 'Colaborador', gestor: 'Gestor', rh: 'RH', diretoria: 'Diretoria', administracao: 'Administração' };
@@ -119,10 +125,22 @@ const AGREGADOS = [
 // ---------------- rotas ----------------
 const ROTAS = [
   ['POST', /^\/auth\/login$/, async (req, _m, corpo) => {
+    const origem = req.socket.remoteAddress || '?';
+    const f = FALHAS_LOGIN.get(origem);
+    if (f?.ate) {
+      const resta = Math.ceil((f.ate - Date.now()) / 1000);
+      if (resta > 0) throw new Erro(429, 'Muitas tentativas.', { 'Retry-After': String(resta) });
+      FALHAS_LOGIN.delete(origem);
+    }
     const u = E.pessoas.find(p => p.email === String(corpo.email || '').trim().toLowerCase());
     const a = Buffer.from(String(corpo.senha || '')), b = Buffer.from(SENHA_DEV);
     // Resposta única para usuário inexistente, desligado e senha incorreta (RF03; item 3.1a; RB-11).
-    if (!u || !u.ativo || a.length !== b.length || !timingSafeEqual(a, b)) throw new Erro(401, 'E-mail ou senha incorretos.');
+    if (!u || !u.ativo || a.length !== b.length || !timingSafeEqual(a, b)) {
+      const n = (FALHAS_LOGIN.get(origem)?.n || 0) + 1;
+      FALHAS_LOGIN.set(origem, { n, ate: n >= LIMITE_LOGIN ? Date.now() + BLOQUEIO_S * 1000 : 0 });
+      throw new Erro(401, 'E-mail ou senha incorretos.');
+    }
+    FALHAS_LOGIN.delete(origem);
     const token = randomBytes(24).toString('hex');
     SESSOES.set(token, sessaoDe(u));
     return { corpo: { nome: u.nome, perfil: maisAlto(u.perfis) }, cookie: `sid=${token}; HttpOnly; SameSite=Strict; Path=/` };
@@ -152,7 +170,7 @@ const ROTAS = [
   ['POST', /^\/alertas\/(\d+)\/tratamento$/, async (req, m, d) => {
     exigir(req, ['gestor']);
     const a = achar(E.alertas, m[1]);
-    if (!String(d.descricao || '').trim()) throw new Erro(422, 'Descreva o que foi feito.');
+    if (!String(d.descricao || '').trim()) throw new Erro(422, 'Informe o que foi feito.');
     a.status = 'tratado'; a.acao = { tipo: d.tipo, revisao: d.revisao || null, descricao: d.descricao }; return a;
   }],
 
@@ -268,7 +286,7 @@ async function api(req, res, caminho) {
   } catch (e) {
     const status = e instanceof Erro ? e.status : 500;
     if (status === 500) console.error(e);
-    json(res, status, { mensagem: status === 500 ? 'Erro interno.' : e.message });
+    json(res, status, { mensagem: status === 500 ? 'Erro interno.' : e.message }, e.cabecalhos || {});
   }
 }
 

@@ -4,12 +4,14 @@ import { api } from '../api.js';
 
 export async function telaRelatorios(ctx) {
   const d = await api.relatorios(ctx.params.departamento);
+  // TL-14c (Figma): a Diretoria vê "Indicadores por departamento", sem a área de exportação.
+  const diretoria = ctx.sessao.perfil === 'diretoria';
   const dep = campo({ rotulo: 'Departamento', nome: 'departamento', valor: ctx.params.departamento || 'Todos', opcoes: d.departamentos.map(x => ({ valor: x, texto: x })), marca: false });
   dep.querySelector('select').addEventListener('change', ev => ctx.navegar(`relatorios?departamento=${encodeURIComponent(ev.target.value)}`));
   const val = x => (x == null ? '—' : x);
   const exportar = formato => h('a', { class: 'btn btn-secundario', href: `${(window.APP_CONFIG || {}).API_BASE}/relatorios/agregados/exportacao?formato=${formato}`, download: '' }, formato === 'pdf' ? 'Exportar PDF' : 'Exportar Excel');
   return h('section', null,
-    h('h1', null, 'Relatórios agregados'),
+    h('h1', null, diretoria ? 'Indicadores por departamento' : 'Relatórios agregados'),
     h('p', { class: 'sub' }, 'Somente agregados. Nenhuma pessoa é identificada nesta tela.'),
     h('div', { class: 'cartao filtros' },
       dep,
@@ -34,5 +36,5 @@ export async function telaRelatorios(ctx) {
       linhas: d.linhas
     }),
     h('p', { class: 'nota' }, 'Recorte com menos de 5 respondentes não é exibido: soma ao departamento superior até atingir o mínimo.'),
-    h('div', { class: 'cartao' }, h('h2', null, 'Exportar'), h('div', { class: 'acoes' }, exportar('pdf'), exportar('xlsx'))));
+    diretoria ? null : h('div', { class: 'cartao' }, h('h2', null, 'Exportar'), h('div', { class: 'acoes' }, exportar('pdf'), exportar('xlsx'))));
 }

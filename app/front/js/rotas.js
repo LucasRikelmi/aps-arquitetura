@@ -35,11 +35,11 @@ export const ROTAS = [
 ];
 export const NAO_ENCONTRADO = { caminho: '404', tl: 'TL-17', rastro: 'ext. *a · RF09 RNF07', publica: true, tela: telaNaoEncontrado };
 
-// Menus conforme o Figma. Diretoria não tem menu desenhado; usa só Relatórios (a conferir com o RH).
+// Menus conforme o Figma (TL-06, TL-06b, TL-11b, TL-14c).
 export const MENU = {
   colaborador: [['checkin', 'Check-in da semana'], ['historico', 'Meu histórico']],
   gestor: [['painel', 'Painel da equipe'], ['metas', 'Metas'], ['relatorios', 'Relatórios']],
   rh: [['painel', 'Painel da empresa'], ['cadastro', 'Cadastro'], ['formulario', 'Formulário'], ['parametros', 'Parâmetros'], ['relatorios', 'Relatórios']],
-  diretoria: [['relatorios', 'Relatórios']],
+  diretoria: [['relatorios', 'Indicadores']],
   administracao: [['cadastro', 'Cadastro'], ['perfis', 'Perfis de acesso'], ['log', 'Log de acesso']]
 };

@@ -26,7 +26,7 @@ export async function telaEntrar(ctx) {
   const expirou = avisoDeEntrada();
   let enviando = false;
 
-  const desenhar = (erro = '', email = '') => {
+  const desenhar = (erro = '', email = '', credenciais = false) => {
     preencher(form,
       h('h1', null, 'Entrar'),
       h('p', { class: 'sub' }, 'Use o e-mail corporativo cadastrado pelo RH.'),
@@ -38,6 +38,8 @@ export async function telaEntrar(ctx) {
     if (erro) {
       // Mensagem única, sem dizer se o e-mail existe (RF03; item 3.1a).
       slot.append(aviso('erro', 'Não foi possível entrar', erro));
+      // TL-01 erro (Figma): os dois campos ficam marcados como inválidos.
+      if (credenciais) form.querySelectorAll('input').forEach(i => i.setAttribute('aria-invalid', 'true'));
       focarAviso(slot);
     } else if (expirou) {
       slot.append(aviso('info', 'Sessão encerrada', expirou));
@@ -53,11 +55,11 @@ export async function telaEntrar(ctx) {
       await api.login(email, senha);
       ctx.navegar('');
     } catch (e) {
-      const msg = e instanceof ApiError && e.status === 401 ? 'E-mail ou senha incorretos.'
+      const msg = e instanceof ApiError && e.status === 401 ? 'E-mail ou senha incorretos. Confira os dados e tente novamente.'
         : e instanceof ApiError && e.status === 429 ? mensagemBloqueio(e.retryAfter)
         : e instanceof ApiError && (e.status === 0 || e.status >= 500) ? 'O serviço está indisponível. Tente novamente em instantes.'
         : 'Não foi possível entrar. Tente novamente.';
-      desenhar(msg, email);
+      desenhar(msg, email, e instanceof ApiError && e.status === 401);
     } finally {
       enviando = false;
       form.removeAttribute('aria-busy');

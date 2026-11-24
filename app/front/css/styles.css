@@ -72,6 +72,7 @@ input[type=text], input[type=email], input[type=password], input[type=date], inp
   width: 100%; font: inherit; color: var(--tinta); background: #fff; border: 1.5px solid #6d7a76; border-radius: 8px; padding: .55rem .7rem; min-height: 2.6rem; }
 textarea { resize: vertical; }
 .tem-erro input, .tem-erro select, .tem-erro textarea { border-color: var(--erro); border-width: 2px; }
+[aria-invalid=true] { border-color: var(--erro) !important; }
 .msg-erro { color: var(--erro); font-weight: 600; font-size: .875rem; margin: .3rem 0 0; }
 
 fieldset { border: 0; margin: 0 0 1.25rem; padding: 0; min-width: 0; }

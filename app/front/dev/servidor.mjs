@@ -161,7 +161,8 @@ const ROTAS = [
     exigir(req, ['colaborador']);
     if (!janelaAberta) throw new Erro(409, 'A janela do check-in está encerrada.');
     if (!d.humor || !d.carga) throw new Erro(422, 'Campos obrigatórios ausentes.');
-    E.checkinEnviado = d; return { ok: true };
+    const enviadoEm = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', dateStyle: 'short', timeStyle: 'short' }).format(new Date());
+    E.checkinEnviado = { ...d, enviadoEm }; return { ok: true, enviadoEm };
   }],
   ['GET', /^\/checkins\/historico$/, async req => { exigir(req, ['colaborador']); return E.historico; }],
 

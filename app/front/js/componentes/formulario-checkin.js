@@ -16,9 +16,9 @@ export function formularioCheckin(ctx, dados) {
       lista.length ? aviso('erro', 'Revise o formulário',
         `Falta preencher: ${lista.map(([, m]) => m).join('; ')}.`) : null,
       grupoRadio({ legenda: '1. Como você se sentiu nesta semana?', nome: 'humor', obrigatorio: true, valor: valores.humor,
-        opcoes: HUMOR.map(([v, t]) => ({ valor: v, texto: t })), erro: erros.humor ? 'Escolha uma opção de 1 a 5.' : '' }),
+        opcoes: HUMOR.map(([v, t]) => ({ valor: v, texto: t })), erro: erros.humor ? 'Selecione como você se sentiu (obrigatório)' : '' }),
       grupoRadio({ legenda: '2. Como esteve sua carga de trabalho?', nome: 'carga', obrigatorio: true, valor: valores.carga,
-        opcoes: CARGA.map(c => ({ valor: c, texto: '' })), erro: erros.carga ? 'Escolha leve, normal ou pesada.' : '' }),
+        opcoes: CARGA.map(c => ({ valor: c, texto: '' })), erro: erros.carga ? 'Selecione sua carga de trabalho (obrigatório)' : '' }),
       h('fieldset', { class: 'grupo' },
         h('legend', null, '3. Progresso das suas metas'),
         dados.metas.length === 0 ? h('p', { class: 'ajuda' }, 'Você não tem metas ativas nesta semana.') :
@@ -52,14 +52,23 @@ export function formularioCheckin(ctx, dados) {
     if (!valores.carga) erros.carga = 'pergunta 2 (carga de trabalho)';
     if (Object.keys(erros).length) { desenhar(erros); return; } // estado "TL-02 erro"
     try {
-      await api.enviarCheckin({ humor: Number(valores.humor), carga: valores.carga, obstaculo: valores.obstaculo, comentario: valores.comentario, metas: valores.metas });
-      // estado "TL-02 enviado"
-      preencher(form, 
-        aviso('ok', 'Check-in enviado', 'Obrigado. Você pode editar a resposta até o fim da janela.'),
+      const r = await api.enviarCheckin({ humor: Number(valores.humor), carga: valores.carga, obstaculo: valores.obstaculo, comentario: valores.comentario, metas: valores.metas });
+      // estado "TL-02 enviado" (Figma: selo com data e hora, resumo das respostas, Ver meu histórico, Editar check-in)
+      const ou = v => (String(v || '').trim() ? v : 'não informado');
+      const metas = dados.metas.map(m => `${m.titulo} ${valores.metas[m.id]}%`).join(' · ');
+      preencher(form,
+        aviso('ok', r?.enviadoEm ? `Check-in enviado em ${r.enviadoEm}` : 'Check-in enviado', ''),
+        h('h2', null, 'Resumo das suas respostas'),
         h('dl', { class: 'resumo' },
-          h('dt', null, 'Como se sentiu'), h('dd', null, `${valores.humor} · ${ROTULO_HUMOR[valores.humor]}`),
-          h('dt', null, 'Carga de trabalho'), h('dd', null, valores.carga)),
-        h('div', { class: 'acoes' }, botao('Editar resposta', { variante: 'secundario', onClick: () => { dados.enviado = { ...valores }; desenhar(); form.querySelector('input')?.focus(); } })));
+          h('dt', null, 'Humor da semana'), h('dd', null, `${valores.humor} · ${ROTULO_HUMOR[valores.humor]}`),
+          h('dt', null, 'Carga de trabalho'), h('dd', null, valores.carga),
+          dados.metas.length ? [h('dt', null, 'Metas'), h('dd', null, metas)] : null,
+          h('dt', null, 'Algo está atrapalhando'), h('dd', null, ou(valores.obstaculo)),
+          h('dt', null, 'Comentário'), h('dd', null, ou(valores.comentario))),
+        h('p', { class: 'nota' }, `Você pode editar as respostas até o fechamento da janela${dados.limite ? `, ${dados.limite}` : ''}.`),
+        h('div', { class: 'acoes' },
+          h('a', { class: 'btn btn-primario', href: '#historico' }, 'Ver meu histórico'),
+          botao('Editar check-in', { variante: 'secundario', onClick: () => { dados.enviado = { ...valores }; desenhar(); form.querySelector('input')?.focus(); } })));
       focarAviso(form);
       anunciar('Check-in enviado.');
     } catch (e) {
